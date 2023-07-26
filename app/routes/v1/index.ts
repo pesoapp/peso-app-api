@@ -1,3 +1,4 @@
 import ocDeliveryChargeRoute from "./ocDeliveryCharge/route";
+import auctionRoute from "./auction/route";
 
-export default { ocDeliveryChargeRoute };
+export default { auctionRoute, ocDeliveryChargeRoute };

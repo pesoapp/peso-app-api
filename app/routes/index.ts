@@ -8,6 +8,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/oc-delivery-charge",
     route: V1.ocDeliveryChargeRoute,
   },
+  {
+    url: "/api/v1/auction",
+    route: V1.auctionRoute,
+  },
 ];
 
 export const addRoutes = (app: Express) => {
