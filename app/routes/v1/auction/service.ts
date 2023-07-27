@@ -9,7 +9,7 @@ const getAll = async (_query: any) => {
 };
 
 const getById = async (id: number) => {
-  return await prisma.condition.findFirst({
+  return await prisma.auction.findFirst({
     where: {
       id,
     },
