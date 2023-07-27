@@ -20,6 +20,15 @@ const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
   const data = await service.getById(Number(id));
 
+  if (!data) {
+    _res.send({
+      data: [],
+      status: "fail",
+      message: "Get Auction failed",
+    });
+    return;
+  }
+
   const ocCustomerTemp = await ocCustomer.getById(data?.customer_id || 0);
   const conditionTemp = await condition.getById(data?.condition_id || 0);
   const ocProductBrandTemp = await ocProductBrand.getById(data?.brand_id || 0);
