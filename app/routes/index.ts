@@ -16,6 +16,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/auth",
     route: V1.authRoute,
   },
+  {
+    url: "/api/v1/condition",
+    route: V1.conditionRoute,
+  },
 ];
 
 export const addRoutes: AddRoutes = (app: Express) => {
