@@ -9,12 +9,15 @@ const getAll = async (_query: any) => {
 };
 
 const getById = async (id: number) => {
-  return await prisma.auction.findFirst({
+  const temp = await prisma.auction.findFirst({
     where: {
       id,
     },
   });
+
+  return temp;
 };
+
 // SELECT a.*,oc.firstname,oc.lastname,
 //         FORMAT(a.price,2) as priceFormat,
 //         FORMAT(a.buy_price,2) as buyPriceFormat,
