@@ -6,8 +6,10 @@ import ocCustomerRoute from "./ocCustomer/route";
 import ocProductBrandRoute from "./ocProductBrand/route";
 import auctionSideImagesRoute from "./auctionSideImages/route";
 import ocAddressRoute from "./ocAddress/route";
+import auctionQuestionRoute from "./auctionQuestion/route";
 
 export default {
+  auctionQuestionRoute,
   ocAddressRoute,
   auctionSideImagesRoute,
   ocProductBrandRoute,
