@@ -6,3 +6,4 @@ export interface IRoute {
 }
 
 export type AddRoutes = (app: Express) => void;
+export type AddMiddlewaress = (app: Express) => void;
