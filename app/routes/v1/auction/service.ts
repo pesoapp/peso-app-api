@@ -5,6 +5,9 @@ const getAll = async (_query: any) => {
     include: {
       condition: true,
     },
+    where: {
+      deleted_at: null,
+    },
   });
 };
 
