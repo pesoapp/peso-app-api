@@ -22,8 +22,20 @@ const add = async (_body: any) => {
   });
 };
 
+const addMany = async (auction_id: Number, side_images: any[]) => {
+  return await Promise.all(
+    side_images.map(async (e: any, index: Number) => {
+      return await add({
+        auction_id,
+        image_path: e,
+        sort_order: index,
+      });
+    })
+  );
+};
+
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (filter: any, session: any) => {};
 
-export default { getAll, add, update, removeOne, getById };
+export default { addMany, getAll, add, update, removeOne, getById };
