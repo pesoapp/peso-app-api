@@ -50,6 +50,15 @@ const add = async (_body: any) => {
 
 const update = async (filter: any, _body: any, session: any) => {};
 
-const removeOne = async (filter: any, session: any) => {};
+const removeOne = async (id: number) => {
+  return await prisma.auction.update({
+    where: {
+      id,
+    },
+    data: {
+      deleted_at: new Date(),
+    },
+  });
+};
 
 export default { getAll, add, update, removeOne, getById };
