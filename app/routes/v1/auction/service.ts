@@ -8,10 +8,18 @@ const getAll = async (_query: any) => {
   });
 };
 
+const getById = async (id: number) => {
+  return await prisma.condition.findFirst({
+    where: {
+      id,
+    },
+  });
+};
+
 const add = async (_body: any, session: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (filter: any, session: any) => {};
 
-export default { getAll, add, update, removeOne };
+export default { getAll, add, update, removeOne, getById };

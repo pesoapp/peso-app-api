@@ -1,5 +1,4 @@
 import service from "./service";
-
 import { Request, Response } from "express";
 
 const getAll = async (_req: Request, _res: Response) => {
@@ -12,10 +11,20 @@ const getAll = async (_req: Request, _res: Response) => {
   });
 };
 
+const getById = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+  const data = await service.getById(Number(id));
+  _res.send({
+    data: [data],
+    status: "success",
+    message: "Get Auction success",
+  });
+};
+
 const add = async (_req: Request, _res: Response) => {};
 
 const update = async (_req: Request, _res: Response) => {};
 
 const removeOne = async (_req: Request, _res: Response) => {};
 
-export { getAll, add, update, removeOne };
+export { getAll, getById, add, update, removeOne };
