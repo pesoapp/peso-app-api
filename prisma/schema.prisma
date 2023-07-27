@@ -104,37 +104,36 @@ model approve_receivables {
 }
 
 model auction {
-  id                 Int         @id @default(autoincrement())
-  name               String      @db.VarChar(255)
-  price              Float?      @default(0.00)
-  main_image         String?     @db.Text
-  sold               Boolean?    @default(false)
-  buy_price          Float?      @default(0.00)
+  id                 Int       @id @default(autoincrement())
+  name               String    @db.VarChar(255)
+  price              Float?    @default(0.00)
+  main_image         String?   @db.Text
+  sold               Boolean?  @default(false)
+  buy_price          Float?    @default(0.00)
   condition_id       Int
-  model              String      @db.VarChar(255)
-  due_date           DateTime?   @db.DateTime(0)
+  model              String    @db.VarChar(255)
+  due_date           DateTime? @db.DateTime(0)
   brand_id           Int
   category_id        Int
-  description        String?     @db.VarChar(255)
-  views              Int?        @default(0)
-  created_At         DateTime    @db.DateTime(0)
-  updated_At         DateTime    @db.DateTime(0)
+  description        String?   @db.VarChar(255)
+  views              Int?      @default(0)
+  created_At         DateTime  @db.DateTime(0)
+  updated_At         DateTime  @db.DateTime(0)
   customer_id        Int
-  reason_of_selling  String?     @db.VarChar(255)
-  issue              String?     @db.LongText
-  warranty           String?     @db.VarChar(255)
-  freebies           String?     @db.LongText
-  owner_history      String?     @db.VarChar(255)
-  inclusions         String?     @db.LongText
-  tags               String?     @db.LongText
-  deleted_at         DateTime?   @db.DateTime(0)
+  reason_of_selling  String?   @db.VarChar(255)
+  issue              String?   @db.LongText
+  warranty           String?   @db.VarChar(255)
+  freebies           String?   @db.LongText
+  owner_history      String?   @db.VarChar(255)
+  inclusions         String?   @db.LongText
+  tags               String?   @db.LongText
+  deleted_at         DateTime? @db.DateTime(0)
   auction_day        Int?
-  days_to_auction    Int?        @default(0)
-  date_posted        DateTime?   @db.DateTime(0)
+  days_to_auction    Int?      @default(0)
+  date_posted        DateTime? @db.DateTime(0)
   delivery_charge_id Int?
-  quantity           Int?        @default(0)
-  condition          condition   @relation(fields: [condition_id], references: [id], onUpdate: Restrict, map: "auction_ibfk_1")
-  customer           oc_customer @relation(fields: [customer_id], references: [customer_id])
+  quantity           Int?      @default(0)
+  condition          condition @relation(fields: [condition_id], references: [id], onUpdate: Restrict, map: "auction_ibfk_1")
 
   @@index([condition_id], map: "condition_id")
 }
@@ -1351,7 +1350,6 @@ model oc_customer {
   fgivesacc         Int?      @default(0)
   picture           String?   @default("assets/default_pic.jpg") @db.VarChar(255)
   live_video_status Boolean?  @default(false)
-  auction           auction[]
 
   @@index([address_id], map: "occust_address_id_index")
   @@index([approved], map: "occust_approved_index")
