@@ -1,7 +1,7 @@
-import model from "./model";
+import { prisma } from "../../../db";
 
 const getAll = async () => {
-  return await model.findAll({});
+  return await prisma.oc_delivery_charge.findMany();
 };
 
 const add = async (_body: any, session: any) => {};
