@@ -44,6 +44,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/oc-customer-wallet",
     route: V1.ocCustomerWalletRoute,
   },
+  {
+    url: "/api/v1/auction-question-reply",
+    route: V1.auctionQuestionReplyRoute,
+  },
 ];
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
