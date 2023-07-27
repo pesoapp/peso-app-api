@@ -40,9 +40,11 @@ const getById = async (_req: Request, _res: Response) => {
 };
 
 const add = async (_req: Request<any, any, any>, _res: Response) => {
-  const data = await service.add(_req.body);
+  const { side_images, ...res } = _req.body;
+  const data = await service.add(res);
+  const temp = await auctionSideImages.addMany(data.id ?? 0, side_images);
   _res.send({
-    data: [data],
+    data: [{ data, side_images: temp }],
     status: "success",
     message: "Add Auction success",
   });
