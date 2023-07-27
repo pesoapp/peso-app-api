@@ -17,7 +17,7 @@ const getById = async (_req: Request, _res: Response) => {
   _res.send({
     data: [data],
     status: "success",
-    message: "Get Oc Deliver Charge success",
+    message: "Get Oc Delivery Charge success",
   });
 };
 

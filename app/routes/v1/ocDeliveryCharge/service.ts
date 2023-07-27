@@ -3,6 +3,7 @@ import { prisma } from "../../../db";
 const getAll = async () => {
   return await prisma.oc_delivery_charge.findMany();
 };
+
 const getById = async (id: number) => {
   return await prisma.oc_delivery_charge.findFirst({
     where: {
@@ -10,6 +11,7 @@ const getById = async (id: number) => {
     },
   });
 };
+
 const add = async (_body: any, session: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
