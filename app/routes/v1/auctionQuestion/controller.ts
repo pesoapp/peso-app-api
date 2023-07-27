@@ -1,6 +1,6 @@
 import service from "./service";
 import { Request, Response } from "express";
-
+import ocCustomerWallet from "../ocCustomerWallet/service";
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 5, page = 1 } = _req.query;
   const data = await service.getAll({ limit, page });
@@ -33,8 +33,18 @@ const getByAuction = async (_req: Request, _res: Response) => {
 };
 
 const add = async (_req: Request<any, any, any>, _res: Response) => {
+  const { auction_id, customer_id } = _req.body;
+  const questions = await service.getByAuction(Number(auction_id));
+
+  await ocCustomerWallet.add({
+    customer_id,
+    particulars: "Ask the Auction",
+    amount: questions.length == 0 ? 2 : 0.1,
+  });
+
+  const data = await service.add(_req.body);
   _res.send({
-    data: [],
+    data: [data],
     status: "success",
     message: "Add Auction Question success",
   });
