@@ -12,6 +12,14 @@ const getById = async (id: number) => {
   });
 };
 
+const getByAuction = async (auction_id: number) => {
+  return await prisma.auction_side_images.findMany({
+    where: {
+      auction_id,
+    },
+  });
+};
+
 const add = async (_body: any) => {
   return await prisma.auction_side_images.create({
     data: {
@@ -38,4 +46,12 @@ const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (filter: any, session: any) => {};
 
-export default { addMany, getAll, add, update, removeOne, getById };
+export default {
+  getByAuction,
+  addMany,
+  getAll,
+  add,
+  update,
+  removeOne,
+  getById,
+};
