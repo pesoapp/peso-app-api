@@ -12,7 +12,15 @@ const getById = async (id: number) => {
   });
 };
 
-const add = async (_body: any, session: any) => {};
+const add = async (_body: any) => {
+  return await prisma.auction_side_images.create({
+    data: {
+      auction_id: _body.auction_id,
+      image_path: _body.image_path,
+      sort_order: _body.sort_order,
+    },
+  });
+};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
