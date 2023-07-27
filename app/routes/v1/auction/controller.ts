@@ -5,6 +5,7 @@ import condition from "../condition/service";
 import ocProductBrand from "../ocProductBrand/service";
 import ocAddress from "../ocProductBrand/service";
 import auctionSideImages from "../auctionSideImages/service";
+import auctionQuestion from "../auctionQuestion/service";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 5, page = 1 } = _req.query;
@@ -36,6 +37,8 @@ const getById = async (_req: Request, _res: Response) => {
   const auctionSideImagesTemp = await auctionSideImages.getByAuction(
     data?.id || 0
   );
+  const auctionQuestionTemp = await auctionQuestion.getByAuction(data?.id || 0);
+
   _res.send({
     data: [
       {
@@ -44,6 +47,7 @@ const getById = async (_req: Request, _res: Response) => {
         condition: conditionTemp,
         address: ocAddressTemp,
         side_images: auctionSideImagesTemp,
+        questions: auctionQuestionTemp,
         ...data,
       },
     ],
