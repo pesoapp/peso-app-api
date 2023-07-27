@@ -12,14 +12,12 @@ const getAll = async (_query: any) => {
 };
 
 const getById = async (id: number) => {
-  const temp = await prisma.auction.findFirst({
+  return await prisma.auction.findFirst({
     where: {
       id,
       deleted_at: null,
     },
   });
-
-  return temp;
 };
 
 const add = async (_body: any) => {
