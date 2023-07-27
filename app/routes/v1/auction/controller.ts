@@ -39,7 +39,14 @@ const getById = async (_req: Request, _res: Response) => {
   });
 };
 
-const add = async (_req: Request, _res: Response) => {};
+const add = async (_req: Request<any, any, any>, _res: Response) => {
+  const data = await service.add(_req.body);
+  _res.send({
+    data: [data],
+    status: "success",
+    message: "Add Auction success",
+  });
+};
 
 const update = async (_req: Request, _res: Response) => {};
 
