@@ -20,6 +20,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/condition",
     route: V1.conditionRoute,
   },
+  {
+    url: "/api/v1/oc-customer",
+    route: V1.ocCustomerRoute,
+  },
 ];
 
 export const addRoutes: AddRoutes = (app: Express) => {
