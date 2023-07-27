@@ -1,12 +1,13 @@
 require("dotenv").config();
-import { connectDB } from "./app/db";
 import ENV from "./app/env";
 import { addRoutes } from "./app/routes";
+import { addMiddlewares } from "./app/middlewares";
 
 import express, { Request, Response, Express } from "express";
 
 const app: Express = express();
 
+addMiddlewares(app);
 addRoutes(app);
 
 app.get("/api/healthchecker", (req: Request, res: Response) => {
@@ -24,10 +25,8 @@ app.all("*", (req: Request, res: Response) => {
 });
 
 const start = () => {
-  connectDB().then(() => {
-    app.listen(ENV.PORT, async () => {
-      console.log("🚀 Server started Successfully");
-    });
+  app.listen(ENV.PORT, async () => {
+    console.log("🚀 Server started Successfully");
   });
 };
 
