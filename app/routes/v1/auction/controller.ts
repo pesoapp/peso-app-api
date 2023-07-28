@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import ocCustomer from "../ocCustomer/service";
 import condition from "../condition/service";
 import ocProductBrand from "../ocProductBrand/service";
-import ocAddress from "../ocProductBrand/service";
+import ocAddress from "../ocAddress/service";
 import auctionSideImages from "../auctionSideImages/service";
 import auctionQuestion from "../auctionQuestion/service";
 
