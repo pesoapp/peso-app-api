@@ -1,6 +1,8 @@
 import service from "./service";
 import { Request, Response } from "express";
 import ocCustomerWallet from "../ocCustomerWallet/service";
+import ocCustomer from "../ocCustomer/service";
+
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 5, page = 1 } = _req.query;
   const data = await service.getAll({ limit, page });
@@ -25,6 +27,16 @@ const getById = async (_req: Request, _res: Response) => {
 const getByAuction = async (_req: Request, _res: Response) => {
   const { id = 5 } = _req.params;
   const data = await service.getByAuction(Number(id));
+  const ocCustomersTemp =
+    (await ocCustomer.getManyByCustomer(data.map((e: any) => e.customer_id))) ??
+    [];
+
+  data.map((e: any) => {
+    e.customer = ocCustomersTemp.find(
+      (customer: any) => (customer.customer_id = e.customer_id)
+    );
+    return e;
+  });
   _res.send({
     data,
     status: "success",
