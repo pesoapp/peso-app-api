@@ -24,7 +24,16 @@ const getByAuction = async (auction_id: number) => {
   });
 };
 
-const add = async (_body: any) => {};
+const add = async (_body: any) => {
+  return await prisma.auction_bid.create({
+    data: {
+      customer_id: _body.customer_id,
+      auction_id: _body.auction_id,
+      bid: _body.bid,
+      created_at: new Date(),
+    },
+  });
+};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
