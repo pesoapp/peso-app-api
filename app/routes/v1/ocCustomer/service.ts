@@ -12,10 +12,18 @@ const getById = async (id: number) => {
   });
 };
 
+const getManyByCustomer = async (ids: number[]) => {
+  return await prisma.oc_customer.findMany({
+    where: {
+      customer_id: { in: ids },
+    },
+  });
+};
+
 const add = async (_body: any, session: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (filter: any, session: any) => {};
 
-export default { getById, getAll, add, update, removeOne };
+export default { getManyByCustomer, getById, getAll, add, update, removeOne };
