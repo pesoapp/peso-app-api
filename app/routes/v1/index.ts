@@ -9,7 +9,9 @@ import ocAddressRoute from "./ocAddress/route";
 import auctionQuestionRoute from "./auctionQuestion/route";
 import ocCustomerWalletRoute from "./ocCustomerWallet/route";
 import auctionQuestionReplyRoute from "./auctionQuestionReply/route";
+import auctionBidRoute from "./auctionBid/route";
 export default {
+  auctionBidRoute,
   auctionQuestionReplyRoute,
   ocCustomerWalletRoute,
   auctionQuestionRoute,

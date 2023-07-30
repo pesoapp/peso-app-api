@@ -6,7 +6,7 @@ import ocProductBrand from "../ocProductBrand/service";
 import ocAddress from "../ocAddress/service";
 import auctionSideImages from "../auctionSideImages/service";
 import auctionQuestion from "../auctionQuestion/service";
-
+import auctionBid from "../auctionBid/service";
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
   const data = await service.getAll({ limit, page });
@@ -38,6 +38,8 @@ const getById = async (_req: Request, _res: Response) => {
   const conditionTemp = await condition.getById(data?.condition_id || 0);
   const ocProductBrandTemp = await ocProductBrand.getById(data?.brand_id || 0);
   const ocAddressTemp = await ocAddress.getById(data?.brand_id || 0);
+  const auctionBidTemp = await auctionBid.getByAuction(data?.id || 0);
+
   const auctionSideImagesTemp = await auctionSideImages.getByAuction(
     data?.id || 0
   );
@@ -64,6 +66,7 @@ const getById = async (_req: Request, _res: Response) => {
         address: ocAddressTemp,
         side_images: auctionSideImagesTemp,
         questions: auctionQuestionTemp,
+        bids: auctionBidTemp,
         ...data,
       },
     ],
@@ -71,7 +74,6 @@ const getById = async (_req: Request, _res: Response) => {
     message: "Get Auction success",
   });
 };
-
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   const { side_images, ...res } = _req.body;
   const data = await service.add(res);
