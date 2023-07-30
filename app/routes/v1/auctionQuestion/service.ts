@@ -1,7 +1,12 @@
 import { prisma } from "../../../db";
 
 const getAll = async (_query: any) => {
-  return await prisma.auction_question.findMany({});
+  const { limit = 5, page = 1 } = _query;
+
+  return await prisma.auction_question.findMany({
+    skip: page - 1 != 0 ? limit * page : 0,
+    take: Number(limit),
+  });
 };
 
 const getById = async (id: number) => {
