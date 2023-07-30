@@ -105,7 +105,7 @@ const removeOne = async (_req: Request, _res: Response) => {
   _res.send({
     data: [data],
     status: "success",
-    message: "Add Auction success",
+    message: "Remove Auction success",
   });
 };
 
