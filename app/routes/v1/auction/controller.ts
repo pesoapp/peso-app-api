@@ -38,7 +38,6 @@ const getById = async (_req: Request, _res: Response) => {
   const conditionTemp = await condition.getById(data?.condition_id || 0);
   const ocProductBrandTemp = await ocProductBrand.getById(data?.brand_id || 0);
   const ocAddressTemp = await ocAddress.getById(data?.brand_id || 0);
-  const auctionBidTemp = await auctionBid.getByAuction(data?.id || 0);
 
   const auctionSideImagesTemp = await auctionSideImages.getByAuction(
     data?.id || 0
@@ -52,6 +51,19 @@ const getById = async (_req: Request, _res: Response) => {
 
   auctionQuestionTemp.map((e: any) => {
     e.customer = ocCustomersTemp.find(
+      (customer: any) => (customer.customer_id = e.customer_id)
+    );
+    return e;
+  });
+
+  const auctionBidTemp = await auctionBid.getByAuction(data?.id || 0);
+  const temp =
+    (await ocCustomer.getManyByCustomer(
+      auctionBidTemp.map((e: any) => e.customer_id)
+    )) ?? [];
+
+  auctionBidTemp.map((e: any) => {
+    e.customer = temp.find(
       (customer: any) => (customer.customer_id = e.customer_id)
     );
     return e;
