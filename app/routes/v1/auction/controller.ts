@@ -43,6 +43,18 @@ const getById = async (_req: Request, _res: Response) => {
   );
   const auctionQuestionTemp = await auctionQuestion.getByAuction(data?.id || 0);
 
+  const ocCustomersTemp =
+    (await ocCustomer.getManyByCustomer(
+      auctionQuestionTemp.map((e: any) => e.customer_id)
+    )) ?? [];
+
+  auctionQuestionTemp.map((e: any) => {
+    e.customer = ocCustomersTemp.find(
+      (customer: any) => (customer.customer_id = e.customer_id)
+    );
+    return e;
+  });
+
   _res.send({
     data: [
       {
