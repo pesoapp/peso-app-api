@@ -6,6 +6,9 @@ const getAll = async (_query: any) => {
   return await prisma.lounge_post.findMany({
     skip: page - 1 != 0 ? limit * page : 0,
     take: Number(limit),
+    orderBy: {
+      date_created: "desc",
+    },
   });
 };
 
