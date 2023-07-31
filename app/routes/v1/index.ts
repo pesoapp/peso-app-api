@@ -14,8 +14,9 @@ import loungePostRoute from "./loungePost/route";
 import loungeGroupRoute from "./loungeGroup/route";
 import loungeGroupMemberRoute from "./loungeGroupMember/route";
 import loungePostCommentsRoute from "./loungePostComments/route";
-
+import auctionViewRoute from "./auctionView/route";
 export default {
+  auctionViewRoute,
   loungePostCommentsRoute,
   loungeGroupMemberRoute,
   loungeGroupRoute,

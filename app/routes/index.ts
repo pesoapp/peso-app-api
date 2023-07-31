@@ -68,7 +68,12 @@ export const routes: IRoute[] = [
     url: "/api/v1/lounge-post-comments",
     route: V1.loungePostCommentsRoute,
   },
+  {
+    url: "/api/v1/auction-view",
+    route: V1.auctionViewRoute,
+  },
 ];
+
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);
