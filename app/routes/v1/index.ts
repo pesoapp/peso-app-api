@@ -12,8 +12,9 @@ import auctionQuestionReplyRoute from "./auctionQuestionReply/route";
 import auctionBidRoute from "./auctionBid/route";
 import loungePostRoute from "./loungePost/route";
 import loungeGroupRoute from "./loungeGroup/route";
-
+import loungeGroupMemberRoute from "./loungeGroupMember/route";
 export default {
+  loungeGroupMemberRoute,
   loungeGroupRoute,
   loungePostRoute,
   auctionBidRoute,

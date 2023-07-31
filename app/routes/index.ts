@@ -60,7 +60,12 @@ export const routes: IRoute[] = [
     url: "/api/v1/lounge-group",
     route: V1.loungeGroupRoute,
   },
+  {
+    url: "/api/v1/lounge-group-member",
+    route: V1.loungeGroupMemberRoute,
+  },
 ];
+
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);
