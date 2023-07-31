@@ -76,7 +76,12 @@ export const routes: IRoute[] = [
     url: "/api/v1/auction-cart",
     route: V1.auctionCartRoute,
   },
+  {
+    url: "/api/v1/auction-video-call",
+    route: V1.auctionVideoCallRoute,
+  },
 ];
+
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);
