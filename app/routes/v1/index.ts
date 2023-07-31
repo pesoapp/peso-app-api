@@ -11,8 +11,10 @@ import ocCustomerWalletRoute from "./ocCustomerWallet/route";
 import auctionQuestionReplyRoute from "./auctionQuestionReply/route";
 import auctionBidRoute from "./auctionBid/route";
 import loungePostRoute from "./loungePost/route";
+import loungeGroupRoute from "./loungeGroup/route";
 
 export default {
+  loungeGroupRoute,
   loungePostRoute,
   auctionBidRoute,
   auctionQuestionReplyRoute,
