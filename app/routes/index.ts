@@ -52,6 +52,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/auction-bid",
     route: V1.auctionBidRoute,
   },
+  {
+    url: "/api/v1/lounge-post",
+    route: V1.loungePostRoute,
+  },
 ];
 
 export const addRoutes: AddRoutes = (app: Express) => {

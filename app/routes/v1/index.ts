@@ -10,7 +10,10 @@ import auctionQuestionRoute from "./auctionQuestion/route";
 import ocCustomerWalletRoute from "./ocCustomerWallet/route";
 import auctionQuestionReplyRoute from "./auctionQuestionReply/route";
 import auctionBidRoute from "./auctionBid/route";
+import loungePostRoute from "./loungePost/route";
+
 export default {
+  loungePostRoute,
   auctionBidRoute,
   auctionQuestionReplyRoute,
   ocCustomerWalletRoute,
