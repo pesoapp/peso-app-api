@@ -80,6 +80,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/auction-video-call",
     route: V1.auctionVideoCallRoute,
   },
+  {
+    url: "/api/v1/oc-category-description",
+    route: V1.ocCategoryDescriptionRoute,
+  },
 ];
 
 export const addRoutes: AddRoutes = (app: Express) => {

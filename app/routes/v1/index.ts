@@ -17,7 +17,10 @@ import loungePostCommentsRoute from "./loungePostComments/route";
 import auctionViewRoute from "./auctionView/route";
 import auctionCartRoute from "./auctionCart/route";
 import auctionVideoCallRoute from "./auctionVideoCall/route";
+import ocCategoryDescriptionRoute from "./ocCategoryDescription/route";
+
 export default {
+  ocCategoryDescriptionRoute,
   auctionVideoCallRoute,
   auctionCartRoute,
   auctionViewRoute,
