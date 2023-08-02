@@ -11,7 +11,14 @@ const getById = async (id: number) => {
     },
   });
 };
-const add = async (_body: any, session: any) => {};
+
+const add = async (_body: any) => {
+  return await prisma.condition.create({
+    data: {
+      condition: _body.condition,
+    },
+  });
+};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
