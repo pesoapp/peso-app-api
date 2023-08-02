@@ -11,7 +11,15 @@ const getById = async (id: number) => {
     },
   });
 };
-const add = async (_body: any, session: any) => {};
+const add = async (_body: any) => {
+  return await prisma.oc_product_brand.create({
+    data: {
+      name: _body.name,
+      description: _body.description,
+      status: 1,
+    },
+  });
+};
 
 const update = async (filter: any, _body: any, session: any) => {};
 

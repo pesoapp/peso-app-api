@@ -22,7 +22,14 @@ const getById = async (_req: Request, _res: Response) => {
   });
 };
 
-const add = async (_req: Request, _res: Response) => {};
+const add = async (_req: Request, _res: Response) => {
+  const data = await service.add(_req.body);
+  _res.send({
+    data: [data],
+    status: "success",
+    message: "Add Oc Product Brand success",
+  });
+};
 
 const update = async (_req: Request, _res: Response) => {};
 
