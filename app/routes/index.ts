@@ -84,8 +84,11 @@ export const routes: IRoute[] = [
     url: "/api/v1/oc-category-description",
     route: V1.ocCategoryDescriptionRoute,
   },
+  {
+    url: "/api/v1/upload",
+    route: V1.uploadRoute,
+  },
 ];
-
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);

@@ -18,8 +18,9 @@ import auctionViewRoute from "./auctionView/route";
 import auctionCartRoute from "./auctionCart/route";
 import auctionVideoCallRoute from "./auctionVideoCall/route";
 import ocCategoryDescriptionRoute from "./ocCategoryDescription/route";
-
+import uploadRoute from "./upload/route";
 export default {
+  uploadRoute,
   ocCategoryDescriptionRoute,
   auctionVideoCallRoute,
   auctionCartRoute,
