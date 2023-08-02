@@ -7,14 +7,14 @@ const addAuction = async (_req: Request, _res: Response) => {
   const name: string = generateId(20);
   await S3_INSTANCE.upload({
     Bucket: ENV.AWS_BUCKET_NAME,
-    Key: name,
+    Key: `auction/${name}`,
     Body: _req.file?.path || "",
   }).promise();
 
   await fs.unlink(_req.file?.path || "", () => {});
 
   _res.send({
-    data: [{ path: name }],
+    data: [{ path: `auction/${name}` }],
     status: "success",
     message: "Upload Auction Image success",
   });
