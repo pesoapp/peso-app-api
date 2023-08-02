@@ -4,6 +4,7 @@ import { addRoutes } from "./app/routes";
 import { addMiddlewares } from "./app/middlewares";
 
 import express, { Request, Response, Express } from "express";
+import fs from "fs";
 
 const app: Express = express();
 
@@ -25,6 +26,7 @@ app.all("*", (req: Request, res: Response) => {
 });
 
 const start = () => {
+  fs.mkdirSync("./uploads", { recursive: true });
   app.listen(ENV.PORT, async () => {
     console.log("🚀 Server started Successfully");
   });
