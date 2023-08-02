@@ -11,6 +11,7 @@ const getById = async (id: number) => {
     },
   });
 };
+
 const add = async (_body: any) => {
   return await prisma.oc_product_brand.create({
     data: {
