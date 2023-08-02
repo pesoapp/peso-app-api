@@ -13,6 +13,8 @@ const ENV = {
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || `access-key`,
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || `secret-key`,
   AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || `bucket-name`,
+  PESO_APP_TEMP:
+    process.env.PESO_APP_TEMP || `https://pesoapp.ph/peso_beta/api/5.2.16/url/`,
 };
 
 export default ENV;
