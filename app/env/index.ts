@@ -10,6 +10,9 @@ const ENV = {
   PORT: process.env.PORT || 9000,
   DB_NAME: process.env.DB_NAME || "pesoappd_ocnew",
   DATABASE_URL: process.env.DATABASE_URL || `localhost:3306`,
+  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || `access-key`,
+  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || `secret-key`,
+  AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || `bucket-name`,
 };
 
 export default ENV;
