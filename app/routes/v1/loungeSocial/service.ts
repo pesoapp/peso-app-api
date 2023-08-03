@@ -7,8 +7,9 @@ const getAll = async (_query: any) => {
 };
 
 const getAllLikesByPost = async (post_id: number = 0) => {
-  const result =
-    await prisma.$queryRaw`SELECT * FROM lounge_social WHERE post_id=${post_id}`;
+  const result = await prisma.$queryRaw<
+    any[]
+  >`SELECT * FROM lounge_social WHERE post_id=${post_id}`;
   return result;
 };
 

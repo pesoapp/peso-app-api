@@ -34,14 +34,14 @@ const getAll = async (_req: Request, _res: Response) => {
 
   await Promise.all(
     data.map(async (e: any) => {
-      e.likes = await loungeSocial.getAllLikesByPost(e.post_id);
+      e.likes = (await loungeSocial.getAllLikesByPost(e.post_id)).length;
       return e;
     })
   );
 
   await Promise.all(
     data.map(async (e: any) => {
-      e.comments = await loungePostComments.getByPost(e.post_id);
+      e.comments = (await loungePostComments.getByPost(e.post_id)).length;
       return e;
     })
   );
