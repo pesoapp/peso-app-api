@@ -35,6 +35,16 @@ const getById = async (_req: Request, _res: Response) => {
   });
 };
 
+const getByPost = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+  const data = await service.getByPost(Number(id));
+
+  _res.send({
+    data,
+    status: "success",
+    message: "Get Lounge Post Comments success",
+  });
+};
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   _res.send({
     data: [],
@@ -53,4 +63,4 @@ const removeOne = async (_req: Request, _res: Response) => {
   });
 };
 
-export { getAll, getById, add, update, removeOne };
+export { getByPost, getAll, getById, add, update, removeOne };

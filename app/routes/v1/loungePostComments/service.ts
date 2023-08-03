@@ -17,10 +17,18 @@ const getById = async (id: number) => {
   });
 };
 
+const getByPost = async (id: number) => {
+  return await prisma.lounge_post_comments.findMany({
+    where: {
+      post_id: id,
+    },
+  });
+};
+
 const add = async (_body: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getAll, add, update, removeOne, getById };
+export default { getByPost, getAll, add, update, removeOne, getById };
