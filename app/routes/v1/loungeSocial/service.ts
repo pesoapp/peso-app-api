@@ -12,12 +12,29 @@ const getAllLikesByPost = async (post_id: number = 0) => {
   return result;
 };
 
-const getById = async (id: number) => {
-  return await prisma.lounge_post.findFirst({
-    where: {
-      post_id: id,
-    },
-  });
+const getById = async (id: number) => {};
+
+const toggleLike = async (body: any) => {
+  const result =
+    (await prisma.$queryRaw<
+      any[]
+    >`SELECT * FROM lounge_social WHERE post_id=${body.post_id}`) ?? [];
+
+  if (result.length == 0) {
+    await prisma.$executeRawUnsafe(
+      "INSERT INTO lounge_social (`customer_id`, `post_id`, `like`) VALUES (" +
+        body.customer_id +
+        ", " +
+        body.post_id +
+        ", 1)"
+    );
+  } else {
+    await prisma.$executeRawUnsafe(
+      `DELETE FROM lounge_social WHERE post_id = ${body.post_id} AND customer_id = ${body.customer_id}`
+    );
+  }
+
+  return result;
 };
 
 const add = async (_body: any) => {};
@@ -26,4 +43,12 @@ const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getAllLikesByPost, getAll, add, update, removeOne, getById };
+export default {
+  toggleLike,
+  getAllLikesByPost,
+  getAll,
+  add,
+  update,
+  removeOne,
+  getById,
+};

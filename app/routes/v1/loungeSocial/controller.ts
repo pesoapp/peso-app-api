@@ -26,20 +26,8 @@ const getAllLikesByPost = async (_req: Request, _res: Response) => {
 };
 
 const getById = async (_req: Request, _res: Response) => {
-  const { id = 0 } = _req.params;
-  const data = await service.getById(Number(id));
-
-  if (!data) {
-    _res.send({
-      data: [],
-      status: "fail",
-      message: "Get Lounge Social failed",
-    });
-    return;
-  }
-
   _res.send({
-    data: [data],
+    data: [],
     status: "success",
     message: "Get Lounge Social success",
   });
@@ -48,6 +36,16 @@ const getById = async (_req: Request, _res: Response) => {
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   _res.send({
     data: [],
+    status: "success",
+    message: "Add Lounge Social success",
+  });
+};
+
+const toggleLike = async (_req: Request<any, any, any>, _res: Response) => {
+  const data = await service.toggleLike(_req.body);
+
+  _res.send({
+    data,
     status: "success",
     message: "Add Lounge Social success",
   });
@@ -63,4 +61,12 @@ const removeOne = async (_req: Request, _res: Response) => {
   });
 };
 
-export { getAllLikesByPost, getAll, getById, add, update, removeOne };
+export {
+  toggleLike,
+  getAllLikesByPost,
+  getAll,
+  getById,
+  add,
+  update,
+  removeOne,
+};
