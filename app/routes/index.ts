@@ -88,7 +88,12 @@ export const routes: IRoute[] = [
     url: "/api/v1/upload",
     route: V1.uploadRoute,
   },
+  {
+    url: "/api/v1/lounge-social",
+    route: V1.loungeSocialRoute,
+  },
 ];
+
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);
