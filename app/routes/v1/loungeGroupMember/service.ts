@@ -25,10 +25,26 @@ const getByLoungeGroup = async (lounge_group_id: number) => {
   });
 };
 
+const getByCustomer = async (customer_id: number) => {
+  return await prisma.lounge_group_member.findMany({
+    where: {
+      customer_id,
+    },
+  });
+};
+
 const add = async (_body: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getByLoungeGroup, getAll, add, update, removeOne, getById };
+export default {
+  getByCustomer,
+  getByLoungeGroup,
+  getAll,
+  add,
+  update,
+  removeOne,
+  getById,
+};
