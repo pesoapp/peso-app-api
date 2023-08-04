@@ -17,10 +17,18 @@ const getById = async (id: number) => {
   });
 };
 
+const getByLoungeGroup = async (lounge_group_id: number) => {
+  return await prisma.lounge_group_member.findMany({
+    where: {
+      lounge_group_id,
+    },
+  });
+};
+
 const add = async (_body: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getAll, add, update, removeOne, getById };
+export default { getByLoungeGroup, getAll, add, update, removeOne, getById };
