@@ -4,6 +4,7 @@ import ocCustomer from "../ocCustomer/service";
 import loungeGroup from "../loungeGroup/service";
 import loungeSocial from "../loungeSocial/service";
 import loungePostComments from "../loungePostComments/service";
+import { parseLoungePostTitle } from "../../../utils";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
@@ -46,6 +47,11 @@ const getAll = async (_req: Request, _res: Response) => {
     })
   );
 
+  data.map((e: any) => {
+    e.title = parseLoungePostTitle(e.title);
+    return e;
+  });
+
   _res.send({
     data,
     status: "success",
@@ -60,7 +66,6 @@ const getAll = async (_req: Request, _res: Response) => {
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
   const data = await service.getById(Number(id));
-
   if (!data) {
     _res.send({
       data: [],
@@ -69,9 +74,29 @@ const getById = async (_req: Request, _res: Response) => {
     });
     return;
   }
+  const ocCustomersTemp =
+    (await ocCustomer.getManyByCustomer([data?.customer_id ?? 0])) ?? [];
+
+  const loungeGroupTemp =
+    (await loungeGroup.getManyByLoungeGroup([data?.lounge_group_id ?? 0])) ??
+    [];
+
+  const loungeSocialTemp =
+    (await loungeSocial.getAllLikesByPost(data?.post_id ?? 0)) ?? [];
+  const loungePostCommentsTemp =
+    (await loungePostComments.getByPost(data?.post_id ?? 0)) ?? [];
 
   _res.send({
-    data: [data],
+    data: [
+      {
+        ...data,
+        title: parseLoungePostTitle(data.title),
+        customer: ocCustomersTemp[0] ?? null,
+        group: loungeGroupTemp[0] ?? null,
+        likes: loungeSocialTemp,
+        comments: loungePostCommentsTemp,
+      },
+    ],
     status: "success",
     message: "Get Lounge Post success",
   });
