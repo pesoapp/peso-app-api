@@ -1,9 +1,18 @@
 import service from "./service";
 import { Request, Response } from "express";
+import loungeGroupMember from "../loungeGroupMember/service";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
   const data = await service.getAll({ limit, page });
+
+  await Promise.all(
+    data.map(async (e: any) => {
+      e.members = await loungeGroupMember.getByLoungeGroup(e.id);
+      return e;
+    })
+  );
+
   _res.send({
     data,
     status: "success",
@@ -29,7 +38,9 @@ const getById = async (_req: Request, _res: Response) => {
   }
 
   _res.send({
-    data: [data],
+    data: [
+      { ...data, members: await loungeGroupMember.getByLoungeGroup(data.id) },
+    ],
     status: "success",
     message: "Get Lounge Group success",
   });
