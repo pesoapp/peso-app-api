@@ -18,3 +18,12 @@ export function generateId(length: number = 5) {
   }
   return result;
 }
+
+export function parseLoungePostTitle(title: string = "") {
+  title = title.replace(/[\\r\\n]/gm, "");
+  title = title.substr(1);
+  title = title.substr(0, title.length - 2);
+  title = title.replace(/#\S+/g, "");
+  title = title.trim();
+  return title;
+}
