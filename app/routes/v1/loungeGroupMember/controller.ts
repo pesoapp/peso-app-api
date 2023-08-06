@@ -78,4 +78,36 @@ const removeOne = async (_req: Request, _res: Response) => {
   });
 };
 
-export { getByCustomer, getAll, getById, add, update, removeOne };
+const removeCustomer = async (_req: Request, _res: Response) => {
+  const { id = 0, customer_id = 0 } = _req.params;
+
+  const data = await service.removeCustomer({
+    lounge_group_id: Number(id),
+    customer_id: Number(customer_id),
+  });
+
+  if (data.count <= 0) {
+    _res.send({
+      data: [],
+      status: "fail",
+      message: "Remove Lounge Group Member failed",
+    });
+    return;
+  }
+
+  _res.send({
+    data: [],
+    status: "success",
+    message: "Remove Lounge Group Member success",
+  });
+};
+
+export {
+  getByCustomer,
+  getAll,
+  getById,
+  add,
+  update,
+  removeOne,
+  removeCustomer,
+};

@@ -47,7 +47,16 @@ const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
+const removeCustomer = async (filter: any) => {
+  return await prisma.lounge_group_member.deleteMany({
+    where: {
+      lounge_group_id: filter.lounge_group_id,
+      customer_id: filter.customer_id,
+    },
+  });
+};
 export default {
+  removeCustomer,
   getByCustomer,
   getByLoungeGroup,
   getAll,
