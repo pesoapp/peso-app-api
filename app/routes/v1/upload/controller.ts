@@ -30,4 +30,29 @@ const addAuction = async (_req: Request, _res: Response) => {
   });
 };
 
-export { addAuction };
+const addLoungeGroup = async (_req: Request, _res: Response) => {
+  // AWS FILE UPLOAD
+  // const name: string = generateId(20);
+  // await S3_INSTANCE.upload({
+  //   Bucket: ENV.AWS_BUCKET_NAME,
+  //   Key: `lounge/${name}`,
+  //   Body: _req.file?.path || "",
+  // }).promise();
+
+  const image = new Blob([await readFile(_req.file?.path ?? "")]);
+  let formData = new FormData();
+  formData.set("image", image, _req.file?.path ?? "");
+  const response = await pesoAppPost(
+    "lounge_group.php?action=uploadGroupImage",
+    formData
+  );
+  await fs.unlink(_req.file?.path || "", () => {});
+
+  _res.send({
+    data: [{ path: response.path }],
+    status: "success",
+    message: "Upload Lounge Group Image success",
+  });
+};
+
+export { addLoungeGroup, addAuction };

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addAuction } from "./controller.js";
+import { addLoungeGroup, addAuction } from "./controller.js";
 import multer from "multer";
 
 const storage = multer.diskStorage({
@@ -24,4 +24,5 @@ const upload = multer({ storage, fileFilter });
 
 const router: Router = Router();
 router.route("/auction").post(upload.single("image"), addAuction);
+router.route("/lounge-group").post(upload.single("image"), addLoungeGroup);
 export default router;
