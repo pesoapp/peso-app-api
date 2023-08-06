@@ -5,6 +5,13 @@ export const S3_INSTANCE = new AWS.S3({
   accessKeyId: ENV.AWS_ACCESS_KEY_ID,
   secretAccessKey: ENV.AWS_SECRET_ACCESS_KEY,
 });
+export async function pesoAppGet(url: string) {
+  const response = await fetch(`${ENV.PESO_APP_TEMP}${url}`, {
+    method: "get",
+  });
+  return JSON.parse(await response.text());
+}
+
 
 export function generateId(length: number = 5) {
   let result = "";
