@@ -33,7 +33,15 @@ const getByCustomer = async (customer_id: number) => {
   });
 };
 
-const add = async (_body: any) => {};
+const add = async (_body: any) => {
+  return await prisma.lounge_group_member.create({
+    data: {
+      lounge_group_id: _body.lounge_group_id,
+      customer_id: _body.customer_id,
+      date_added: new Date(),
+    },
+  });
+};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
