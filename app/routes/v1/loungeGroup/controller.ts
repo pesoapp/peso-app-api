@@ -47,8 +47,15 @@ const getById = async (_req: Request, _res: Response) => {
 };
 
 const add = async (_req: Request<any, any, any>, _res: Response) => {
+  const data = await service.add(_req.body);
+
+  await loungeGroupMember.add({
+    lounge_group_id: data.id,
+    customer_id: _req.body.id,
+  });
+
   _res.send({
-    data: [],
+    data: [data],
     status: "success",
     message: "Add Lounge Group success",
   });

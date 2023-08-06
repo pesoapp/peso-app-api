@@ -25,7 +25,16 @@ const getManyByLoungeGroup = async (ids: number[]) => {
   });
 };
 
-const add = async (_body: any) => {};
+const add = async (_body: any) => {
+  return await prisma.lounge_group.create({
+    data: {
+      name: _body.name,
+      customer_id: _body.customer_id,
+      date_added: new Date(),
+      picture: _body.picture,
+    },
+  });
+};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
