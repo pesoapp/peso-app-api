@@ -1,13 +1,17 @@
-import service from "./service";
+import { pesoAppPost } from "../../../utils";
 
 import { Request, Response } from "express";
 
 const login = async (_req: Request<any, any, any>, _res: Response) => {
-  const { email = "" } = _req.body;
+  const { username = "", password = "" } = _req.body;
 
-  const data = await service.login(email);
+  let formData = new FormData();
+  formData.set("username", username);
+  formData.set("password", password);
+  const response = await pesoAppPost("auth.php?action=login", formData);
+
   _res.send({
-    data: [data],
+    data: [{ ...response }],
     status: "success",
     message: "Login success",
   });
