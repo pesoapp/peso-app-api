@@ -3,6 +3,7 @@ import { S3_INSTANCE, generateId } from "../../../utils";
 import ENV from "../../../env";
 import fs from "fs";
 import { readFile } from "node:fs/promises";
+import { pesoAppPost } from "../../../utils";
 
 const addAuction = async (_req: Request, _res: Response) => {
   // AWS FILE UPLOAD
@@ -16,19 +17,14 @@ const addAuction = async (_req: Request, _res: Response) => {
   const image = new Blob([await readFile(_req.file?.path ?? "")]);
   let formData = new FormData();
   formData.set("imageMain", image, _req.file?.path ?? "");
-  const resp = await fetch(
-    `${ENV.PESO_APP_TEMP}auction.php?action=uploadAuctionImage`,
-    {
-      body: formData,
-      method: "post",
-    }
+  const response = await pesoAppPost(
+    "auction.php?action=uploadAuctionImage",
+    formData
   );
-  const path = JSON.parse(await resp.text()).path;
-
   await fs.unlink(_req.file?.path || "", () => {});
 
   _res.send({
-    data: [{ path }],
+    data: [{ path: response.path }],
     status: "success",
     message: "Upload Auction Image success",
   });
