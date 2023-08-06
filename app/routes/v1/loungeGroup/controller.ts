@@ -24,6 +24,25 @@ const getAll = async (_req: Request, _res: Response) => {
   });
 };
 
+const getNew = async (_req: Request, _res: Response) => {
+  const { customer_id = 0, filter = "" } = _req.query;
+
+  const loungeGroupMemberTemp = await loungeGroupMember.getByCustomer(
+    Number(customer_id)
+  );
+
+  const data = await service.getNew(
+    loungeGroupMemberTemp.map((e: any) => Number(e.lounge_group_id)),
+    filter.toString()
+  );
+
+  _res.send({
+    data,
+    status: "success",
+    message: "Get Lounge Group success",
+  });
+};
+
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
   const data = await service.getById(Number(id));
@@ -71,4 +90,4 @@ const removeOne = async (_req: Request, _res: Response) => {
   });
 };
 
-export { getAll, getById, add, update, removeOne };
+export { getNew, getAll, getById, add, update, removeOne };
