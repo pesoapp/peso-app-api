@@ -51,7 +51,7 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
 
   await loungeGroupMember.add({
     lounge_group_id: data.id,
-    customer_id: _req.body.id,
+    customer_id: _req.body.customer_id,
   });
 
   _res.send({
