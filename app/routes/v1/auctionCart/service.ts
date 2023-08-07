@@ -17,10 +17,18 @@ const getById = async (id: number) => {
   });
 };
 
+const getByCustomer = async (customer_id: number) => {
+  return await prisma.auction_cart.findMany({
+    where: {
+      customer_id,
+    },
+  });
+};
+
 const add = async (_body: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getAll, add, update, removeOne, getById };
+export default { getByCustomer, getAll, add, update, removeOne, getById };

@@ -1,5 +1,6 @@
 import service from "./service";
 import { Request, Response } from "express";
+import auction from "../auction/service";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
@@ -34,6 +35,28 @@ const getById = async (_req: Request, _res: Response) => {
     message: "Get Auction Cart success",
   });
 };
+
+const getByCustomer = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+  const data = await service.getByCustomer(Number(id));
+  const auctionTemp = await auction.getManyById(
+    data.map((e: any) => {
+      return e.auction_id;
+    })
+  );
+
+  data.map((e: any) => {
+    e.auction = auctionTemp.find((auc: any) => auc.id == e.auction_id);
+    return e;
+  });
+
+  _res.send({
+    data,
+    status: "success",
+    message: "Get Auction Cart success",
+  });
+};
+
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   _res.send({
     data: [],
@@ -52,4 +75,4 @@ const removeOne = async (_req: Request, _res: Response) => {
   });
 };
 
-export { getAll, getById, add, update, removeOne };
+export { getByCustomer, getAll, getById, add, update, removeOne };
