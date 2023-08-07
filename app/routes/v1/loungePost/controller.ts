@@ -7,8 +7,8 @@ import loungePostComments from "../loungePostComments/service";
 import { parseLoungePostTitle } from "../../../utils";
 
 const getAll = async (_req: Request, _res: Response) => {
-  const { limit = 10, page = 1 } = _req.query;
-  const data = await service.getAll({ limit, page });
+  const { limit = 10, page = 1, lounge_group_id = 0 } = _req.query;
+  const data = await service.getAll({ limit, page, lounge_group_id });
 
   const ocCustomersTemp =
     (await ocCustomer.getManyByCustomer(data.map((e: any) => e.customer_id))) ??
