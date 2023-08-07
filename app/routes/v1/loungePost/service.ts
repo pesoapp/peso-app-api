@@ -23,7 +23,35 @@ const getById = async (id: number) => {
   });
 };
 
-const add = async (_body: any) => {};
+const add = async (_body: any) => {
+  if (_body.post_parent_id) {
+    return await prisma.lounge_post.create({
+      data: {
+        customer_id: _body.customer_id,
+        post_parent_id: _body.post_parent_id,
+        title: _body.title,
+        file_name: _body.file_name,
+        file_type: _body.file_type,
+        tags: _body.tags,
+        date_created: new Date(),
+        date_modified: new Date(),
+        lounge_group_id: _body.lounge_group_id,
+      },
+    });
+  }
+  return await prisma.lounge_post.create({
+    data: {
+      customer_id: _body.customer_id,
+      title: _body.title,
+      file_name: _body.file_name,
+      file_type: _body.file_type,
+      tags: _body.tags,
+      date_created: new Date(),
+      date_modified: new Date(),
+      lounge_group_id: _body.lounge_group_id,
+    },
+  });
+};
 
 const update = async (filter: any, _body: any, session: any) => {};
 

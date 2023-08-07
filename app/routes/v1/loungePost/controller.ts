@@ -4,7 +4,7 @@ import ocCustomer from "../ocCustomer/service";
 import loungeGroup from "../loungeGroup/service";
 import loungeSocial from "../loungeSocial/service";
 import loungePostComments from "../loungePostComments/service";
-import { parseLoungePostTitle } from "../../../utils";
+import { parseLoungePostTitle, youtubeParser } from "../../../utils";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1, lounge_group_id = 0 } = _req.query;
@@ -102,9 +102,22 @@ const getById = async (_req: Request, _res: Response) => {
   });
 };
 
+//TODO: Add incentives
 const add = async (_req: Request<any, any, any>, _res: Response) => {
+  const data = await service.add({
+    customer_id: _req.body.customer_id,
+    lounge_group_id: _req.body.lounge_group_id ?? 0,
+    tags: `${_req.body.tags.replace("#", ",")}`,
+    file_type: _req.body.file_type,
+    title: `${_req.body.title} \n#${_req.body.tags.replace(",", " #")}`,
+    file_name:
+      _req.body.file_type == "youtube"
+        ? youtubeParser(_req.body.link)
+        : _req.body.link,
+  });
+
   _res.send({
-    data: [],
+    data: [data],
     status: "success",
     message: "Add Lounge Post success",
   });
