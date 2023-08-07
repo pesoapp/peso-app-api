@@ -25,10 +25,44 @@ const getByCustomer = async (customer_id: number) => {
   });
 };
 
-const add = async (_body: any) => {};
+const getByAuctionPriceCustomer = async (
+  auction_id: number,
+  customer_id: number,
+  price: number
+) => {
+  return await prisma.auction_cart.findFirst({
+    where: {
+      customer_id,
+      auction_id,
+      price,
+    },
+  });
+};
+
+const add = async (_body: any) => {
+  return await prisma.auction_cart.create({
+    data: {
+      auction_id: _body.auction_id,
+      auctioner_id: _body.auctioner_id,
+      price: _body.price,
+      customer_id: _body.customer_id,
+      date_added: new Date(),
+      quantity: 1,
+      due: new Date(_body.due),
+    },
+  });
+};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getByCustomer, getAll, add, update, removeOne, getById };
+export default {
+  getByAuctionPriceCustomer,
+  getByCustomer,
+  getAll,
+  add,
+  update,
+  removeOne,
+  getById,
+};

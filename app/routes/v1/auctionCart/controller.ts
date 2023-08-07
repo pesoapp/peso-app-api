@@ -58,8 +58,11 @@ const getByCustomer = async (_req: Request, _res: Response) => {
 };
 
 const add = async (_req: Request<any, any, any>, _res: Response) => {
+  //TODO: Update only if auction cart already exissts
+  const data = await service.add(_req.body);
+
   _res.send({
-    data: [],
+    data: [data],
     status: "success",
     message: "Add Auction Cart success",
   });
