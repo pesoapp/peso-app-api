@@ -24,6 +24,14 @@ const getById = async (id: number) => {
   });
 };
 
+const getManyById = async (ids: number[]) => {
+  return await prisma.auction.findMany({
+    where: {
+      id: { in: ids },
+    },
+  });
+};
+
 const add = async (_body: any) => {
   return await prisma.auction.create({
     data: {
@@ -67,4 +75,4 @@ const removeOne = async (id: number) => {
   });
 };
 
-export default { getAll, add, update, removeOne, getById };
+export default { getManyById, getAll, add, update, removeOne, getById };
