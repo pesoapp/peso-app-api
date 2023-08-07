@@ -80,7 +80,6 @@ const removeOne = async (_req: Request, _res: Response) => {
 
 const removeCustomer = async (_req: Request, _res: Response) => {
   const { id = 0, customer_id = 0 } = _req.params;
-
   const data = await service.removeCustomer({
     lounge_group_id: Number(id),
     customer_id: Number(customer_id),
