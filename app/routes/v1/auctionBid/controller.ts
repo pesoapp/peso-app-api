@@ -57,8 +57,17 @@ const add = async (_req: Request, _res: Response) => {
   });
 };
 
+const approve = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+  const data = await service.approve(Number(id));
+  _res.send({
+    data: [data],
+    status: "success",
+    message: "Approve Auction Bid success",
+  });
+};
 const update = async (_req: Request, _res: Response) => {};
 
 const removeOne = async (_req: Request, _res: Response) => {};
 
-export { getByAuction, getAll, getById, add, update, removeOne };
+export { approve, getByAuction, getAll, getById, add, update, removeOne };

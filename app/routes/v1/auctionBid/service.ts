@@ -35,11 +35,23 @@ const add = async (_body: any) => {
   });
 };
 
+const approve = async (id: any) => {
+  return await prisma.auction_bid.update({
+    where: {
+      id,
+    },
+    data: {
+      is_approved: true,
+    },
+  });
+};
+
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (filter: any, session: any) => {};
 
 export default {
+  approve,
   getByAuction,
   getAll,
   add,
