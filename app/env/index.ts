@@ -15,6 +15,10 @@ const ENV = {
   AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || `bucket-name`,
   PESO_APP_TEMP:
     process.env.PESO_APP_TEMP || `https://pesoapp.ph/peso_beta/api/5.2.16/url/`,
+  PUSHER_APP_ID: process.env.PUSHER_APP_ID || `app-id`,
+  PUSHER_KEY: process.env.PUSHER_KEY || `key`,
+  PUSHER_SECRET: process.env.PUSHER_SECRET || `secret`,
+  PUSHER_CLUSTER: process.env.PUSHER_CLUSTER || `cluster`,
 };
 
 export default ENV;
