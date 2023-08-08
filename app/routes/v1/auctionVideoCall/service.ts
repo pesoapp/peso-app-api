@@ -17,7 +17,17 @@ const getById = async (id: number) => {
   });
 };
 
-const add = async (_body: any) => {};
+const add = async (_body: any) => {
+  return await prisma.auction_video_call.create({
+    data: {
+      link: _body.link,
+      auctioner_id: _body.auctioner_id,
+      auction_id: _body.auction_id,
+      customer_id: _body.customer_id,
+      date_added: new Date(),
+    },
+  });
+};
 
 const update = async (filter: any, _body: any, session: any) => {};
 

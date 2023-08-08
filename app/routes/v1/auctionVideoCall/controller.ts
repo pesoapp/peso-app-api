@@ -1,5 +1,8 @@
+import { PUSHER } from "../../../constants";
+import { PUSHER_INSTANCE } from "../../../utils";
 import service from "./service";
 import { Request, Response } from "express";
+import conversation from "../conversation/service";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
@@ -34,9 +37,54 @@ const getById = async (_req: Request, _res: Response) => {
     message: "Get Auction Video Call success",
   });
 };
+
+// TODO: return link if video call already exists
 const add = async (_req: Request<any, any, any>, _res: Response) => {
+  const data = await service.add(_req.body);
+
+  await PUSHER_INSTANCE.triggerBatch([
+    {
+      channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
+      name: PUSHER.NAME.VIDEO_COUNT,
+      data: {
+        customerName: "TESTEST",
+        customerId: _req.body.auctioner_id,
+        status: 0,
+      },
+    },
+    {
+      channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
+      name: PUSHER.NAME.VIDEO_NOTIFICATION,
+      data: {
+        customerName: "TESTEST",
+        customerId: _req.body.auctioner_id,
+        status: 0,
+      },
+    },
+    {
+      channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
+      name: PUSHER.NAME.ID,
+      data: data.id,
+    },
+    {
+      channel: PUSHER.CHANNEL.MESSAGE_CHANNEL,
+      name: PUSHER.NAME.MESSAGE,
+      data: _req.body.auctioner_id,
+    },
+  ]);
+
+  await conversation.sendMessage({
+    customer_id: _req.body.customer_id,
+    receiver_id: _req.body.auctioner_id,
+    message: "Ongoing Video Call",
+    auction_id: _req.body.auction_id,
+    smstype: "CALL",
+    status: 0,
+    call_id: data.id,
+  });
+
   _res.send({
-    data: [],
+    data: [data],
     status: "success",
     message: "Add Auction Video Call success",
   });
