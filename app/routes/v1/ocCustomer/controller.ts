@@ -2,6 +2,7 @@ import service from "./service";
 
 import { Request, Response } from "express";
 import { PUSHER_INSTANCE } from "../../../utils";
+import { PUSHER } from "../../../constants";
 
 const getAll = async (_req: Request, _res: Response) => {
   const data = await service.getAll();
@@ -29,9 +30,9 @@ const toggleActiveStatus = async (_req: Request, _res: Response) => {
 
   await PUSHER_INSTANCE.triggerBatch([
     {
-      channel: "auctioner_active",
-      name: "live-demo-status",
-      data: { status, customer_id: id },
+      channel: PUSHER.CHANNEL.AUCTIONER_ACTIVE,
+      name: PUSHER.NAME.LIVE_DEMO_STATUS,
+      data: { status, customer_id: Number(id) },
     },
   ]);
 
