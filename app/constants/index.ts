@@ -1,3 +1,4 @@
 import MODEL from "./model";
+import PUSHER from "./pusher";
 
-export { MODEL };
+export { PUSHER, MODEL };
