@@ -104,6 +104,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/auctioner-message",
     route: V1.auctionerMessageRoute,
   },
+  {
+    url: "/api/v1/conversation",
+    route: V1.conversationRoute,
+  },
 ];
 
 export const addRoutes: AddRoutes = (app: Express) => {

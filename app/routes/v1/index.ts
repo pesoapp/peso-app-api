@@ -23,7 +23,10 @@ import loungeSocialRoute from "./loungeSocial/route";
 import ocMessageInboxRoute from "./ocMessageInbox/route";
 import ocDeliveryChargeCaRoute from "./ocDeliveryChargeCa/route";
 import auctionerMessageRoute from "./auctionerMessage/route";
+import conversationRoute from "./conversation/route";
+
 export default {
+  conversationRoute,
   auctionerMessageRoute,
   ocDeliveryChargeCaRoute,
   ocMessageInboxRoute,
