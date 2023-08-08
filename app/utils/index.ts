@@ -10,6 +10,9 @@ export const PUSHER_INSTANCE = new Pusher({
   useTLS: true,
 });
 
+export function triggerPush(batch: any[]) {
+  PUSHER_INSTANCE.triggerBatch(batch);
+}
 
 export const S3_INSTANCE = new AWS.S3({
   accessKeyId: ENV.AWS_ACCESS_KEY_ID,
