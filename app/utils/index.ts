@@ -1,5 +1,15 @@
 import AWS from "aws-sdk";
 import ENV from "../env";
+import Pusher from "pusher";
+
+export const PUSHER_INSTANCE = new Pusher({
+  appId: ENV.PUSHER_APP_ID,
+  key: ENV.PUSHER_KEY,
+  secret: ENV.PUSHER_SECRET,
+  cluster: ENV.PUSHER_CLUSTER,
+  useTLS: true,
+});
+
 
 export const S3_INSTANCE = new AWS.S3({
   accessKeyId: ENV.AWS_ACCESS_KEY_ID,
