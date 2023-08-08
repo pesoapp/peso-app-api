@@ -21,7 +21,10 @@ import ocCategoryDescriptionRoute from "./ocCategoryDescription/route";
 import uploadRoute from "./upload/route";
 import loungeSocialRoute from "./loungeSocial/route";
 import ocMessageInboxRoute from "./ocMessageInbox/route";
+import ocDeliveryChargeCaRoute from "./ocDeliveryChargeCa/route";
+
 export default {
+  ocDeliveryChargeCaRoute,
   ocMessageInboxRoute,
   loungeSocialRoute,
   uploadRoute,

@@ -96,7 +96,12 @@ export const routes: IRoute[] = [
     url: "/api/v1/oc-message-inbox",
     route: V1.ocMessageInboxRoute,
   },
+  {
+    url: "/api/v1/oc-message-inbox-ca",
+    route: V1.ocDeliveryChargeCaRoute,
+  },
 ];
+
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);
