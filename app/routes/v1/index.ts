@@ -20,8 +20,9 @@ import auctionVideoCallRoute from "./auctionVideoCall/route";
 import ocCategoryDescriptionRoute from "./ocCategoryDescription/route";
 import uploadRoute from "./upload/route";
 import loungeSocialRoute from "./loungeSocial/route";
-
+import ocMessageInboxRoute from "./ocMessageInbox/route";
 export default {
+  ocMessageInboxRoute,
   loungeSocialRoute,
   uploadRoute,
   ocCategoryDescriptionRoute,

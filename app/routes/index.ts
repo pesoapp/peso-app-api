@@ -92,8 +92,11 @@ export const routes: IRoute[] = [
     url: "/api/v1/lounge-social",
     route: V1.loungeSocialRoute,
   },
+  {
+    url: "/api/v1/oc-message-inbox",
+    route: V1.ocMessageInboxRoute,
+  },
 ];
-
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);
