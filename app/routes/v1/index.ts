@@ -22,8 +22,9 @@ import uploadRoute from "./upload/route";
 import loungeSocialRoute from "./loungeSocial/route";
 import ocMessageInboxRoute from "./ocMessageInbox/route";
 import ocDeliveryChargeCaRoute from "./ocDeliveryChargeCa/route";
-
+import auctionerMessageRoute from "./auctionerMessage/route";
 export default {
+  auctionerMessageRoute,
   ocDeliveryChargeCaRoute,
   ocMessageInboxRoute,
   loungeSocialRoute,

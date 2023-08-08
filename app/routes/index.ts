@@ -100,6 +100,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/oc-message-inbox-ca",
     route: V1.ocDeliveryChargeCaRoute,
   },
+  {
+    url: "/api/v1/auctioner-message",
+    route: V1.auctionerMessageRoute,
+  },
 ];
 
 export const addRoutes: AddRoutes = (app: Express) => {
