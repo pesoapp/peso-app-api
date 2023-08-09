@@ -3,6 +3,7 @@ import { PUSHER_INSTANCE } from "../../../utils";
 import service from "./service";
 import { Request, Response } from "express";
 import conversation from "../conversation/service";
+import ocCustomer from "../ocCustomer/service";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
@@ -42,12 +43,16 @@ const getById = async (_req: Request, _res: Response) => {
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   const data = await service.add(_req.body);
 
+  const ocCustomerTemp = await ocCustomer.getById(
+    Number(_req.body.customer_id)
+  );
+
   await PUSHER_INSTANCE.triggerBatch([
     {
       channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
       name: PUSHER.NAME.VIDEO_COUNT,
       data: {
-        customerName: "TESTEST",
+        customerName: `${ocCustomerTemp?.firstname} ${ocCustomerTemp?.lastname}`,
         customerId: _req.body.auctioner_id,
         status: 0,
       },
@@ -56,7 +61,7 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
       channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
       name: PUSHER.NAME.VIDEO_NOTIFICATION,
       data: {
-        customerName: "TESTEST",
+        customerName: `${ocCustomerTemp?.firstname} ${ocCustomerTemp?.lastname}`,
         customerId: _req.body.auctioner_id,
         status: 0,
       },

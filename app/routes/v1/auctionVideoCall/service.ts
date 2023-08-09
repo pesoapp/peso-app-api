@@ -18,6 +18,17 @@ const getById = async (id: number) => {
 };
 
 const add = async (_body: any) => {
+  const temp = await prisma.auction_video_call.findFirst({
+    where: {
+      auctioner_id: _body.auctioner_id,
+      auction_id: _body.auction_id,
+      customer_id: _body.customer_id,
+      status: 0,
+    },
+  });
+
+  if (temp) return temp;
+
   return await prisma.auction_video_call.create({
     data: {
       link: _body.link,
