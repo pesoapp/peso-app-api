@@ -80,3 +80,23 @@ export function parseCredential(credential: string) {
 export function checkIfPhoneNumber(credential: string): boolean {
   return REGEX.PHONENUMBER.test(credential);
 }
+
+export function getYtUrl(): string {
+  return "https://www.googleapis.com/youtube/v3/";
+}
+
+export async function searchYoutube(
+  query: string = "peso app",
+  maxResults: number = 10
+): Promise<any[]> {
+  const response = await fetch(
+    `${getYtUrl()}search?part=snippet&maxResults=${maxResults}&q=${query}&key=${
+      ENV.YT_KEY
+    }&type=video`
+  );
+
+  const parsed = await response.json();
+  const items = parsed.items ?? [];
+
+  return items;
+}
