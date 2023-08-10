@@ -24,8 +24,10 @@ import ocMessageInboxRoute from "./ocMessageInbox/route";
 import ocDeliveryChargeCaRoute from "./ocDeliveryChargeCa/route";
 import auctionerMessageRoute from "./auctionerMessage/route";
 import conversationRoute from "./conversation/route";
+import youtubeRoute from "./youtube/route";
 
 export default {
+  youtubeRoute,
   conversationRoute,
   auctionerMessageRoute,
   ocDeliveryChargeCaRoute,

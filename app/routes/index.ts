@@ -108,8 +108,11 @@ export const routes: IRoute[] = [
     url: "/api/v1/conversation",
     route: V1.conversationRoute,
   },
+  {
+    url: "/api/v1/youtube",
+    route: V1.youtubeRoute,
+  },
 ];
-
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);
