@@ -19,6 +19,7 @@ const ENV = {
   PUSHER_KEY: process.env.PUSHER_KEY || `key`,
   PUSHER_SECRET: process.env.PUSHER_SECRET || `secret`,
   PUSHER_CLUSTER: process.env.PUSHER_CLUSTER || `cluster`,
+  YT_KEY: process.env.YT_KEY || `key`,
 };
 
 export default ENV;
