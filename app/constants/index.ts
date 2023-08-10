@@ -1,4 +1,5 @@
 import MODEL from "./model";
 import PUSHER from "./pusher";
+import REGEX from "./regex";
 
-export { PUSHER, MODEL };
+export { REGEX, PUSHER, MODEL };
