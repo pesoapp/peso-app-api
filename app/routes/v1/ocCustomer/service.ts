@@ -31,6 +31,14 @@ const toggleActiveStatus = async (customer_id: number, active: boolean) => {
   });
 };
 
+const getByEmail = async (email: string) => {
+  return await prisma.oc_customer.findFirst({
+    where: {
+      email,
+    },
+  });
+};
+
 const add = async (_body: any, session: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
@@ -38,6 +46,7 @@ const update = async (filter: any, _body: any, session: any) => {};
 const removeOne = async (filter: any, session: any) => {};
 
 export default {
+  getByEmail,
   toggleActiveStatus,
   getManyByCustomer,
   getById,
