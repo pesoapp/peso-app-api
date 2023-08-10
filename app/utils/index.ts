@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
 import ENV from "../env";
 import Pusher from "pusher";
+import { REGEX } from "../constants";
 
 export const PUSHER_INSTANCE = new Pusher({
   appId: ENV.PUSHER_APP_ID,
@@ -61,4 +62,21 @@ export function youtubeParser(url: string) {
     /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
   var match = url.match(regExp);
   return match && match[7].length == 11 ? match[7] : false;
+}
+
+export function parseCredential(credential: string) {
+  if (checkIfPhoneNumber(credential)) {
+    if (credential.length == 12) {
+      return credential.slice(2);
+    }
+    if (credential.length == 11) {
+      return credential.slice(1);
+    }
+  }
+
+  return credential;
+}
+
+export function checkIfPhoneNumber(credential: string): boolean {
+  return REGEX.PHONENUMBER.test(credential);
 }
