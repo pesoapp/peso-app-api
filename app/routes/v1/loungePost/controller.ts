@@ -7,7 +7,12 @@ import loungePostComments from "../loungePostComments/service";
 import { parseLoungePostTitle, youtubeParser } from "../../../utils";
 
 const getAll = async (_req: Request, _res: Response) => {
-  const { limit = 10, page = 1, lounge_group_id = 0 } = _req.query;
+  const {
+    limit = 10,
+    page = 1,
+    lounge_group_id = 0,
+    customer_id = 0,
+  } = _req.query;
   const data = await service.getAll({ limit, page, lounge_group_id });
 
   const ocCustomersTemp =
@@ -36,6 +41,15 @@ const getAll = async (_req: Request, _res: Response) => {
   await Promise.all(
     data.map(async (e: any) => {
       e.likes = (await loungeSocial.getAllLikesByPost(e.post_id)).length;
+      return e;
+    })
+  );
+
+  await Promise.all(
+    data.map(async (e: any) => {
+      e.liked = (await loungeSocial.getAllLikesByPost(e.post_id)).some(
+        (e: any) => e.customer_id == customer_id
+      );
       return e;
     })
   );
