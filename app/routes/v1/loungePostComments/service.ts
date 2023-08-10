@@ -25,8 +25,17 @@ const getByPost = async (id: number) => {
   });
 };
 
-const add = async (_body: any) => {};
-
+const add = async (_body: any) => {
+  return await prisma.lounge_post_comments.create({
+    data: {
+      post_id: _body.post_id,
+      customer_id: _body.customer_id,
+      comment: `\"${_body.comment}\"`,
+      date_created: new Date(),
+      date_modified: new Date(),
+    },
+  });
+};
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};

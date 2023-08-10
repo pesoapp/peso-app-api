@@ -45,9 +45,12 @@ const getByPost = async (_req: Request, _res: Response) => {
     message: "Get Lounge Post Comments success",
   });
 };
+
 const add = async (_req: Request<any, any, any>, _res: Response) => {
+  const data = await service.add(_req.body);
+
   _res.send({
-    data: [],
+    data: [data],
     status: "success",
     message: "Add Lounge Post Comments success",
   });
