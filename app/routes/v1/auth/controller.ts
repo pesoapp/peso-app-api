@@ -23,7 +23,7 @@ const login = async (_req: Request<any, any, any>, _res: Response) => {
 };
 
 const google = async (_req: Request<any, any, any>, _res: Response) => {
-  const { email = "", password = "" } = _req.body;
+  const { email = "" } = _req.body;
   const data = await ocCustomer.getByEmail(email);
 
   if (data) {
@@ -42,4 +42,24 @@ const google = async (_req: Request<any, any, any>, _res: Response) => {
   });
 };
 
-export { google, login };
+const facebook = async (_req: Request<any, any, any>, _res: Response) => {
+  const { email = "" } = _req.body;
+  const data = await ocCustomer.getByEmail(email);
+
+  if (data) {
+    _res.send({
+      data: [],
+      status: "fail",
+      message: "Facebook Login failed",
+    });
+    return;
+  }
+
+  _res.send({
+    data,
+    status: "success",
+    message: "Facebook Login success",
+  });
+};
+
+export { facebook, google, login };
