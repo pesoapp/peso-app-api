@@ -79,6 +79,7 @@ const getAll = async (_req: Request, _res: Response) => {
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
+  const { customer_id = 0 } = _req.query;
   const data = await service.getById(Number(id));
   if (!data) {
     _res.send({
@@ -108,6 +109,7 @@ const getById = async (_req: Request, _res: Response) => {
         customer: ocCustomersTemp[0] ?? null,
         group: loungeGroupTemp[0] ?? null,
         likes: loungeSocialTemp,
+        liked: loungeSocialTemp.some((e: any) => e.customer_id == customer_id),
         comments: loungePostCommentsTemp,
       },
     ],
