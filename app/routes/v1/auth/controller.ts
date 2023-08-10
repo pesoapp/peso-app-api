@@ -62,4 +62,24 @@ const facebook = async (_req: Request<any, any, any>, _res: Response) => {
   });
 };
 
-export { facebook, google, login };
+const apple = async (_req: Request<any, any, any>, _res: Response) => {
+  const { email = "" } = _req.body;
+  const data = await ocCustomer.getByEmail(email);
+
+  if (data) {
+    _res.send({
+      data: [],
+      status: "fail",
+      message: "Apple Login failed",
+    });
+    return;
+  }
+
+  _res.send({
+    data,
+    status: "success",
+    message: "Apple Login success",
+  });
+};
+
+export { apple, facebook, google, login };
