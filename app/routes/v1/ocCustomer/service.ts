@@ -39,7 +39,36 @@ const getByEmail = async (email: string) => {
   });
 };
 
-const add = async (_body: any, session: any) => {};
+const add = async (_body: any) => {
+  return await prisma.oc_customer.create({
+    data: {
+      customer_group_id: _body,
+      store_id: _body,
+      firstname: _body,
+      lastname: _body,
+      b_day: _body,
+      email: _body,
+      telephone: _body,
+      fax: _body,
+      custom_field: _body,
+      salt: _body,
+      password: _body,
+      newsletter: _body,
+      ip: _body,
+      status: _body,
+      approved: _body,
+      date_added: new Date(),
+      username: _body,
+      nexmo_code: _body,
+      nexmo_status: _body,
+      safe: _body,
+      token: _body,
+      a2sh_status: _body,
+      fb_app_id: _body,
+      type: _body,
+    },
+  });
+};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
