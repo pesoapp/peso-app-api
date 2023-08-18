@@ -581,12 +581,13 @@ model lounge_post {
 }
 
 model lounge_post_comments {
-  comment_id    Int      @id @default(autoincrement())
-  customer_id   Int
-  post_id       Int
-  comment       String   @db.LongText
-  date_created  DateTime @db.DateTime(0)
-  date_modified DateTime @db.DateTime(0)
+  comment_id        Int      @id @default(autoincrement())
+  customer_id       Int
+  post_id           Int
+  comment           String   @db.LongText
+  date_created      DateTime @db.DateTime(0)
+  date_modified     DateTime @db.DateTime(0)
+  comment_parent_id Int?     @default(0)
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -594,6 +595,7 @@ model lounge_social {
   post_id     Int
   customer_id Int
   like        Int?
+  date_added  DateTime? @default(now()) @db.Timestamp(0)
 
   @@ignore
 }
@@ -3422,6 +3424,15 @@ model video_call {
   customer_id Int
   status      Int?     @default(0)
   date_added  DateTime @db.DateTime(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model lounge_comment_social {
+  comment_id  Int
+  customer_id Int
+  like        Int?
+
+  @@ignore
 }
 
 enum oc_recurring_frequency {
