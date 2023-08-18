@@ -29,7 +29,7 @@ const add = async (_body: any) => {
       data: {
         customer_id: _body.customer_id,
         post_parent_id: _body.post_parent_id,
-        title: _body.title,
+        title: JSON.stringify(_body.title),
         file_name: _body.file_name,
         file_type: _body.file_type,
         tags: _body.tags,
@@ -42,7 +42,7 @@ const add = async (_body: any) => {
   return await prisma.lounge_post.create({
     data: {
       customer_id: _body.customer_id,
-      title: _body.title,
+      title: JSON.stringify(_body.title),
       file_name: _body.file_name,
       file_type: _body.file_type,
       tags: _body.tags,
