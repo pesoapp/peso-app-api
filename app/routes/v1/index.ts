@@ -29,8 +29,9 @@ import sellerBranchSelectedProductsRoute from "./sellerBranchSelectedProducts/ro
 import latestPromoRoute from "./latestPromo/route";
 import lpSellerPromoListRoute from "./lpSellerPromoList/route";
 import ocSellerRoute from "./ocSeller/route";
-
+import ocBannerImageDescriptionRoute from "./ocBannerImageDescription/route";
 export default {
+  ocBannerImageDescriptionRoute,
   ocSellerRoute,
   lpSellerPromoListRoute,
   latestPromoRoute,
