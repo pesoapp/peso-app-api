@@ -3,9 +3,9 @@ import { Request, Response } from "express";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
-  const data = await service.getAll({ limit, page });
+  // const data = await service.getAll({ limit, page });
   _res.send({
-    data,
+    data: [],
     status: "success",
     message: "Get Auction View success",
     meta: {
@@ -17,19 +17,19 @@ const getAll = async (_req: Request, _res: Response) => {
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.getById(Number(id));
+  // const data = await service.getById(Number(id));
 
-  if (!data) {
-    _res.send({
-      data: [],
-      status: "fail",
-      message: "Get Auction View failed",
-    });
-    return;
-  }
+  // if (!data) {
+  //   _res.send({
+  //     data: [],
+  //     status: "fail",
+  //     message: "Get Auction View failed",
+  //   });
+  //   return;
+  // }
 
   _res.send({
-    data: [data],
+    data: [],
     status: "success",
     message: "Get Auction View success",
   });
