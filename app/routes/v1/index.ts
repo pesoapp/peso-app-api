@@ -30,7 +30,10 @@ import latestPromoRoute from "./latestPromo/route";
 import lpSellerPromoListRoute from "./lpSellerPromoList/route";
 import ocSellerRoute from "./ocSeller/route";
 import ocBannerImageDescriptionRoute from "./ocBannerImageDescription/route";
+import ocBannerImageRoute from "./ocBannerImage/route";
+
 export default {
+  ocBannerImageRoute,
   ocBannerImageDescriptionRoute,
   ocSellerRoute,
   lpSellerPromoListRoute,

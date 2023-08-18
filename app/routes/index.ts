@@ -132,7 +132,12 @@ export const routes: IRoute[] = [
     url: "/api/v1/oc-banner-image-description",
     route: V1.ocBannerImageDescriptionRoute,
   },
+  {
+    url: "/api/v1/oc-banner-image",
+    route: V1.ocBannerImageRoute,
+  },
 ];
+
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);
