@@ -2,8 +2,12 @@ import service from "./service";
 import { Request, Response } from "express";
 
 const getAll = async (_req: Request, _res: Response) => {
-  const { limit = 10, page = 1 } = _req.query;
-  const data = await service.getAll();
+  const { limit = 10, page = 1, featured_promo = 0 } = _req.query;
+  const data = await service.getAll({
+    limit: Number(limit),
+    page: Number(page),
+    featured_promo: Number(featured_promo),
+  });
   _res.send({
     data,
     status: "success",

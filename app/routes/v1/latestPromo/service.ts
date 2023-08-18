@@ -1,7 +1,15 @@
 import { prisma } from "../../../db";
 
-const getAll = async () => {
-  const result = await prisma.latest_promo.findMany();
+const getAll = async (query: any) => {
+  let temp = {};
+  if (query.featured_promo != 0) {
+    temp = {
+      where: {
+        featured_promo: query.featured_promo,
+      },
+    };
+  }
+  const result = await prisma.latest_promo.findMany(temp);
   return result;
 };
 
