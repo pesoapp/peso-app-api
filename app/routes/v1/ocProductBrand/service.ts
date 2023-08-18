@@ -1,7 +1,7 @@
 import { prisma } from "../../../db";
 
-const getAll = async () => {
-  return await prisma.oc_product_brand.findMany();
+const getAll = async (query: any) => {
+  return await prisma.oc_product_brand.findMany({});
 };
 
 const getById = async (id: number) => {

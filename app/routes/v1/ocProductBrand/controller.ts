@@ -3,7 +3,7 @@ import service from "./service";
 import { Request, Response } from "express";
 
 const getAll = async (_req: Request, _res: Response) => {
-  const data = await service.getAll();
+  const data = await service.getAll(_req.query);
   _res.send({
     data,
     status: "success",
