@@ -28,7 +28,10 @@ import youtubeRoute from "./youtube/route";
 import sellerBranchSelectedProductsRoute from "./sellerBranchSelectedProducts/route";
 import latestPromoRoute from "./latestPromo/route";
 import lpSellerPromoListRoute from "./lpSellerPromoList/route";
+import ocSellerRoute from "./ocSeller/route";
+
 export default {
+  ocSellerRoute,
   lpSellerPromoListRoute,
   latestPromoRoute,
   sellerBranchSelectedProductsRoute,

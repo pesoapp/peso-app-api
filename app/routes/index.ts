@@ -124,6 +124,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/lp-seller-promo-list",
     route: V1.lpSellerPromoListRoute,
   },
+  {
+    url: "/api/v1/oc-seller",
+    route: V1.ocSellerRoute,
+  },
 ];
 
 export const addRoutes: AddRoutes = (app: Express) => {
