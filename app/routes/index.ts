@@ -120,7 +120,12 @@ export const routes: IRoute[] = [
     url: "/api/v1/latest-promo",
     route: V1.latestPromoRoute,
   },
+  {
+    url: "/api/v1/lp-seller-promo-list",
+    route: V1.lpSellerPromoListRoute,
+  },
 ];
+
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);

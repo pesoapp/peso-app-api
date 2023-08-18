@@ -27,8 +27,9 @@ import conversationRoute from "./conversation/route";
 import youtubeRoute from "./youtube/route";
 import sellerBranchSelectedProductsRoute from "./sellerBranchSelectedProducts/route";
 import latestPromoRoute from "./latestPromo/route";
-
+import lpSellerPromoListRoute from "./lpSellerPromoList/route";
 export default {
+  lpSellerPromoListRoute,
   latestPromoRoute,
   sellerBranchSelectedProductsRoute,
   youtubeRoute,
