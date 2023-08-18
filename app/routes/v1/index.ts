@@ -25,8 +25,12 @@ import ocDeliveryChargeCaRoute from "./ocDeliveryChargeCa/route";
 import auctionerMessageRoute from "./auctionerMessage/route";
 import conversationRoute from "./conversation/route";
 import youtubeRoute from "./youtube/route";
+import sellerBranchSelectedProductsRoute from "./sellerBranchSelectedProducts/route";
+import latestPromoRoute from "./latestPromo/route";
 
 export default {
+  latestPromoRoute,
+  sellerBranchSelectedProductsRoute,
   youtubeRoute,
   conversationRoute,
   auctionerMessageRoute,

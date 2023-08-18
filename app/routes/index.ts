@@ -112,6 +112,14 @@ export const routes: IRoute[] = [
     url: "/api/v1/youtube",
     route: V1.youtubeRoute,
   },
+  {
+    url: "/api/v1/seller-branch-selected-products",
+    route: V1.sellerBranchSelectedProductsRoute,
+  },
+  {
+    url: "/api/v1/latest-promo",
+    route: V1.latestPromoRoute,
+  },
 ];
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
