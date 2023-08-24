@@ -19,6 +19,7 @@ const getAll = async (_req: Request, _res: Response) => {
     },
   });
 };
+
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
   const data = await service.getById(Number(id));
@@ -30,6 +31,11 @@ const getById = async (_req: Request, _res: Response) => {
       message: "Get Oc Product failed",
     });
   }
+  _res.send({
+    data: [data],
+    status: "success",
+    message: "Get Oc Product success",
+  });
 };
 
 const add = async (_req: Request<any, any, any>, _res: Response) => {
