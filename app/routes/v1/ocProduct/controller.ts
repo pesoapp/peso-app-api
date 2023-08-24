@@ -1,5 +1,7 @@
 import service from "./service";
 import { Request, Response } from "express";
+import ocProductImage from "../ocProductImage/service";
+
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
 
@@ -71,8 +73,13 @@ const getById = async (_req: Request, _res: Response) => {
       message: "Get Oc Product failed",
     });
   }
+
+  const ocProductImageTemp = await ocProductImage.getByProduct(
+    data?.product_id ?? 0
+  );
+
   _res.send({
-    data: [data],
+    data: [{ ...data, sideImages: ocProductImageTemp }],
     status: "success",
     message: "Get Oc Product success",
   });
