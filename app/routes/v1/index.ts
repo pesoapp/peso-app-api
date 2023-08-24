@@ -32,7 +32,9 @@ import ocSellerRoute from "./ocSeller/route";
 import ocBannerImageDescriptionRoute from "./ocBannerImageDescription/route";
 import ocBannerImageRoute from "./ocBannerImage/route";
 import productViewsRoute from "./productViews/route";
+import ocProductRoute from "./ocProduct/route";
 export default {
+  ocProductRoute,
   productViewsRoute,
   ocBannerImageRoute,
   ocBannerImageDescriptionRoute,

@@ -140,6 +140,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/product-views",
     route: V1.productViewsRoute,
   },
+  {
+    url: "/api/v1/oc-product",
+    route: V1.ocProductRoute,
+  },
 ];
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
