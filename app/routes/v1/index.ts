@@ -36,8 +36,10 @@ import ocProductRoute from "./ocProduct/route";
 import ocProductImageRoute from "./ocProductImage/route";
 import ocProductDescriptionRoute from "./ocProductDescription/route";
 import ocManufacturerRoute from "./ocManufacturer/route";
+import ocReviewRoute from "./ocReview/route";
 
 export default {
+  ocReviewRoute,
   ocManufacturerRoute,
   ocProductDescriptionRoute,
   ocProductImageRoute,
