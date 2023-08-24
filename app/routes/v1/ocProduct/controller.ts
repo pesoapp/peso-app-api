@@ -1,6 +1,5 @@
 import service from "./service";
 import { Request, Response } from "express";
-
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
 
@@ -19,6 +18,47 @@ const getAll = async (_req: Request, _res: Response) => {
     },
   });
 };
+
+// TODO:
+// return array(
+//               'hasShipMethod' => true,
+//               'productId' => $data['product_id'],
+//               'name' => utf8_encode($data['name']),
+//               'price' => round($data['price'], 2),
+//               'oldPrice' => $oldPrice,
+//               'newPrice' => $newPrice,
+//               'thumb' => $img,
+//               'image' => $this->get_product_images($product_id, $img),
+//               'rating' => $this->getProductRating($product_id, $storeId, 'all'),
+//               'quantity' => $data['quantity'],
+//               'tag' => $data['tag'],
+//               'viewed' => $data['viewed'],
+//               'description' => html_entity_decode($data['description']),
+//               'discount' => [],
+//               'reviews' => $this->getProductReviews($data['product_id']),
+//               'warehouse' => [],
+//               'freebie' => [],
+//               'pricePromoText' => $priceDeduct,
+//               'detail' => array(
+//                   array(
+//                       'label' => 'tags',
+//                       'value' => $data['tag']
+//                   ),
+//                   array(
+//                       'label' => 'model',
+//                       'value' => html_entity_decode($data['model']),
+//                   ),
+//                   array(
+//                       'label' => 'category',
+//                       'value' => html_entity_decode($product->product_category_names($data['product_id']))
+//                   ),
+//               ),
+//               'attribute' => $this->get_attribute($product_id),
+//               'storeList' => $storeList,
+//               'brand' => $this->brandName($product_id),
+//               'category' => html_entity_decode($product->product_category_names($data['product_id']))
+
+//           );
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
