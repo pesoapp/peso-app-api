@@ -32,6 +32,27 @@ const getById = async (_req: Request, _res: Response) => {
   });
 };
 
+const getByProduct = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+  const { limit = 10, page = 1 } = _req.query;
+
+  const data = await service.getByProduct({
+    limit: Number(limit),
+    page: Number(page),
+    product_id: Number(id),
+  });
+
+  _res.send({
+    data,
+    status: "success",
+    message: "Get Oc Review success",
+    meta: {
+      currentPage: Number(page),
+      limit: Number(limit),
+    },
+  });
+};
+
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   _res.send({
     data: [],
@@ -51,4 +72,4 @@ const removeOne = async (_req: Request, _res: Response) => {
   });
 };
 
-export { getAll, getById, add, update, removeOne };
+export { getByProduct, getAll, getById, add, update, removeOne };

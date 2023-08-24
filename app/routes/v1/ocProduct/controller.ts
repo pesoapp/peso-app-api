@@ -2,6 +2,8 @@ import service from "./service";
 import { Request, Response } from "express";
 import ocProductImage from "../ocProductImage/service";
 import ocProductDescription from "../ocProductDescription/service";
+import ocReview from "../ocReview/service";
+
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
 
@@ -71,6 +73,7 @@ const getById = async (_req: Request, _res: Response) => {
       status: "fail",
       message: "Get Oc Product failed",
     });
+    return;
   }
 
   const ocProductImageTemp = await ocProductImage.getByProduct(
@@ -81,11 +84,18 @@ const getById = async (_req: Request, _res: Response) => {
     data?.product_id ?? 0
   );
 
+  const ocReviewTemp = await ocReview.getByProduct({
+    product_id: data?.product_id ?? 0,
+    limit: 3,
+    page: 1,
+  });
+
   _res.send({
     data: [
       {
         ...data,
         sideImages: ocProductImageTemp,
+        reviews: ocReviewTemp,
         ...ocProductDescriptionTemp[0],
       },
     ],
