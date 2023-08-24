@@ -41,25 +41,6 @@ const add = async (_body: any) => {
       date_viewed: new Date(),
     },
   });
-  // if($row['cntid'] == 0){
-  //     $stmt = $this->conn->prepare("INSERT INTO product_views
-  //                                           SET customer_id = :customer_id, ip = :ip,p_type=:p_type,
-  //                                               product_id=:product_id,date_viewed=convert_tz(utc_timestamp(),'-08:00','+0:00')");
-  //     $stmt->bindValue(':customer_id', $customer_id);
-  //     $stmt->bindValue(':ip', $_SERVER['REMOTE_ADDR']);
-  //     $stmt->bindValue(':p_type', $p_type);
-  //     $stmt->bindValue(':product_id', $product_id);
-  //     $stmt->execute();
-  // }else{
-  //    $stmt = $this->conn->prepare("UPDATE product_views
-  //                                           SET date_viewed=convert_tz(utc_timestamp(),'-08:00','+0:00')
-  //                                         where customer_id = :customer_id
-  //                                         AND product_id = :product_id and p_type=:p_type");
-  //     $stmt->bindValue(':customer_id', $customer_id);
-  //     $stmt->bindValue(':p_type', $p_type);
-  //     $stmt->bindValue(':product_id', $product_id);
-  //     $stmt->execute();
-  // }
 };
 
 const update = async (id: number, _body: any) => {
