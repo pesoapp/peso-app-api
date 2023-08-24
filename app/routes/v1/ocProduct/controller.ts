@@ -1,7 +1,7 @@
 import service from "./service";
 import { Request, Response } from "express";
 import ocProductImage from "../ocProductImage/service";
-
+import ocProductDescription from "../ocProductDescription/service";
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
 
@@ -59,7 +59,6 @@ const getAll = async (_req: Request, _res: Response) => {
 //               'storeList' => $storeList,
 //               'brand' => $this->brandName($product_id),
 //               'category' => html_entity_decode($product->product_category_names($data['product_id']))
-
 //           );
 
 const getById = async (_req: Request, _res: Response) => {
@@ -78,8 +77,18 @@ const getById = async (_req: Request, _res: Response) => {
     data?.product_id ?? 0
   );
 
+  const ocProductDescriptionTemp = await ocProductDescription.getByProduct(
+    data?.product_id ?? 0
+  );
+
   _res.send({
-    data: [{ ...data, sideImages: ocProductImageTemp }],
+    data: [
+      {
+        ...data,
+        sideImages: ocProductImageTemp,
+        ...ocProductDescriptionTemp[0],
+      },
+    ],
     status: "success",
     message: "Get Oc Product success",
   });
