@@ -44,7 +44,16 @@ const toggleActiveStatus = async (_req: Request, _res: Response) => {
 };
 const add = async (_req: Request, _res: Response) => {};
 
-const update = async (_req: Request, _res: Response) => {};
+const update = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+  const data = await service.update({ id: Number(id) }, _req.body);
+
+  _res.send({
+    data: [data],
+    status: "success",
+    message: "Update Oc Customer success",
+  });
+};
 
 const removeOne = async (_req: Request, _res: Response) => {};
 

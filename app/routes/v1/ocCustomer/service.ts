@@ -70,7 +70,20 @@ const add = async (_body: any) => {
   });
 };
 
-const update = async (filter: any, _body: any, session: any) => {};
+const update = async (filter: any, _body: any) => {
+  return await prisma.oc_customer.update({
+    where: {
+      customer_id: filter.id,
+    },
+    data: {
+      firstname: _body.firstname,
+      lastname: _body.lastname,
+      b_day: _body.b_day,
+      email: _body.email,
+      telephone: _body.telephone,
+    },
+  });
+};
 
 const removeOne = async (filter: any, session: any) => {};
 
