@@ -28,11 +28,22 @@ const getById = async (_req: Request, _res: Response) => {
   });
 };
 
+const getByBanner = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+  const data = await service.getByBanner(Number(id));
+
+  _res.send({
+    data,
+    status: "success",
+    message: "Get Oc Banner Image success",
+  });
+};
+
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   _res.send({
     data: [],
     status: "success",
-    message: "Add Seller Branch Selected Products success",
+    message: "Add Oc Banner Image Description success",
   });
 };
 
@@ -43,8 +54,8 @@ const removeOne = async (_req: Request, _res: Response) => {
   _res.send({
     data: [],
     status: "success",
-    message: "Remove Seller Branch Selected Products success",
+    message: "Remove Oc Banner Image Description success",
   });
 };
 
-export { getAll, getById, add, update, removeOne };
+export { getByBanner, getAll, getById, add, update, removeOne };
