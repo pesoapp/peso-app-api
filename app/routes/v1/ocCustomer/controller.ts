@@ -44,6 +44,7 @@ const toggleActiveStatus = async (_req: Request, _res: Response) => {
 };
 const add = async (_req: Request, _res: Response) => {};
 
+// TODO: Add peso code verification M360Api
 const update = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
   const data = await service.update({ id: Number(id) }, _req.body);
