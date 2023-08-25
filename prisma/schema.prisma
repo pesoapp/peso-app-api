@@ -228,15 +228,15 @@ model auctioner_order {
 }
 
 model auctioner_order_item {
-  id                Int     @id @default(autoincrement())
-  auctioner_code_id Int?
-  auction_id        Int?
-  quantity          Int?
-  name              String? @db.VarChar(255)
-  model             String? @db.VarChar(255)
-  price             Float?
-  total             Float?
-  order_number      String? @db.VarChar(255)
+  id                 Int     @id @default(autoincrement())
+  auctioner_order_id Int?
+  auction_id         Int?
+  quantity           Int?
+  name               String? @db.VarChar(255)
+  model              String? @db.VarChar(255)
+  price              Float?
+  total              Float?
+  order_number       String? @db.VarChar(255)
 }
 
 model auctioner_order_total {
@@ -3433,6 +3433,113 @@ model lounge_comment_social {
   like        Int?
 
   @@ignore
+}
+
+model auction_order {
+  id                      Int      @id @default(autoincrement())
+  invoice_no              Int      @default(0)
+  invoice_prefix          String   @db.VarChar(26)
+  store_id                Int      @default(0)
+  store_name              String   @db.VarChar(64)
+  store_url               String   @db.VarChar(255)
+  customer_id             Int      @default(0)
+  customer_group_id       Int      @default(0)
+  firstname               String?  @db.VarChar(32)
+  lastname                String?  @db.VarChar(32)
+  email                   String   @db.VarChar(96)
+  telephone               String   @db.VarChar(32)
+  fax                     String   @db.VarChar(32)
+  custom_field            String   @db.Text
+  payment_firstname       String   @db.VarChar(32)
+  payment_lastname        String   @db.VarChar(32)
+  payment_company         String   @db.VarChar(40)
+  payment_address_1       String   @db.VarChar(128)
+  payment_address_2       String   @db.VarChar(128)
+  payment_city            String   @db.VarChar(128)
+  payment_postcode        String   @db.VarChar(256)
+  payment_country         String   @db.VarChar(128)
+  payment_country_id      Int
+  payment_zone            String   @db.VarChar(128)
+  payment_zone_id         Int
+  payment_address_format  String   @db.Text
+  payment_custom_field    String   @db.Text
+  payment_method          String   @db.VarChar(128)
+  payment_code            String   @db.VarChar(128)
+  shipping_firstname      String   @db.VarChar(32)
+  shipping_lastname       String   @db.VarChar(32)
+  shipping_company        String   @db.VarChar(40)
+  shipping_address_1      String   @db.VarChar(128)
+  shipping_address_2      String   @db.VarChar(128)
+  shipping_city           String   @db.VarChar(128)
+  shipping_postcode       String   @db.VarChar(256)
+  shipping_country        String   @db.VarChar(128)
+  shipping_country_id     Int
+  shipping_zone           String   @db.VarChar(128)
+  shipping_zone_id        Int
+  shipping_address_format String   @db.Text
+  shipping_custom_field   String   @db.Text
+  shipping_method         String?  @db.VarChar(128)
+  shipping_code           String?  @db.VarChar(256)
+  comment                 String   @db.Text
+  total                   Decimal  @default(0.0000) @db.Decimal(15, 4)
+  order_status_id         Int      @default(0)
+  affiliate_id            Int
+  commission              Decimal  @db.Decimal(15, 4)
+  marketing_id            Int
+  tracking                String   @db.VarChar(64)
+  language_id             Int
+  currency_id             Int
+  currency_code           String   @db.VarChar(3)
+  currency_value          Decimal  @default(1.00000000) @db.Decimal(15, 8)
+  ip                      String   @db.VarChar(40)
+  forwarded_ip            String   @db.VarChar(40)
+  user_agent              String   @db.Text
+  accept_language         String   @db.VarChar(255)
+  date_added              DateTime @db.DateTime(0)
+  date_modified           DateTime @db.DateTime(0)
+  wr                      String?  @db.VarChar(256)
+  payment_district        String?  @db.VarChar(256)
+  payment_region          String?  @db.VarChar(45)
+  shipping_district       String?  @db.VarChar(45)
+  shipping_region         String?  @db.VarChar(45)
+  skip_shipping_insurance Int?     @default(0)
+  ops_verification        String?  @db.VarChar(256)
+  fund_status             String?  @db.VarChar(256)
+
+  @@index([customer_group_id], map: "auc_customer_group_id_index")
+  @@index([customer_id], map: "auc_customer_id_index")
+  @@index([email], map: "auc_email_index")
+  @@index([fax], map: "auc_fax_index")
+  @@index([firstname], map: "auc_firstname_index")
+  @@index([invoice_no], map: "auc_invoice_no_index")
+  @@index([invoice_prefix], map: "auc_invoice_prefix_index")
+  @@index([lastname], map: "auc_lastname_index")
+  @@index([id], map: "auc_order_id_index")
+  @@index([payment_address_1], map: "auc_payment_address_1_index")
+  @@index([payment_address_2], map: "auc_payment_address_2_index")
+  @@index([payment_city], map: "auc_payment_city_index")
+  @@index([payment_company], map: "auc_payment_company_index")
+  @@index([payment_country_id], map: "auc_payment_country_id_index")
+  @@index([payment_country], map: "auc_payment_country_index")
+  @@index([payment_firstname], map: "auc_payment_firstname_index")
+  @@index([payment_lastname], map: "auc_payment_lastname_index")
+  @@index([payment_postcode], map: "auc_payment_postcode_index")
+  @@index([payment_zone_id], map: "auc_payment_zone_id_index")
+  @@index([payment_zone], map: "auc_payment_zone_index")
+  @@index([store_id], map: "auc_store_id_index")
+  @@index([store_name], map: "auc_store_name_index")
+  @@index([store_url], map: "auc_store_url_index")
+  @@index([telephone], map: "auc_telephone_index")
+}
+
+model auction_order_history {
+  id               Int      @id @default(autoincrement())
+  auction_order_id Int?
+  comment          String?  @db.Text
+  order_number     String?  @db.VarChar(255)
+  notify           Boolean?
+  date_added       DateTime @db.DateTime(0)
+  order_status_id  Int?
 }
 
 enum oc_recurring_frequency {
