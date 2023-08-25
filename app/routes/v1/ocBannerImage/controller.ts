@@ -1,6 +1,6 @@
 import service from "./service";
+import ocBannerImageDescription from "../ocBannerImageDescription/service";
 import { Request, Response } from "express";
-
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
   const data = await service.getAll({
@@ -32,13 +32,26 @@ const getById = async (_req: Request, _res: Response) => {
 const getByBanner = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
   const data = await service.getByBanner(Number(id));
+  const ocBannerImageDescriptionTemp =
+    await ocBannerImageDescription.getByBanner(Number(id));
+
+  const temp = data.map((e: any) => {
+    const temp = ocBannerImageDescriptionTemp.find(
+      (desc: any) => desc.banner_image_id == e.banner_image_id
+    );
+    return {
+      ...e,
+      ...temp,
+    };
+  });
 
   _res.send({
-    data,
+    data: temp,
     status: "success",
     message: "Get Oc Banner Image success",
   });
 };
+
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   _res.send({
     data: [],
