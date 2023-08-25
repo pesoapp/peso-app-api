@@ -11,7 +11,7 @@ const getAll = async (_req: Request, _res: Response) => {
   _res.send({
     data,
     status: "success",
-    message: "Get Lp Seller Promo List success",
+    message: "Get Oc Banner Image success",
     meta: {
       currentPage: Number(page),
       limit: Number(limit),
@@ -25,10 +25,20 @@ const getById = async (_req: Request, _res: Response) => {
   _res.send({
     data: [],
     status: "success",
-    message: "Get Lp Seller Promo List success",
+    message: "Get Oc Banner Image success",
   });
 };
 
+const getByBanner = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+  const data = await service.getByBanner(Number(id));
+
+  _res.send({
+    data,
+    status: "success",
+    message: "Get Oc Banner Image success",
+  });
+};
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   _res.send({
     data: [],
@@ -48,4 +58,4 @@ const removeOne = async (_req: Request, _res: Response) => {
   });
 };
 
-export { getAll, getById, add, update, removeOne };
+export { getByBanner, getAll, getById, add, update, removeOne };
