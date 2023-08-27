@@ -43,6 +43,10 @@ const add = async (_body: any) => {
 
 const update = async (filter: any, _body: any, session: any) => {};
 
-const removeOne = async (id: number) => {};
+const removeOne = async (filter: any) => {
+  await prisma.$executeRawUnsafe(
+    `DELETE FROM oc_customer_wishlist WHERE customer_id = ${filter.customer_id} AND product_id = ${filter.product_id}`
+  );
+};
 
 export default { getByCustomer, getAll, add, update, removeOne, getById };

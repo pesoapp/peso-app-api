@@ -76,7 +76,13 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
 const update = async (_req: Request, _res: Response) => {};
 
 const removeOne = async (_req: Request, _res: Response) => {
-  const { id } = _req.params;
+  const { customer_id = 0, product_id = 0 } = _req.query;
+
+  const data = await service.removeOne({
+    customer_id: Number(customer_id),
+    product_id: Number(product_id),
+  });
+
   _res.send({
     data: [],
     status: "success",
