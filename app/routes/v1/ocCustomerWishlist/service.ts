@@ -24,11 +24,11 @@ const getAll = async ({
 const getById = async (id: number) => {};
 
 const getByCustomer = async (customer_id: number) => {
-  return await prisma.oc_customer_wishlist.findFirst({
-    where: {
-      customer_id,
-    },
-  });
+  return await prisma.$queryRawUnsafe<any[]>(
+    "SELECT cw.*, pp.price, pp.name, pp.img FROM (SELECT p.price, p.product_id, p.status, pd.name, p.image img FROM oc_product p LEFT JOIN oc_product_description pd ON pd.product_id = p.product_id UNION ALL SELECT bg.price, bg.product_id, bg.status, bg.product_name as `name`, bg.img FROM bg_product bg ) pp JOIN oc_customer_wishlist cw ON cw.product_id = pp.product_id WHERE cw.customer_id = " +
+      customer_id +
+      " AND pp.status = 1 ORDER BY cw.date_added DESC"
+  );
 };
 
 const add = async (_body: any) => {

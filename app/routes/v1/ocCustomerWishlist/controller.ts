@@ -1,6 +1,6 @@
 import service from "./service";
 import { Request, Response } from "express";
-
+import { pTypeParser } from "../../../utils";
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
   const data = await service.getAll({
@@ -32,6 +32,12 @@ const getById = async (_req: Request, _res: Response) => {
 const getByCustomer = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
   const data = await service.getByCustomer(Number(id));
+
+  data.map((e: any) => {
+    e.p_type = pTypeParser(e.p_type);
+    return e;
+  });
+
   _res.send({
     data: [data],
     status: "success",
