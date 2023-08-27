@@ -39,7 +39,7 @@ const getByCustomer = async (_req: Request, _res: Response) => {
   });
 
   _res.send({
-    data: [data],
+    data,
     status: "success",
     message: "Get Oc Customer Wishlist success",
   });
