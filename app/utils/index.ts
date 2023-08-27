@@ -11,6 +11,15 @@ export const PUSHER_INSTANCE = new Pusher({
   useTLS: true,
 });
 
+export function pTypeParser(type: number) {
+  switch (type) {
+    case 0:
+      return "reg";
+    case 2:
+      return "bg";
+  }
+}
+
 export function triggerPush(batch: any[]) {
   PUSHER_INSTANCE.triggerBatch(batch);
 }
