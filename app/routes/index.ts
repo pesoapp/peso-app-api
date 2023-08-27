@@ -160,6 +160,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/oc-review",
     route: V1.ocReviewRoute,
   },
+  {
+    url: "/api/v1/oc-customer-wishlist",
+    route: V1.ocCustomerWishlistRoute,
+  },
 ];
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
