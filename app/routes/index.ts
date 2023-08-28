@@ -168,6 +168,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/seller-branch",
     route: V1.sellerBranchRoute,
   },
+  {
+    url: "/api/v1/oc-cart",
+    route: V1.ocCartRoute,
+  },
 ];
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {

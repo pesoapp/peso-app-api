@@ -39,7 +39,10 @@ import ocManufacturerRoute from "./ocManufacturer/route";
 import ocReviewRoute from "./ocReview/route";
 import ocCustomerWishlistRoute from "./ocCustomerWishlist/route";
 import sellerBranchRoute from "./sellerBranch/route";
+import ocCartRoute from "./ocCart/route";
+
 export default {
+  ocCartRoute,
   sellerBranchRoute,
   ocCustomerWishlistRoute,
   ocReviewRoute,
