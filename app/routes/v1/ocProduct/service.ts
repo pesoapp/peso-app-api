@@ -4,6 +4,14 @@ const getAll = async ({ limit = 5, page = 1 }) => {
   return await prisma.oc_product.findMany({});
 };
 
+const getManyById = async (id: number[]) => {
+  return await prisma.oc_product.findMany({
+    where: {
+      product_id: { in: id },
+    },
+  });
+};
+
 // FIX: Taking to long to respond
 const getById = async (id: number) => {
   return await prisma.oc_product.findFirst({
@@ -19,4 +27,4 @@ const update = async (id: number, _body: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getAll, add, update, removeOne, getById };
+export default { getManyById, getAll, add, update, removeOne, getById };
