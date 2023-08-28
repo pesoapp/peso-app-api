@@ -11,6 +11,17 @@ const getAll = async (_req: Request, _res: Response) => {
   });
 };
 
+const getManyByCustomer = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+
+  const data = await service.getManyByCustomer(Number(id));
+  _res.send({
+    data,
+    status: "success",
+    message: "Get Oc Address success",
+  });
+};
+
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
 
@@ -28,4 +39,4 @@ const update = async (_req: Request, _res: Response) => {};
 
 const removeOne = async (_req: Request, _res: Response) => {};
 
-export { getById, getAll, add, update, removeOne };
+export { getManyByCustomer, getById, getAll, add, update, removeOne };
