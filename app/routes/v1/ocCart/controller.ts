@@ -1,5 +1,7 @@
 import service from "./service";
 import ocSeller from "../ocSeller/service";
+import ocProduct from "../ocProduct/service";
+import bgProduct from "../bgProduct/service";
 import { Request, Response } from "express";
 
 const getAll = async (_req: Request, _res: Response) => {
@@ -24,12 +26,37 @@ const getManyByCustomer = async (_req: Request, _res: Response) => {
     data.map((e: any) => e.seller_id)
   );
 
-  data.map((e: any) => {
-    e.seller = ocSellerTemp.find(
-      (seller: any) => seller.seller_id == e.seller_id
-    );
+  const ocProductTemp = await ocProduct.getManyById(
+    data.map((e: any) => e.product_id)
+  );
+
+  const bgProductTemp = await bgProduct.getManyByProducts(
+    ocProductTemp.map((e: any) => e.product_id)
+  );
+  console.log(bgProductTemp);
+
+  ocProductTemp.map((e: any) => {
+    e.bg = bgProductTemp.find((bg: any) => bg.product_id == e.product_id) ?? {};
     return e;
   });
+
+  data.map((e: any) => {
+    e.seller =
+      ocSellerTemp.find((seller: any) => seller.seller_id == e.seller_id) ??
+      null;
+
+    e.product =
+      ocProductTemp.find(
+        (product: any) => product.product_id == e.product_id
+      ) ?? null;
+
+    if (e.product == null || e.seller == null) {
+      return null;
+    }
+
+    return e;
+  });
+
   _res.send({
     data,
     status: "success",
