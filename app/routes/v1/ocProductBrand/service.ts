@@ -12,6 +12,14 @@ const getById = async (id: number) => {
   });
 };
 
+const getManyById = async (ids: number[]) => {
+  return await prisma.oc_product_brand.findMany({
+    where: {
+      id: { in: ids },
+    },
+  });
+};
+
 const add = async (_body: any) => {
   return await prisma.oc_product_brand.create({
     data: {
@@ -26,4 +34,4 @@ const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (filter: any, session: any) => {};
 
-export default { getById, getAll, add, update, removeOne };
+export default { getManyById, getById, getAll, add, update, removeOne };
