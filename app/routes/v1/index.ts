@@ -40,8 +40,9 @@ import ocReviewRoute from "./ocReview/route";
 import ocCustomerWishlistRoute from "./ocCustomerWishlist/route";
 import sellerBranchRoute from "./sellerBranch/route";
 import ocCartRoute from "./ocCart/route";
-
+import bgProductRoute from "./bgProduct/route";
 export default {
+  bgProductRoute,
   ocCartRoute,
   sellerBranchRoute,
   ocCustomerWishlistRoute,
