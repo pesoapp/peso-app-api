@@ -28,10 +28,21 @@ const getById = async (id: number) => {
   });
 };
 
+const getManyByProduct = async (product_id: number) => {
+  return await prisma.seller_branch_selected_products.findMany({
+    where: {
+      quantity: {
+        gt: 0,
+      },
+      product_id,
+    },
+  });
+};
+
 const add = async (_body: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getAll, add, update, removeOne, getById };
+export default { getManyByProduct, getAll, add, update, removeOne, getById };
