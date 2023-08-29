@@ -20,10 +20,24 @@ const getManyById = async (ids: number[]) => {
   });
 };
 
+const getNameById = async (branch_id: number) => {
+  return await prisma.$queryRawUnsafe<any[]>(
+    "SELECT * FROM seller_branch where id = " + branch_id + ";"
+  );
+};
+
 const add = async (_body: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getManyById, getAll, add, update, removeOne, getById };
+export default {
+  getNameById,
+  getManyById,
+  getAll,
+  add,
+  update,
+  removeOne,
+  getById,
+};
