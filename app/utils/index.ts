@@ -15,8 +15,12 @@ export function pTypeParser(type: number) {
   switch (type) {
     case 0:
       return "reg";
+    case 1:
+      return "cb";
     case 2:
       return "bg";
+    case 3:
+      return "ae";
   }
 }
 
