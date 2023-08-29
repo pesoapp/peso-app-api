@@ -19,6 +19,7 @@ const getById = async (id: number) => {
     },
   });
 };
+
 const add = async (_body: any, session: any) => {};
 
 const update = async (filter: any, _body: any, session: any) => {};
