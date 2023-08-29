@@ -55,7 +55,21 @@ const update = async (_req: Request, _res: Response) => {
     message: "Update Oc Customer success",
   });
 };
+const setAddress = async (_req: Request, _res: Response) => {
+  const { address_id } = _req.body;
+  const { id } = _req.params;
+
+  const data = await service.setAddress(Number(id), Number(address_id));
+
+  _res.send({
+    data: [data],
+    status: "success",
+    message: "Update Oc Customer Address success",
+  });
+};
 
 const removeOne = async (_req: Request, _res: Response) => {};
 
-export { toggleActiveStatus, getById, getAll, add, update, removeOne };
+export {
+  setAddress,
+};

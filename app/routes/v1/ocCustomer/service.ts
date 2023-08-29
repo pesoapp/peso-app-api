@@ -4,6 +4,17 @@ const getAll = async () => {
   return await prisma.oc_customer.findMany();
 };
 
+const setAddress = async (customer_id: number, address_id: number) => {
+  return await prisma.oc_customer.update({
+    where: {
+      customer_id,
+    },
+    data: {
+      address_id,
+    },
+  });
+};
+
 const getById = async (id: number) => {
   return await prisma.oc_customer.findFirst({
     where: {
@@ -88,6 +99,7 @@ const update = async (filter: any, _body: any) => {
 const removeOne = async (filter: any, session: any) => {};
 
 export default {
+  setAddress,
   getByEmail,
   toggleActiveStatus,
   getManyByCustomer,
