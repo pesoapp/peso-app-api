@@ -41,7 +41,10 @@ import ocCustomerWishlistRoute from "./ocCustomerWishlist/route";
 import sellerBranchRoute from "./sellerBranch/route";
 import ocCartRoute from "./ocCart/route";
 import bgProductRoute from "./bgProduct/route";
+import addressTrackerRoute from "./addressTracker/route";
+
 export default {
+  addressTrackerRoute,
   bgProductRoute,
   ocCartRoute,
   sellerBranchRoute,

@@ -176,6 +176,10 @@ export const routes: IRoute[] = [
     url: "/api/v1/bg-product",
     route: V1.bgProductRoute,
   },
+  {
+    url: "/api/v1/address-tracker",
+    route: V1.addressTrackerRoute,
+  },
 ];
 
 export const addRoutes: AddRoutes = (app: Express) => {
