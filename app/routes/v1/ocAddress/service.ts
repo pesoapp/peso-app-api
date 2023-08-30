@@ -29,7 +29,7 @@ const add = async (_body: any) => {
       company: _body.company,
       address_1: _body.address_1,
       address_2: _body.address_2,
-      postcode: _body.postcode,
+      postcode: _body.postal_code,
       city: _body.city,
       country_id: _body.country_id,
       custom_field: "",

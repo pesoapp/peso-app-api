@@ -65,7 +65,7 @@ const add = async (_req: Request, _res: Response) => {
   await ocCustomer.setAddress(Number(customer_id), Number(data.address_id));
 
   _res.send({
-    data,
+    data: [data],
     status: "success",
     message: "Get Oc Address success",
   });
