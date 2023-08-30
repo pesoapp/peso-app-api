@@ -42,7 +42,34 @@ const getById = async (_req: Request, _res: Response) => {
   });
 };
 
-const add = async (_req: Request, _res: Response) => {};
+const add = async (_req: Request, _res: Response) => {
+  const { customer_id, ...res } = _req.body;
+  const customer = await ocCustomer.getById(Number(customer_id));
+
+  if (!customer) {
+    _res.send({
+      data: [],
+      status: "fail",
+      message: "Create Oc Address failed",
+    });
+    return;
+  }
+
+  const data = await service.add({
+    customer_id,
+    firstname: customer.firstname,
+    lastname: customer.lastname,
+    ...res,
+  });
+
+  await ocCustomer.setAddress(Number(customer_id), Number(data.address_id));
+
+  _res.send({
+    data,
+    status: "success",
+    message: "Get Oc Address success",
+  });
+};
 
 const update = async (_req: Request, _res: Response) => {};
 
