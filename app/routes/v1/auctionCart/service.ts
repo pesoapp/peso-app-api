@@ -55,9 +55,21 @@ const add = async (_body: any) => {
 
 const update = async (filter: any, _body: any, session: any) => {};
 
+const updateQuantity = async (id: any, _body: any) => {
+  return await prisma.auction_cart.update({
+    where: {
+      id,
+    },
+    data: {
+      quantity: _body.quantity,
+    },
+  });
+};
+
 const removeOne = async (id: number) => {};
 
 export default {
+  updateQuantity,
   getByAuctionPriceCustomer,
   getByCustomer,
   getAll,

@@ -70,6 +70,17 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
 
 const update = async (_req: Request, _res: Response) => {};
 
+const updateQuantity = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+
+  const data = await service.updateQuantity(Number(id), _req.body);
+
+  _res.send({
+    data: [data],
+    status: "success",
+    message: "Add Auction Cart success",
+  });
+};
 const removeOne = async (_req: Request, _res: Response) => {
   _res.send({
     data: [],
@@ -78,4 +89,12 @@ const removeOne = async (_req: Request, _res: Response) => {
   });
 };
 
-export { getByCustomer, getAll, getById, add, update, removeOne };
+export {
+  updateQuantity,
+  getByCustomer,
+  getAll,
+  getById,
+  add,
+  update,
+  removeOne,
+};
