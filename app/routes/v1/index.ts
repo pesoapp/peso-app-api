@@ -42,8 +42,9 @@ import sellerBranchRoute from "./sellerBranch/route";
 import ocCartRoute from "./ocCart/route";
 import bgProductRoute from "./bgProduct/route";
 import addressTrackerRoute from "./addressTracker/route";
-
+import auctionOrderRoute from "./auctionOrder/route";
 export default {
+  auctionOrderRoute,
   addressTrackerRoute,
   bgProductRoute,
   ocCartRoute,

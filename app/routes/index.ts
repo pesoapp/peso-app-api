@@ -180,8 +180,11 @@ export const routes: IRoute[] = [
     url: "/api/v1/address-tracker",
     route: V1.addressTrackerRoute,
   },
+  {
+    url: "/api/v1/auction-order",
+    route: V1.auctionOrderRoute,
+  },
 ];
-
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);
