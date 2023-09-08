@@ -17,6 +17,14 @@ const getById = async (id: number) => {
   });
 };
 
+const getManyById = async (ids: any[]) => {
+  return await prisma.auction_cart.findMany({
+    where: {
+      id: { in: ids.map((e: any) => Number(e)) },
+    },
+  });
+};
+
 const getByCustomer = async (customer_id: number) => {
   return await prisma.auction_cart.findMany({
     where: {
@@ -69,6 +77,7 @@ const updateQuantity = async (id: any, _body: any) => {
 const removeOne = async (id: number) => {};
 
 export default {
+  getManyById,
   updateQuantity,
   getByAuctionPriceCustomer,
   getByCustomer,

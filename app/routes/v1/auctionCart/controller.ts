@@ -1,6 +1,8 @@
 import service from "./service";
 import { Request, Response } from "express";
 import auction from "../auction/service";
+import ocCustomer from "../ocCustomer/service";
+import ocDeliveryCharge from "../ocDeliveryCharge/service";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
@@ -57,6 +59,54 @@ const getByCustomer = async (_req: Request, _res: Response) => {
   });
 };
 
+const getAuctionRatesById = async (_req: Request, _res: Response) => {
+  const { cart_ids = [], page = 1 } = _req.query;
+  if (!Array.isArray(cart_ids)) {
+    _res.send({
+      data: [],
+      status: "fail",
+      message: "Get Auction Cart failed",
+    });
+    return;
+  }
+
+  const data = await service.getManyById(cart_ids ?? []);
+  const ocCustomerTemp = await ocCustomer.getManyByCustomer(
+    data.map((e: any) => e.auctioner_id)
+  );
+
+  const auctionTemp = await auction.getManyById(
+    data.map((e: any) => e.auction_id)
+  );
+
+  const ocDeliveryChargeTemp = await ocDeliveryCharge.getManyById(
+    auctionTemp.map((e: any) => e.delivery_charge_id)
+  );
+
+  auctionTemp.map((e: any) => {
+    e.deliveryChange = ocDeliveryChargeTemp.find(
+      (delivery: any) => delivery.id == e.delivery_charge_id
+    );
+
+    return e;
+  });
+
+  data.map((e: any) => {
+    e.auction = auctionTemp.find((auction: any) => auction.id == e.auction_id);
+    e.auctioner = ocCustomerTemp.find(
+      (customer: any) => customer.customer_id == e.auctioner_id
+    );
+
+    return e;
+  });
+
+  _res.send({
+    data: data,
+    status: "success",
+    message: "Get Auction Order success",
+  });
+};
+
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   //TODO: Update only if auction cart already exissts
   const data = await service.add(_req.body);
@@ -90,6 +140,7 @@ const removeOne = async (_req: Request, _res: Response) => {
 };
 
 export {
+  getAuctionRatesById,
   updateQuantity,
   getByCustomer,
   getAll,
