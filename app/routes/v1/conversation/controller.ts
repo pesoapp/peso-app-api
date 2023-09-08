@@ -38,7 +38,7 @@ const getConversation = async (_req: Request, _res: Response) => {
 };
 
 const sendMessage = async (_req: Request, _res: Response) => {
-  await service.sendMessage({
+  const data = await service.sendMessage({
     status: 0,
     call_id: 0,
     smstype: _req.body.auction_id == 0 ? "MESSAGE" : "WITH_ITEM",
@@ -54,7 +54,7 @@ const sendMessage = async (_req: Request, _res: Response) => {
   ]);
 
   _res.send({
-    data: [],
+    data: [data],
     status: "success",
     message: "Get Conversation success",
   });

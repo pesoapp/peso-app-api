@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import auction from "../auction/service";
 import ocCustomer from "../ocCustomer/service";
 import ocDeliveryCharge from "../ocDeliveryCharge/service";
+import ocAddress from "../ocAddress/service";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;

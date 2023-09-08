@@ -81,7 +81,7 @@ const sendMessage = async (_body: any) => {
 
     chatNo = temp[0]["max_data"] + 1;
   }
-  console.log(chatNo);
+
   const dateNow = "convert_tz(utc_timestamp(),'-08:00','+0:00')";
   return await prisma.$executeRawUnsafe<any[]>(
     "INSERT INTO auctioner_message (`sender_id`,`receiver_id`,`date_added`,`message`,`chat_no`,`auction_id`,`sms_type`,`call_status`,`call_id`) values (" +
