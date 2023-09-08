@@ -66,17 +66,53 @@ const getManyProductDiscountById = async (ids: number[]) => {
   );
 };
 
+const checkProductFromCart = async (
+  customer_id: number,
+  product_id: number,
+  p_type: number
+) => {
+  return await prisma.$queryRawUnsafe<any[]>(
+    "SELECT * FROM oc_cart WHERE customer_id = " +
+      customer_id +
+      " AND product_id = " +
+      product_id +
+      "  AND p_type = " +
+      p_type +
+      " "
+  );
+};
+
 const getById = async (id: number) => {
   return await prisma.oc_cart.findFirst({});
 };
 
-const add = async (_body: any) => {};
+const add = async (_body: any) => {
+  return await prisma.oc_cart.create({
+    data: {
+      branch_id: _body.branch_id,
+      deduction_id: _body.deduction_id,
+      product_id: _body.product_id,
+      seller_id: _body.seller_id,
+      price: _body.brancpriceh_id,
+      discount_details: _body.discount_details,
+      freebies: _body.freebies,
+      customer_id: _body.customer_id,
+      session_id: "",
+      option: "[]",
+      recurring_id: 0,
+      quantity: _body.quantity,
+      date_added: new Date(),
+      p_type: _body.p_type,
+    },
+  });
+};
 
 const update = async (id: number, _body: any) => {};
 
 const removeOne = async (id: number) => {};
 
 export default {
+  checkProductFromCart,
   getManyProductDiscountById,
   getManySellerNamesById,
   getManySellerBranchById,

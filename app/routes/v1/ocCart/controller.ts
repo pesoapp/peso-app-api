@@ -276,7 +276,45 @@ const getById = async (_req: Request, _res: Response) => {
   });
 };
 
+// body should have selected product
 const add = async (_req: Request<any, any, any>, _res: Response) => {
+  const { customer_id = 0, product_id = 0, p_type = 0 } = _req.body;
+
+  // $s->bindValue(':customer_id', $customer_id);
+  // $s->bindValue(':seller_id', $selectedProduct->sellerId);
+  // $s->bindValue(':freebies', $selectedProduct->freebies);
+  // $s->bindValue(':price', $selectedProduct->price);
+  // $s->bindValue(':discount_details', $selectedProduct->discountDetails);
+  // $s->bindValue(':product_id', $product_id);
+  // $s->bindValue(':quantity', $selectedProduct->quantity);
+  // $s->bindValue(':branch_id', $selectedProduct->branchId);
+  // $s->bindValue(':deduction_id', $selectedProduct->deductionId);
+  // $s->bindValue(':p_type', $p_type);
+  // {
+  //   sellerId: "",
+  //   freebies: "",
+  //   price: "",
+  //   discountDetails: "",
+  //   quantity: "",
+  //   branchId: "",
+  //   deductionId: "",
+  // }
+  // check product from cart
+  const product = await service.checkProductFromCart(
+    Number(customer_id),
+    Number(product_id),
+    Number(p_type)
+  );
+
+  if (product.length != 0) {
+    const data = await service.add({
+      customer_id: Number(customer_id),
+      p_type: Number(p_type),
+    });
+  }
+
+  // check cart quantity
+  // upsert oc cart
   _res.send({
     data: [],
     status: "success",
