@@ -92,8 +92,35 @@ const getById = async (_req: Request, _res: Response) => {
     Number(id)
   );
 
+  const freebiesTemp = await service.getFreebies(
+    Number(id),
+    [...new Set(stores.map((e: any) => e.seller_id))],
+    [...new Set(stores.map((e: any) => e.branch_id))]
+  );
+
+  stores.map((e: any) => {
+    e.freebies =
+      freebiesTemp.find((freebie: any) => {
+        return (
+          freebie.branch_id == e.branch_id &&
+          freebie.seller_id == e.seller_id &&
+          freebie.product_id == e.product_id
+        );
+      }) ?? "";
+    return e;
+  });
+
+  const deductions = await service.getDeductionsPerSeller(
+    [...new Set(stores.map((e: any) => e.seller_id))],
+    Number(id),
+    data.price.toFixed(2)
+  );
+
+  console.log(deductions);
+
   _res.send({
-    data: [{ ...data, storeList: stores }],
+    data: deductions,
+    // data: [{ ...data, storeList: stores }],
     status: "success",
     message: "Get Oc Product success",
   });

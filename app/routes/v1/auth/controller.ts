@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import service from "./service";
 import ocCustomer from "../ocCustomer/service";
 import { parseCredential } from "../../../utils";
+
 const login = async (_req: Request<any, any, any>, _res: Response) => {
   const { credential = "", password = "" } = _req.body;
   const data = await service.login(parseCredential(credential), password);
