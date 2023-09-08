@@ -60,7 +60,7 @@ const getByCustomer = async (_req: Request, _res: Response) => {
 };
 
 const getAuctionRatesById = async (_req: Request, _res: Response) => {
-  const { cart_ids = [], page = 1 } = _req.query;
+  const { cart_ids = [], cust_def_add = 1 } = _req.query;
   if (!Array.isArray(cart_ids)) {
     _res.send({
       data: [],
@@ -69,9 +69,13 @@ const getAuctionRatesById = async (_req: Request, _res: Response) => {
     });
     return;
   }
-
+  // const custDefAdd = await ocAddress.getById(cust_def_add);
   const data = await service.getManyById(cart_ids ?? []);
   const ocCustomerTemp = await ocCustomer.getManyByCustomer(
+    data.map((e: any) => e.auctioner_id)
+  );
+
+  const ocAddressTemp = await ocAddress.getManyByManyCustomer(
     data.map((e: any) => e.auctioner_id)
   );
 
@@ -87,9 +91,10 @@ const getAuctionRatesById = async (_req: Request, _res: Response) => {
     e.deliveryChange = ocDeliveryChargeTemp.find(
       (delivery: any) => delivery.id == e.delivery_charge_id
     );
-
     return e;
   });
+
+  const ddrRates = await ocDeliveryCharge.getDRRate();
 
   data.map((e: any) => {
     e.auction = auctionTemp.find((auction: any) => auction.id == e.auction_id);
