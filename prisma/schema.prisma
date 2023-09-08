@@ -3542,6 +3542,26 @@ model auction_order_history {
   order_status_id  Int?
 }
 
+model lounge_follow_customer {
+  id           Int @id @default(autoincrement())
+  customer_id  Int
+  following_id Int
+}
+
+model lounge_group_viewer {
+  id          Int       @id @default(autoincrement())
+  customer_id Int?
+  group_id    Int?
+  date_viewed DateTime? @default(now()) @db.DateTime(0)
+}
+
+model lounge_post_views {
+  id          Int  @id @default(autoincrement())
+  post_id     Int?
+  customer_id Int?
+  total_view  Int?
+}
+
 enum oc_recurring_frequency {
   day
   week
