@@ -54,7 +54,7 @@ const getByCustomer = async (_req: Request, _res: Response) => {
   });
 
   _res.send({
-    data,
+    data: data.reverse(),
     status: "success",
     message: "Get Auction Cart success",
   });
