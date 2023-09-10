@@ -7,11 +7,15 @@ import ocAddress from "../ocAddress/service";
 import auctionSideImages from "../auctionSideImages/service";
 import auctionQuestion from "../auctionQuestion/service";
 import auctionBid from "../auctionBid/service";
+
 const getAll = async (_req: Request, _res: Response) => {
-  const { limit = 10, page = 1 } = _req.query;
+  const { limit = 1000, page = 1 } = _req.query;
   const data = await service.getAll({ limit, page });
+
   _res.send({
-    data,
+    data: data.filter((e: any) => {
+      return e.date_posted != null && new Date(e.due_date) >= new Date();
+    }),
     status: "success",
     message: "Get Auction success",
     meta: {
