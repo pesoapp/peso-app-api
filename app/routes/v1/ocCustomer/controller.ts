@@ -70,4 +70,4 @@ const setAddress = async (_req: Request, _res: Response) => {
 
 const removeOne = async (_req: Request, _res: Response) => {};
 
-export { getById, setAddress };
+export { toggleActiveStatus, getById, setAddress };
