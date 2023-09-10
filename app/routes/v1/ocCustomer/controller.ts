@@ -70,6 +70,4 @@ const setAddress = async (_req: Request, _res: Response) => {
 
 const removeOne = async (_req: Request, _res: Response) => {};
 
-export {
-  setAddress,
-};
+export { getById, setAddress };
