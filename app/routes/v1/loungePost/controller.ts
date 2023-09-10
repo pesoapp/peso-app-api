@@ -12,8 +12,9 @@ const getAll = async (_req: Request, _res: Response) => {
     page = 1,
     lounge_group_id = 0,
     customer_id = 0,
+    search = "",
   } = _req.query;
-  const data = await service.getAll({ limit, page, lounge_group_id });
+  const data = await service.getAll({ limit, page, lounge_group_id, search });
 
   const ocCustomersTemp =
     (await ocCustomer.getManyByCustomer(data.map((e: any) => e.customer_id))) ??

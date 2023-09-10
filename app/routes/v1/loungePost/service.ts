@@ -1,8 +1,24 @@
 import { prisma } from "../../../db";
 
 const getAll = async (_query: any) => {
-  const { limit = 5, page = 1, lounge_group_id = 0 } = _query;
+  const { limit = 5, page = 1, lounge_group_id = 0, search = "" } = _query;
+  console.log(`"${search}`);
 
+  if (search != "") {
+    return await prisma.lounge_post.findMany({
+      skip: page - 1 != 0 ? limit * page : 0,
+      take: Number(limit),
+      where: {
+        lounge_group_id: Number(lounge_group_id),
+        title: {
+          startsWith: `"${search}`,
+        },
+      },
+      orderBy: {
+        date_created: "desc",
+      },
+    });
+  }
   return await prisma.lounge_post.findMany({
     skip: page - 1 != 0 ? limit * page : 0,
     take: Number(limit),
