@@ -2,9 +2,9 @@ import service from "./service";
 import { Request, Response } from "express";
 import ocCustomerWallet from "../ocCustomerWallet/service";
 import ocCustomer from "../ocCustomer/service";
-
+import auctionQuestionReply from "../auctionQuestionReply/service";
 const getAll = async (_req: Request, _res: Response) => {
-  const { limit = 5, page = 1 } = _req.query;
+  const { limit = 10, page = 1 } = _req.query;
   const data = await service.getAll({ limit, page });
   _res.send({
     data,
@@ -15,8 +15,38 @@ const getAll = async (_req: Request, _res: Response) => {
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.getById(Number(id));
+  let data: any = await service.getById(Number(id));
 
+  if (!data) {
+    _res.send({
+      data: [],
+      status: "fail",
+      message: "Get Auction Question failed",
+    });
+    return;
+  }
+  let auctionQuestionReplyTemp =
+    (await auctionQuestionReply.getByAuctionQuestion(Number(id))) ?? [];
+
+  const ocCustomerTemp =
+    (await ocCustomer.getManyByCustomer([
+      ...new Set([
+        ...auctionQuestionReplyTemp.map((e: any) => e.customer_id),
+        data.customer_id,
+      ]),
+    ])) ?? [];
+
+  auctionQuestionReplyTemp.map((e: any) => {
+    e.customer = ocCustomerTemp.find(
+      (customer: any) => (customer.customer_id = e.customer_id)
+    );
+    return e;
+  });
+
+  data.replies = auctionQuestionReplyTemp;
+  data.customer = ocCustomerTemp.find(
+    (customer: any) => (customer.customer_id = data.customer_id)
+  );
   _res.send({
     data: [data],
     status: "success",
@@ -26,19 +56,32 @@ const getById = async (_req: Request, _res: Response) => {
 
 const getByAuction = async (_req: Request, _res: Response) => {
   const { id = 5 } = _req.params;
-  const data = await service.getByAuction(Number(id));
+  let data = await service.getByAuction(Number(id));
   const ocCustomersTemp =
     (await ocCustomer.getManyByCustomer(data.map((e: any) => e.customer_id))) ??
     [];
 
-  data.map((e: any) => {
+  data = data.map((e: any) => {
     e.customer = ocCustomersTemp.find(
       (customer: any) => (customer.customer_id = e.customer_id)
     );
     return e;
   });
+
+  const auctionQuestionReplyTemp =
+    await auctionQuestionReply.getByAuctionQuestions([
+      ...new Set(data.map((e: any) => e.id)),
+    ]);
+
+  data = data.map((e: any) => {
+    e.replies = auctionQuestionReplyTemp.filter(
+      (reply: any) => (reply.question_id = e.id)
+    );
+    return e;
+  });
+
   _res.send({
-    data,
+    data: data,
     status: "success",
     message: "Get Auction Question success",
   });

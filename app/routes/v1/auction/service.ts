@@ -1,7 +1,7 @@
 import { prisma } from "../../../db";
 
 const getAll = async (_query: any) => {
-  const { limit = 20, page = 1, customer_id = 0 } = _query;
+  const { limit = 20, page = 1, customer_id = 0, search = "" } = _query;
 
   if (customer_id != 0) {
     return await prisma.auction.findMany({
@@ -28,6 +28,9 @@ const getAll = async (_query: any) => {
     },
     where: {
       deleted_at: null,
+      name: {
+        startsWith: search,
+      },
       due_date: {
         gte: new Date(),
       },

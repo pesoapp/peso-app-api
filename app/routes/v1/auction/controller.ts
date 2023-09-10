@@ -9,8 +9,8 @@ import auctionQuestion from "../auctionQuestion/service";
 import auctionBid from "../auctionBid/service";
 
 const getAll = async (_req: Request, _res: Response) => {
-  const { limit = 1000, page = 1, customer_id = 0 } = _req.query;
-  const data = await service.getAll({ limit, page, customer_id });
+  const { limit = 1000, page = 1, customer_id = 0, search = "" } = _req.query;
+  const data = await service.getAll({ limit, page, customer_id, search });
 
   _res.send({
     data,

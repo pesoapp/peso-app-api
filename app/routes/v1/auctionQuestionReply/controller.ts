@@ -21,6 +21,16 @@ const getById = async (_req: Request, _res: Response) => {
   });
 };
 
+const getByAuctionQuestion = async (_req: Request, _res: Response) => {
+  const { id = 0 } = _req.params;
+  const data = await service.getByAuctionQuestion(Number(id));
+  _res.send({
+    data: [data],
+    status: "success",
+    message: "Get Auction Question Reply success",
+  });
+};
+
 const add = async (_req: Request, _res: Response) => {
   const data = await service.add(_req.body);
   _res.send({
@@ -34,4 +44,4 @@ const update = async (_req: Request, _res: Response) => {};
 
 const removeOne = async (_req: Request, _res: Response) => {};
 
-export { getAll, getById, add, update, removeOne };
+export { getByAuctionQuestion, getAll, getById, add, update, removeOne };

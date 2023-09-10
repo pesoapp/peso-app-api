@@ -12,6 +12,24 @@ const getById = async (id: number) => {
   });
 };
 
+const getByAuctionQuestion = async (question_id: number) => {
+  return await prisma.auction_question_reply.findMany({
+    where: {
+      question_id,
+    },
+  });
+};
+
+const getByAuctionQuestions = async (question_ids: number[]) => {
+  return await prisma.auction_question_reply.findMany({
+    where: {
+      question_id: {
+        in: question_ids,
+      },
+    },
+  });
+};
+
 const add = async (_body: any) => {
   return await prisma.auction_question_reply.create({
     data: {
@@ -28,6 +46,8 @@ const update = async (filter: any, _body: any, session: any) => {};
 const removeOne = async (filter: any, session: any) => {};
 
 export default {
+  getByAuctionQuestions,
+  getByAuctionQuestion,
   getAll,
   add,
   update,
