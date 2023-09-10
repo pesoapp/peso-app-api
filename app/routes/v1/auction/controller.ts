@@ -9,13 +9,11 @@ import auctionQuestion from "../auctionQuestion/service";
 import auctionBid from "../auctionBid/service";
 
 const getAll = async (_req: Request, _res: Response) => {
-  const { limit = 1000, page = 1 } = _req.query;
-  const data = await service.getAll({ limit, page });
+  const { limit = 1000, page = 1, customer_id = 0 } = _req.query;
+  const data = await service.getAll({ limit, page, customer_id });
 
   _res.send({
-    data: data.filter((e: any) => {
-      return e.date_posted != null && new Date(e.due_date) >= new Date();
-    }),
+    data,
     status: "success",
     message: "Get Auction success",
     meta: {

@@ -1,7 +1,24 @@
 import { prisma } from "../../../db";
 
 const getAll = async (_query: any) => {
-  const { limit = 20, page = 1 } = _query;
+  const { limit = 20, page = 1, customer_id = 0 } = _query;
+
+  if (customer_id != 0) {
+    return await prisma.auction.findMany({
+      skip: page - 1 != 0 ? limit * page : 0,
+      take: Number(limit),
+      include: {
+        condition: true,
+      },
+      where: {
+        customer_id: Number(customer_id),
+        deleted_at: null,
+        date_posted: {
+          not: null,
+        },
+      },
+    });
+  }
 
   return await prisma.auction.findMany({
     skip: page - 1 != 0 ? limit * page : 0,
@@ -11,6 +28,9 @@ const getAll = async (_query: any) => {
     },
     where: {
       deleted_at: null,
+      due_date: {
+        gte: new Date(),
+      },
     },
   });
 };
