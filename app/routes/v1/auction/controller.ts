@@ -101,6 +101,15 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
 
 const update = async (_req: Request, _res: Response) => {};
 
+const post = async (_req: Request, _res: Response) => {
+  const { id } = _req.params;
+  const data = await service.post(Number(id));
+  _res.send({
+    data: [data],
+    status: "success",
+    message: "Post Auction success",
+  });
+};
 const removeOne = async (_req: Request, _res: Response) => {
   const { id } = _req.params;
   const data = await service.removeOne(Number(id));
@@ -111,4 +120,4 @@ const removeOne = async (_req: Request, _res: Response) => {
   });
 };
 
-export { getAll, getById, add, update, removeOne };
+export { post, getAll, getById, add, update, removeOne };

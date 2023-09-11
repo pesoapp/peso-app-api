@@ -13,9 +13,6 @@ const getAll = async (_query: any) => {
       where: {
         customer_id: Number(customer_id),
         deleted_at: null,
-        date_posted: {
-          not: null,
-        },
       },
     });
   }
@@ -33,6 +30,9 @@ const getAll = async (_query: any) => {
       },
       due_date: {
         gte: new Date(),
+      },
+      date_posted: {
+        not: null,
       },
     },
   });
@@ -85,6 +85,22 @@ const add = async (_body: any) => {
   });
 };
 
+const post = async (id: number) => {
+  const auction = await getById(id);
+  if (!auction) return {};
+  const now = new Date();
+  now.setDate(new Date().getDate() + (auction.days_to_auction ?? 1));
+  return await prisma.auction.update({
+    where: {
+      id,
+    },
+    data: {
+      date_posted: new Date(),
+      due_date: now,
+    },
+  });
+};
+
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {
@@ -98,4 +114,4 @@ const removeOne = async (id: number) => {
   });
 };
 
-export default { getManyById, getAll, add, update, removeOne, getById };
+export default { post, getManyById, getAll, add, update, removeOne, getById };
