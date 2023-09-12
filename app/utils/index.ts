@@ -88,10 +88,16 @@ export function parseLoungePostTitle(title: string = "") {
 }
 
 export function youtubeParser(url: string) {
-  var regExp =
+  const regExp =
     /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-  var match = url.match(regExp);
-  return match && match[7].length == 11 ? match[7] : false;
+  const match = url.match(regExp);
+  return match && match[7].length == 11 ? match[7] : "";
+}
+
+export function tiktokParser(url: string) {
+  const regExp = /(@[a-zA-z0-9]*|.*)(\/.*\/|trending.?shareId=)([\d]*)/gm;
+  const match = url.match(regExp);
+  return match ? match[0].split("/")[5] : "";
 }
 
 export function parseCredential(credential: string) {
