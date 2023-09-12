@@ -185,6 +185,7 @@ export const routes: IRoute[] = [
     route: V1.auctionOrderRoute,
   },
 ];
+
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);

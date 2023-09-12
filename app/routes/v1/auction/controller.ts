@@ -7,13 +7,14 @@ import ocAddress from "../ocAddress/service";
 import auctionSideImages from "../auctionSideImages/service";
 import auctionQuestion from "../auctionQuestion/service";
 import auctionBid from "../auctionBid/service";
+import { shuffle } from "../../../utils";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 1000, page = 1, customer_id = 0, search = "" } = _req.query;
   const data = await service.getAll({ limit, page, customer_id, search });
 
   _res.send({
-    data,
+    data: shuffle(data),
     status: "success",
     message: "Get Auction success",
     meta: {

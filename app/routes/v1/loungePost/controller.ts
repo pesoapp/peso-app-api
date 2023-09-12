@@ -4,7 +4,7 @@ import ocCustomer from "../ocCustomer/service";
 import loungeGroup from "../loungeGroup/service";
 import loungeSocial from "../loungeSocial/service";
 import loungePostComments from "../loungePostComments/service";
-import { parseLoungePostTitle, youtubeParser } from "../../../utils";
+import { parseLoungePostTitle, shuffle, youtubeParser } from "../../../utils";
 
 const getAll = async (_req: Request, _res: Response) => {
   const {
@@ -68,7 +68,7 @@ const getAll = async (_req: Request, _res: Response) => {
   });
 
   _res.send({
-    data,
+    data: shuffle(data),
     status: "success",
     message: "Get Lounge Post success",
     meta: {
