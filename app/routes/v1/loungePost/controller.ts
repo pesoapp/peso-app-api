@@ -124,6 +124,9 @@ const getById = async (_req: Request, _res: Response) => {
   const loungePostCommentsTemp =
     (await loungePostComments.getByPost(data?.post_id ?? 0)) ?? [];
 
+  const sharesTemp = await service.getManyParentIds(
+    [data?.post_id ?? 0].filter((e: number) => e != 0)
+  );
   _res.send({
     data: [
       {
@@ -134,6 +137,7 @@ const getById = async (_req: Request, _res: Response) => {
         likes: loungeSocialTemp,
         liked: loungeSocialTemp.some((e: any) => e.customer_id == customer_id),
         comments: loungePostCommentsTemp,
+        shares: sharesTemp.length,
       },
     ],
     status: "success",
