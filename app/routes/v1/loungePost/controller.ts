@@ -158,6 +158,7 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
   }
 
   const data = await service.add({
+    post_parent_id: _req.body.post_parent_id,
     customer_id: _req.body.customer_id,
     lounge_group_id: _req.body.lounge_group_id ?? 0,
     tags: `${_req.body.tags.replace("#", ",")}`,
