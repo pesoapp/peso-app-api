@@ -67,8 +67,15 @@ const getAll = async (_req: Request, _res: Response) => {
     })
   );
 
+  const sharesTemp = await service.getManyIds(
+    [...new Set(data.map((e: any) => e.post_id))].filter((e: number) => e != 0)
+  );
+
   data.map((e: any) => {
     e.title = parseLoungePostTitle(e.title);
+    e.shares = sharesTemp.filter(
+      (share: any) => share.post_parent_id == e.post_id
+    ).length;
     return e;
   });
 
