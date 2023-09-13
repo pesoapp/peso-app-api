@@ -67,12 +67,22 @@ const getAll = async (_req: Request, _res: Response) => {
     })
   );
 
-  const sharesTemp = await service.getManyIds(
+  const sharesTemp = await service.getManyParentIds(
     [...new Set(data.map((e: any) => e.post_id))].filter((e: number) => e != 0)
+  );
+
+  const parentTemp = await service.getManyIds(
+    [...new Set(data.map((e: any) => e.post_parent_id))].filter(
+      (e: number) => e != 0
+    )
   );
 
   data.map((e: any) => {
     e.title = parseLoungePostTitle(e.title);
+    e.parent =
+      parentTemp.find(
+        (parent: any) => parent.post_id ?? 0 == e.post_parent_id
+      ) ?? null;
     e.shares = sharesTemp.filter(
       (share: any) => share.post_parent_id == e.post_id
     ).length;

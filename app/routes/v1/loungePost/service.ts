@@ -33,13 +33,21 @@ const getAll = async (_query: any) => {
 const getManyIds = async (ids: number[]) => {
   return await prisma.lounge_post.findMany({
     where: {
+      post_id: {
+        in: ids,
+      },
+    },
+  });
+};
+const getManyParentIds = async (ids: number[]) => {
+  return await prisma.lounge_post.findMany({
+    where: {
       post_parent_id: {
         in: ids,
       },
     },
   });
 };
-
 const getById = async (id: number) => {
   return await prisma.lounge_post.findFirst({
     where: {
@@ -82,4 +90,12 @@ const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getManyIds, getAll, add, update, removeOne, getById };
+export default {
+  getManyParentIds,
+  getManyIds,
+  getAll,
+  add,
+  update,
+  removeOne,
+  getById,
+};
