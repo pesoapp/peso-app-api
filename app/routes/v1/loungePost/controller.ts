@@ -163,7 +163,7 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
     lounge_group_id: _req.body.lounge_group_id ?? 0,
     tags: `${_req.body.tags.replace("#", ",")}`,
     file_type: _req.body.file_type,
-    title: `"${_req.body.title} \n#${_req.body.tags.replace(",", " #")}"`,
+    title: `"${_req.body.title} #${_req.body.tags.replace(",", " #")}"`,
     file_name,
   });
 
