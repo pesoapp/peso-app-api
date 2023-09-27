@@ -144,12 +144,18 @@ const getById = async (_req: Request, _res: Response) => {
     e.customer = ocCustomersTemp.find(
       (customer: any) => customer.customer_id == e.customer_id
     );
+
     e.replies = replies.filter(
       (reply: any) => reply.comment_parent_id == e.comment_id
-    );
+    ).length;
 
     e.likes = loungeCommentSocialTemp.filter(
       (like: any) => like.comment_id == e.comment_id
+    ).length;
+
+    e.liked = loungeCommentSocialTemp.some(
+      (like: any) =>
+        like.comment_id == e.comment_id && like.customer_id == customer_id
     );
     return;
   });
