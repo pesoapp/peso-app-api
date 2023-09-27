@@ -184,8 +184,11 @@ export const routes: IRoute[] = [
     url: "/api/v1/auction-order",
     route: V1.auctionOrderRoute,
   },
+  {
+    url: "/api/v1/lounge-comment-social",
+    route: V1.loungeCommentSocialRoute,
+  },
 ];
-
 export const addRoutes: AddRoutes = (app: Express) => {
   routes.forEach((route) => {
     app.use(route.url, route.route);

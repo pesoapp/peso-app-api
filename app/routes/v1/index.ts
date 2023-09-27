@@ -43,7 +43,10 @@ import ocCartRoute from "./ocCart/route";
 import bgProductRoute from "./bgProduct/route";
 import addressTrackerRoute from "./addressTracker/route";
 import auctionOrderRoute from "./auctionOrder/route";
+import loungeCommentSocialRoute from "./loungeCommentSocial/route";
+
 export default {
+  loungeCommentSocialRoute,
   auctionOrderRoute,
   addressTrackerRoute,
   bgProductRoute,
