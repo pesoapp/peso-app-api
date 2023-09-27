@@ -37,7 +37,8 @@ const getById = async (_req: Request, _res: Response) => {
 
 const getByPost = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.getByPost(Number(id));
+  const { comment_parent_id = 0 } = _req.query;
+  const data = await service.getByPost(Number(id), Number(comment_parent_id));
 
   _res.send({
     data,

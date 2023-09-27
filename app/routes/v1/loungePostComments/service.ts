@@ -17,10 +17,19 @@ const getById = async (id: number) => {
   });
 };
 
-const getByPost = async (id: number) => {
+const getByPost = async (id: number, parent: number = 0) => {
   return await prisma.lounge_post_comments.findMany({
     where: {
       post_id: id,
+      comment_parent_id: parent,
+    },
+  });
+};
+
+const getManyByParents = async (ids: number[]) => {
+  return await prisma.lounge_post_comments.findMany({
+    where: {
+      comment_parent_id: { in: ids },
     },
   });
 };
@@ -31,13 +40,23 @@ const add = async (_body: any) => {
       post_id: _body.post_id,
       customer_id: _body.customer_id,
       comment: `\"${_body.comment}\"`,
+      comment_parent_id: _body.comment_parent_id ?? 0,
       date_created: new Date(),
       date_modified: new Date(),
     },
   });
 };
+
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getByPost, getAll, add, update, removeOne, getById };
+export default {
+  getManyByParents,
+  getByPost,
+  getAll,
+  add,
+  update,
+  removeOne,
+  getById,
+};
