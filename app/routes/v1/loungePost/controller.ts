@@ -4,6 +4,8 @@ import ocCustomer from "../ocCustomer/service";
 import loungeGroup from "../loungeGroup/service";
 import loungeSocial from "../loungeSocial/service";
 import loungePostComments from "../loungePostComments/service";
+import loungeCommentSocial from "../loungeCommentSocial/service";
+
 import {
   parseLoungePostTitle,
   shuffle,
@@ -133,12 +135,21 @@ const getById = async (_req: Request, _res: Response) => {
       loungePostCommentsTemp.map((e: any) => e.comment_id)
     )) ?? [];
 
+  const loungeCommentSocialTemp = await loungeCommentSocial.getManyByIds(
+    loungePostCommentsTemp.map((e: any) => e.customer_id),
+    loungePostCommentsTemp.map((e: any) => e.comment_id)
+  );
+
   loungePostCommentsTemp.map((e: any) => {
     e.customer = ocCustomersTemp.find(
       (customer: any) => customer.customer_id == e.customer_id
     );
     e.replies = replies.filter(
       (reply: any) => reply.comment_parent_id == e.comment_id
+    );
+
+    e.likes = loungeCommentSocialTemp.filter(
+      (like: any) => like.comment_id == e.comment_id
     );
     return;
   });

@@ -12,6 +12,17 @@ const getOne = async (_query: any) => {
   );
 };
 
+const getManyByIds = async (customer_ids: any[], comment_ids: any[]) => {
+  return await prisma.$queryRawUnsafe<any[]>(
+    "SELECT * FROM lounge_comment_social WHERE customer_id IN (" +
+      customer_ids +
+      ") " +
+      "AND comment_id IN (" +
+      comment_ids +
+      ");"
+  );
+};
+
 const add = async (_body: any) => {
   return await prisma.$executeRawUnsafe<any[]>(
     "INSERT INTO  lounge_comment_social SET comment_id=" +
@@ -32,4 +43,4 @@ const removeOne = async (_body: any) => {
   );
 };
 
-export default { getOne, add, removeOne };
+export default { getManyByIds, getOne, add, removeOne };
