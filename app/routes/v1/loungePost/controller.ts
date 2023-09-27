@@ -112,8 +112,6 @@ const getById = async (_req: Request, _res: Response) => {
     });
     return;
   }
-  const ocCustomersTemp =
-    (await ocCustomer.getManyByCustomer([data?.customer_id ?? 0])) ?? [];
 
   const loungeGroupTemp =
     (await loungeGroup.getManyByLoungeGroup([data?.lounge_group_id ?? 0])) ??
@@ -124,6 +122,18 @@ const getById = async (_req: Request, _res: Response) => {
   const loungePostCommentsTemp =
     (await loungePostComments.getByPost(data?.post_id ?? 0)) ?? [];
 
+  const ocCustomersTemp =
+    (await ocCustomer.getManyByCustomer([
+      data?.customer_id ?? 0,
+      ...loungePostCommentsTemp.map((e: any) => e.customer_id),
+    ])) ?? [];
+
+  loungePostCommentsTemp.map((e: any) => {
+    e.customer = ocCustomersTemp.find(
+      (customer: any) => customer.customer_id == e.customer_id
+    );
+    return;
+  });
   const sharesTemp = await service.getManyParentIds(
     [data?.post_id ?? 0].filter((e: number) => e != 0)
   );
