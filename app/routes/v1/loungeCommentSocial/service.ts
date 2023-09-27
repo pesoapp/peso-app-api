@@ -1,5 +1,17 @@
 import { prisma } from "../../../db";
 
+const getOne = async (_query: any) => {
+  return await prisma.$queryRawUnsafe<any[]>(
+    "SELECT * FROM lounge_comment_social WHERE customer_id=" +
+      _query.customer_id +
+      " " +
+      "AND comment_id=" +
+      _query.comment_id +
+      " " +
+      ";"
+  );
+};
+
 const add = async (_body: any) => {
   return await prisma.$executeRawUnsafe<any[]>(
     "INSERT INTO  lounge_comment_social SET comment_id=" +
@@ -20,4 +32,4 @@ const removeOne = async (_body: any) => {
   );
 };
 
-export default { add, removeOne };
+export default { getOne, add, removeOne };
