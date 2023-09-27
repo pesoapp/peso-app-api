@@ -128,12 +128,21 @@ const getById = async (_req: Request, _res: Response) => {
       ...loungePostCommentsTemp.map((e: any) => e.customer_id),
     ])) ?? [];
 
+  const replies =
+    (await loungePostComments.getManyByParents(
+      loungePostCommentsTemp.map((e: any) => e.comment_id)
+    )) ?? [];
+
   loungePostCommentsTemp.map((e: any) => {
     e.customer = ocCustomersTemp.find(
       (customer: any) => customer.customer_id == e.customer_id
     );
+    e.replies = replies.filter(
+      (reply: any) => reply.comment_parent_id == e.comment_id
+    );
     return;
   });
+
   const sharesTemp = await service.getManyParentIds(
     [data?.post_id ?? 0].filter((e: number) => e != 0)
   );
