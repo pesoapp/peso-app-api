@@ -4,17 +4,40 @@ import { Request, Response } from "express";
 import { pTypeParser } from "../../../utils";
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
-  const data = await service.getAll({});
-
-  _res.send({
-    data,
-    status: "success",
-    message: "Get Oc Cart success",
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Oc Cart failed",
     meta: {
       currentPage: Number(page),
       limit: Number(limit),
     },
-  });
+  };
+
+  try {
+    const data = await service.getAll({});
+    response = {
+      data: data,
+      status: "success",
+      message: "Get Oc Cart success",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  } catch (_) {
+    response = {
+      data: [],
+      status: "fail",
+      message: "Get Oc Cart failed",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  }
+
+  _res.send(response);
 };
 
 // TODO: add bg products
