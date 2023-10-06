@@ -9,24 +9,66 @@ const getAll = async (_req: Request, _res: Response) => {
     product_id = 0,
     p_type = 0,
   } = _req.query;
-
-  const data = await service.getAll({
-    limit: Number(limit),
-    page: Number(page),
-    customer_id: Number(customer_id),
-    product_id: Number(product_id),
-    p_type: Number(p_type),
-  });
-
-  _res.send({
-    data,
-    status: "success",
-    message: "Get Product Views success",
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Product Views failed",
     meta: {
-      currentPage: Number(page),
       limit: Number(limit),
+      page: Number(page),
+      customer_id: Number(customer_id),
+      product_id: Number(product_id),
+      p_type: Number(p_type),
     },
-  });
+  };
+
+  try {
+    const data = await service.getAll({});
+    response = {
+      data: data,
+      status: "success",
+      message: "Get Product Views success",
+      meta: {
+        limit: Number(limit),
+        page: Number(page),
+        customer_id: Number(customer_id),
+        product_id: Number(product_id),
+        p_type: Number(p_type),
+      },
+    };
+  } catch (_) {
+    response = {
+      data: [],
+      status: "fail",
+      message: "Get Product Views failed",
+      meta: {
+        limit: Number(limit),
+        page: Number(page),
+        customer_id: Number(customer_id),
+        product_id: Number(product_id),
+        p_type: Number(p_type),
+      },
+    };
+  }
+
+  _res.send(response);
+  // const data = await service.getAll({
+  //   limit: Number(limit),
+  //   page: Number(page),
+  //   customer_id: Number(customer_id),
+  //   product_id: Number(product_id),
+  //   p_type: Number(p_type),
+  // });
+
+  // _res.send({
+  //   data,
+  //   status: "success",
+  //   message: "Get Product Views success",
+  //   meta: {
+  //     currentPage: Number(page),
+  //     limit: Number(limit),
+  //   },
+  // });
 };
 
 const getById = async (_req: Request, _res: Response) => {
