@@ -3,16 +3,40 @@ import { Request, Response } from "express";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
-  const data = await service.getAll({ limit, page });
-  _res.send({
-    data,
-    status: "success",
-    message: "Get Lounge Post Comments success",
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Lounge Post Comments failed",
     meta: {
       currentPage: Number(page),
       limit: Number(limit),
     },
-  });
+  };
+
+  try {
+    const data = await service.getAll({ limit, page });
+    response = {
+      data: data,
+      status: "success",
+      message: "Get Lounge Post Comments success",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  } catch (_) {
+    response = {
+      data: [],
+      status: "fail",
+      message: "Get Lounge Post Comments failed",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  }
+
+  _res.send(response);
 };
 
 const getById = async (_req: Request, _res: Response) => {
