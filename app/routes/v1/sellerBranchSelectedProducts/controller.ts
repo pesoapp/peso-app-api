@@ -6,19 +6,40 @@ import ocProductBrand from "../ocProductBrand/service";
 // TODO: Add status query
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
-  const data = await service.getAll({
-    limit: Number(limit),
-    page: Number(page),
-  });
-  _res.send({
-    data,
-    status: "success",
-    message: "Get Seller Branch Selected Products success",
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Seller Branch Selected Products failed",
     meta: {
       currentPage: Number(page),
       limit: Number(limit),
     },
-  });
+  };
+
+  try {
+    const data = await service.getAll({});
+    response = {
+      data: data,
+      status: "success",
+      message: "Get Seller Branch Selected Products success",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  } catch (_) {
+    response = {
+      data: [],
+      status: "fail",
+      message: "Get Seller Branch Selected Products failed",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  }
+
+  _res.send(response);
 };
 
 const getManyByProduct = async (_req: Request, _res: Response) => {
