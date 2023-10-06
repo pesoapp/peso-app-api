@@ -3,12 +3,28 @@ import service from "./service";
 import { Request, Response } from "express";
 
 const getAll = async (_req: Request, _res: Response) => {
-  const data = await service.getAll(_req.query);
-  _res.send({
-    data,
-    status: "success",
-    message: "Get Oc Product Brand success",
-  });
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Oc Product Brand failed",
+  };
+
+  try {
+    const data = await service.getAll(_req.query);
+    response = {
+      data: data,
+      status: "success",
+      message: "Get Oc Product Brand success",
+    };
+  } catch (_) {
+    response = {
+      data: [],
+      status: "fail",
+      message: "Get Oc Product Brand failed",
+    };
+  }
+
+  _res.send(response);
 };
 
 const getById = async (_req: Request, _res: Response) => {
