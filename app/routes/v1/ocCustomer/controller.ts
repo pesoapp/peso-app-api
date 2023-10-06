@@ -5,12 +5,28 @@ import { PUSHER_INSTANCE } from "../../../utils";
 import { PUSHER } from "../../../constants";
 
 const getAll = async (_req: Request, _res: Response) => {
-  const data = await service.getAll();
-  _res.send({
-    data,
-    status: "success",
-    message: "Get Oc Customer success",
-  });
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Oc Customer failed",
+  };
+
+  try {
+    const data = await service.getAll();
+    response = {
+      data: data,
+      status: "success",
+      message: "Get Oc Customer success",
+    };
+  } catch (_) {
+    response = {
+      data: [],
+      status: "fail",
+      message: "Get Oc Customer failed",
+    };
+  }
+
+  _res.send(response);
 };
 
 const getById = async (_req: Request, _res: Response) => {
