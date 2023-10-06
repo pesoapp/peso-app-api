@@ -11,17 +11,47 @@ import { shuffle } from "../../../utils";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 1000, page = 1, customer_id = 0, search = "" } = _req.query;
-  const data = await service.getAll({ limit, page, customer_id, search });
 
-  _res.send({
-    data: shuffle(data),
-    status: "success",
-    message: "Get Auction success",
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Auction failed",
     meta: {
       currentPage: Number(page),
       limit: Number(limit),
     },
-  });
+  };
+
+  try {
+    const data = await service.getAll({
+      limit: Number(limit),
+      page: Number(page),
+      customer_id: customer_id.toString(),
+      search: search.toString(),
+    });
+
+    response = {
+      data: shuffle(data),
+      status: "success",
+      message: "Get Auction success",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  } catch (_) {
+    response = {
+      data: [],
+      status: "fail",
+      message: "Get Auction failed",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  }
+
+  _res.send(response);
 };
 
 const getById = async (_req: Request, _res: Response) => {
