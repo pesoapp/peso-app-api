@@ -3562,6 +3562,13 @@ model lounge_post_views {
   total_view  Int?
 }
 
+model auction_view {
+  id          Int  @id @default(autoincrement())
+  auction_id  Int?
+  customer_id Int?
+  total_view  Int? @default(0)
+}
+
 enum oc_recurring_frequency {
   day
   week

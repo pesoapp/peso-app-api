@@ -3,17 +3,40 @@ import { Request, Response } from "express";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
-  const data = await service.getAll();
-
-  _res.send({
-    data,
-    status: "success",
-    message: "Get Latest Promo success",
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Latest Promo failed",
     meta: {
       currentPage: Number(page),
       limit: Number(limit),
     },
-  });
+  };
+
+  try {
+    const data = await service.getAll();
+    response = {
+      data: data,
+      status: "success",
+      message: "Get Latest Promo success",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  } catch (_) {
+    response = {
+      data: [],
+      status: "fail",
+      message: "Get Latest Promo failed",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  }
+
+  _res.send(response);
 };
 
 const getById = async (_req: Request, _res: Response) => {

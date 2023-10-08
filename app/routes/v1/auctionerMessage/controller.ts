@@ -3,11 +3,27 @@ import { Request, Response } from "express";
 
 const getAll = async (_req: Request, _res: Response) => {
   const data = await service.getAll();
-  _res.send({
-    data,
-    status: "success",
-    message: "Get Auctioner Message success",
-  });
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Auctioner Message failed",
+  };
+
+  try {
+    response = {
+      data: data,
+      status: "success",
+      message: "Get Auctioner Message success",
+    };
+  } catch (_) {
+    response = {
+      data: [],
+      status: "fail",
+      message: "Get Auctioner Message failed",
+    };
+  }
+
+  _res.send(response);
 };
 
 const getById = async (_req: Request, _res: Response) => {

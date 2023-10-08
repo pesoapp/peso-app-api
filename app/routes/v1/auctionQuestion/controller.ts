@@ -5,12 +5,45 @@ import ocCustomer from "../ocCustomer/service";
 import auctionQuestionReply from "../auctionQuestionReply/service";
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
-  const data = await service.getAll({ limit, page });
-  _res.send({
-    data,
-    status: "success",
-    message: "Get Auction Question success",
-  });
+
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Auction Question failed",
+    meta: {
+      currentPage: Number(page),
+      limit: Number(limit),
+    },
+  };
+
+  try {
+    const data = await service.getAll({
+      limit: Number(limit),
+      page: Number(page),
+    });
+
+    response = {
+      data: data,
+      status: "success",
+      message: "Get Auction Question success",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  } catch (_) {
+    response = {
+      data: [],
+      status: "fail",
+      message: "Get Auction Question failed",
+      meta: {
+        currentPage: Number(page),
+        limit: Number(limit),
+      },
+    };
+  }
+
+  _res.send(response);
 };
 
 const getById = async (_req: Request, _res: Response) => {
