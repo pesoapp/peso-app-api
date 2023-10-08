@@ -5,7 +5,7 @@ const getAll = async (_req: Request, _res: Response) => {
   let response: any = {
     data: [],
     status: "fail",
-    message: "Get Oc Message Inbox Ca failed",
+    message: "Get Oc Delivery Charge Ca failed",
   };
 
   try {
@@ -13,13 +13,13 @@ const getAll = async (_req: Request, _res: Response) => {
     response = {
       data: data,
       status: "success",
-      message: "Get Oc Message Inbox Ca success",
+      message: "Get Oc Delivery Charge Ca success",
     };
   } catch (_) {
     response = {
       data: [],
       status: "fail",
-      message: "Get Oc Message Inbox Ca failed",
+      message: "Get Oc Delivery Charge Ca failed",
     };
   }
 
@@ -33,7 +33,7 @@ const getById = async (_req: Request, _res: Response) => {
   _res.send({
     data: [data],
     status: "success",
-    message: "Get Oc Message Inbox Ca success",
+    message: "Get Oc Delivery Charge Ca success",
   });
 };
 
@@ -41,7 +41,7 @@ const add = async (_req: Request, _res: Response) => {
   _res.send({
     data: [],
     status: "success",
-    message: "Add Oc Message Inbox Ca success",
+    message: "Add Oc Delivery Charge Ca success",
   });
 };
 
@@ -49,7 +49,7 @@ const update = async (_req: Request, _res: Response) => {
   _res.send({
     data: [],
     status: "success",
-    message: "Update Oc Message Inbox Ca success",
+    message: "Update Oc Delivery Charge Ca success",
   });
 };
 
@@ -57,7 +57,7 @@ const removeOne = async (_req: Request, _res: Response) => {
   _res.send({
     data: [],
     status: "success",
-    message: "Update Oc Message Inbox Ca success",
+    message: "Update Oc Delivery Charge Ca success",
   });
 };
 
