@@ -3,6 +3,7 @@ import ocCustomer from "../ocCustomer/service";
 import ocAddress from "../ocAddress/service";
 import auctionCart from "../auctionCart/service";
 import { Request, Response } from "express";
+
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
   let response: any = {
@@ -30,11 +31,11 @@ const getAll = async (_req: Request, _res: Response) => {
         limit: Number(limit),
       },
     };
-  } catch (_) {
+  } catch (_: any) {
     response = {
       data: [],
       status: "fail",
-      message: "Get Auction Order failed",
+      message: _.toString(),
       meta: {
         currentPage: Number(page),
         limit: Number(limit),
@@ -47,22 +48,33 @@ const getAll = async (_req: Request, _res: Response) => {
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.getById(Number(id));
 
-  if (!data) {
-    _res.send({
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await service.getById(Number(id));
+    if (!data) {
+      throw new Error();
+    }
+
+    response = {
+      data: [],
+      status: "success",
+      message: "Get Auction Order success",
+    };
+  } catch (_: any) {
+    response = {
       data: [],
       status: "fail",
-      message: "Get Auction Order failed",
-    });
-    return;
+      message: _.toString(),
+    };
   }
 
-  _res.send({
-    data: [],
-    status: "success",
-    message: "Get Auction Order success",
-  });
+  _res.send(response);
 };
 
 const add = async (_req: Request<any, any, any>, _res: Response) => {
