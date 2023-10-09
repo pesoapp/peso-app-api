@@ -13,6 +13,8 @@ const getOne = async (_query: any) => {
 };
 
 const getManyByIds = async (customer_ids: any[], comment_ids: any[]) => {
+  if (customer_ids.length == 0 || comment_ids.length == 0) return [];
+
   return await prisma.$queryRawUnsafe<any[]>(
     "SELECT * FROM lounge_comment_social WHERE customer_id IN (" +
       customer_ids +
