@@ -130,7 +130,17 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
   });
 };
 
-const update = async (_req: Request, _res: Response) => {};
+const update = async (_req: Request, _res: Response) => {
+  const { id } = _req.params;
+  const { side_images, ...res } = _req.body;
+  const data = await service.update(Number(id), res);
+  const temp = await auctionSideImages.addMany(data.id ?? 0, side_images);
+  _res.send({
+    data: [{ data, side_images: temp }],
+    status: "success",
+    message: "Edit Auction success",
+  });
+};
 
 const post = async (_req: Request, _res: Response) => {
   const { id } = _req.params;
