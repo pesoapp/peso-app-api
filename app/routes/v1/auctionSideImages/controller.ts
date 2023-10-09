@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 5, page = 1 } = _req.query;
+
   let response: any = {
     data: [],
     status: "fail",
@@ -24,11 +25,11 @@ const getAll = async (_req: Request, _res: Response) => {
         limit: Number(limit),
       },
     };
-  } catch (_) {
+  } catch (_: any) {
     response = {
       data: [],
       status: "fail",
-      message: "Get Auction Side Images failed",
+      message: _.toString(),
       meta: {
         currentPage: Number(page),
         limit: Number(limit),
@@ -41,21 +42,54 @@ const getAll = async (_req: Request, _res: Response) => {
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.getById(Number(id));
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Get Auction Side Images success",
-  });
+
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await service.getById(Number(id));
+    response = {
+      data: [data],
+      status: "success",
+      message: "Get Auction Side Images success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
+
+  _res.send(response);
 };
 
 const add = async (_req: Request, _res: Response) => {
-  const data = await service.add(_req.body);
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Add Auction success",
-  });
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await service.add(_req.body);
+    response = {
+      data: [data],
+      status: "success",
+      message: "Add Auction success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
+
+  _res.send(response);
 };
 
 const update = async (_req: Request, _res: Response) => {};
