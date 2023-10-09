@@ -43,54 +43,119 @@ const getAll = async (_req: Request, _res: Response) => {
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.getById(Number(id));
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Get Auction Bid success",
-  });
+
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Get Auction Bid fail",
+  };
+
+  try {
+    const data = await service.getById(Number(id));
+    response = {
+      data: [data],
+      status: "success",
+      message: "Get Auction Bid success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
+  _res.send(response);
 };
 
 const getByAuction = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.getByAuction(Number(id));
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
 
-  const temp =
-    (await ocCustomer.getManyByCustomer(data.map((e: any) => e.customer_id))) ??
-    [];
+  try {
+    const data = await service.getByAuction(Number(id));
+    const temp =
+      (await ocCustomer.getManyByCustomer(
+        data.map((e: any) => e.customer_id)
+      )) ?? [];
 
-  data.map((e: any) => {
-    e.customer = temp.find(
-      (customer: any) => (customer.customer_id = e.customer_id)
-    );
-    return e;
-  });
+    data.map((e: any) => {
+      e.customer = temp.find(
+        (customer: any) => (customer.customer_id = e.customer_id)
+      );
+      return e;
+    });
 
-  _res.send({
-    data,
-    status: "success",
-    message: "Get Auction Bid success",
-  });
+    response = {
+      data,
+      status: "success",
+      message: "Get Auction Bid success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
+
+  _res.send(response);
 };
 
 const add = async (_req: Request, _res: Response) => {
-  const data = await service.add(_req.body);
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Add Auction Bid success",
-  });
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await service.add(_req.body);
+    response = {
+      data: [data],
+      status: "success",
+      message: "Add Auction Bid success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
+  _res.send(response);
 };
 
 const approve = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.approve(Number(id));
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Approve Auction Bid success",
-  });
+
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await service.approve(Number(id));
+    response = {
+      data: [data],
+      status: "success",
+      message: "Approve Auction Bid success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
+
+  _res.send(response);
 };
+
 const update = async (_req: Request, _res: Response) => {};
 
 const removeOne = async (_req: Request, _res: Response) => {};
