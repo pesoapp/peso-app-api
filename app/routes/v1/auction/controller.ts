@@ -147,7 +147,7 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
     const data = await service.add(res);
     const temp = await auctionSideImages.addMany(data.id ?? 0, side_images);
     response = {
-      data: [{ data, side_images: temp }],
+      data: [{ ...data, side_images: temp }],
       status: "success",
       message: "Add Auction success",
     };
