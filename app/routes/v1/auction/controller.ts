@@ -176,7 +176,7 @@ const update = async (_req: Request, _res: Response) => {
     const temp = await auctionSideImages.addMany(data.id ?? 0, side_images);
 
     response = {
-      data: [{ data, side_images: temp }],
+      data: [{ ...data, side_images: temp }],
       status: "success",
       message: "Edit Auction success",
     };
