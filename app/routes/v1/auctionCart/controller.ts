@@ -28,15 +28,11 @@ const getAll = async (_req: Request, _res: Response) => {
         limit: Number(limit),
       },
     };
-  } catch (_) {
+  } catch (_: any) {
     response = {
       data: [],
       status: "fail",
-      message: "Get Auction Cart failed",
-      meta: {
-        currentPage: Number(page),
-        limit: Number(limit),
-      },
+      message: _.toString(),
     };
   }
 
@@ -45,45 +41,75 @@ const getAll = async (_req: Request, _res: Response) => {
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.getById(Number(id));
 
-  if (!data) {
-    _res.send({
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await service.getById(Number(id));
+
+    if (!data) {
+      throw new Error();
+    }
+
+    response = {
+      data: [data],
+      status: "success",
+      message: "Get Auction Cart success",
+    };
+  } catch (_: any) {
+    response = {
       data: [],
       status: "fail",
-      message: "Get Auction Cart failed",
-    });
-    return;
+      message: _.toString(),
+    };
   }
 
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Get Auction Cart success",
-  });
+  _res.send(response);
 };
 
 const getByCustomer = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.getByCustomer(Number(id));
-  const auctionTemp = await auction.getManyById(
+
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await service.getByCustomer(Number(id));
+    const auctionTemp = await auction.getManyById(
+      data.map((e: any) => {
+        return e.auction_id;
+      })
+    );
+
     data.map((e: any) => {
-      return e.auction_id;
-    })
-  );
+      e.auction = auctionTemp.find((auc: any) => auc.id == e.auction_id);
+      return e;
+    });
 
-  data.map((e: any) => {
-    e.auction = auctionTemp.find((auc: any) => auc.id == e.auction_id);
-    return e;
-  });
+    response = {
+      data: data.reverse(),
+      status: "success",
+      message: "Get Auction Cart success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
 
-  _res.send({
-    data: data.reverse(),
-    status: "success",
-    message: "Get Auction Cart success",
-  });
+  _res.send(response);
 };
 
+// TODO
 const getAuctionRatesById = async (_req: Request, _res: Response) => {
   const { cart_ids = [], cust_def_add = 1 } = _req.query;
   if (!Array.isArray(cart_ids)) {
@@ -139,27 +165,58 @@ const getAuctionRatesById = async (_req: Request, _res: Response) => {
 
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   //TODO: Update only if auction cart already exissts
-  const data = await service.add(_req.body);
 
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Add Auction Cart success",
-  });
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await service.add(_req.body);
+    response = {
+      data: [data],
+      status: "success",
+      message: "Add Auction Cart success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
+
+  _res.send(response);
 };
 
 const update = async (_req: Request, _res: Response) => {};
 
 const updateQuantity = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
 
-  const data = await service.updateQuantity(Number(id), _req.body);
+  try {
+    const data = await service.updateQuantity(Number(id), _req.body);
 
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Add Auction Cart success",
-  });
+    response = {
+      data: [data],
+      status: "success",
+      message: "Add Auction Cart success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
+
+  _res.send(response);
 };
 const removeOne = async (_req: Request, _res: Response) => {
   _res.send({
