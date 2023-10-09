@@ -15,11 +15,11 @@ const getAll = async (_req: Request, _res: Response) => {
       status: "success",
       message: "Get Auctioner Message success",
     };
-  } catch (_) {
+  } catch (_: any) {
     response = {
       data: [],
       status: "fail",
-      message: "Get Auctioner Message failed",
+      message: _.toString(),
     };
   }
 
@@ -28,13 +28,27 @@ const getAll = async (_req: Request, _res: Response) => {
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
 
-  const data = await service.getById(Number(id));
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Get Auctioner Message success",
-  });
+  try {
+    const data = await service.getById(Number(id));
+    response = {
+      data: [data],
+      status: "success",
+      message: "Get Auctioner Message success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
+  _res.send(response);
 };
 
 const add = async (_req: Request, _res: Response) => {
