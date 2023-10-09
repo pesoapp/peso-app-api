@@ -56,7 +56,8 @@ const add = async (_body: any) => {
       customer_id: _body.customer_id,
       date_added: new Date(),
       quantity: 1,
-      due: new Date(_body.due),
+      // @ts-ignore
+      due: Date.parse(_body.due),
     },
   });
 };
