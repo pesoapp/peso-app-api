@@ -44,8 +44,9 @@ import bgProductRoute from "./bgProduct/route";
 import addressTrackerRoute from "./addressTracker/route";
 import auctionOrderRoute from "./auctionOrder/route";
 import loungeCommentSocialRoute from "./loungeCommentSocial/route";
-
+import auctionLikesRoute from "./auctionLikes/route";
 export default {
+  auctionLikesRoute,
   loungeCommentSocialRoute,
   auctionOrderRoute,
   addressTrackerRoute,
