@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { PUSHER_INSTANCE } from "../../../utils";
 import { PUSHER } from "../../../constants";
 
-const getAll = async (_req: Request, _res: Response) => {
+const getAllActive = async (_req: Request, _res: Response) => {
   let response: any = {
     data: [],
     status: "fail",
@@ -12,17 +12,17 @@ const getAll = async (_req: Request, _res: Response) => {
   };
 
   try {
-    const data = await service.getAll();
+    const data = await service.getAllActive();
     response = {
-      data: data,
+      data,
       status: "success",
       message: "Get Oc Customer success",
     };
-  } catch (_) {
+  } catch (_: any) {
     response = {
       data: [],
       status: "fail",
-      message: "Get Oc Customer failed",
+      message: _.toString(),
     };
   }
 
@@ -86,4 +86,4 @@ const setAddress = async (_req: Request, _res: Response) => {
 
 const removeOne = async (_req: Request, _res: Response) => {};
 
-export { toggleActiveStatus, getById, setAddress };
+export { getAllActive, toggleActiveStatus, getById, setAddress };

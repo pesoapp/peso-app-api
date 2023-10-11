@@ -1,7 +1,11 @@
 import { prisma } from "../../../db";
 
-const getAll = async () => {
-  return await prisma.oc_customer.findMany();
+const getAllActive = async () => {
+  return await prisma.oc_customer.findMany({
+    where: {
+      live_video_status: true,
+    },
+  });
 };
 
 const setAddress = async (customer_id: number, address_id: number) => {
@@ -104,7 +108,7 @@ export default {
   toggleActiveStatus,
   getManyByCustomer,
   getById,
-  getAll,
+  getAllActive,
   add,
   update,
   removeOne,
