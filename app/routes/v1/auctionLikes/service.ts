@@ -1,5 +1,13 @@
 import { prisma } from "../../../db";
 
+const getByAuction = async (query: any) => {
+  return await prisma.auction_likes.findMany({
+    where: {
+      auction_id: query.auction_id,
+    },
+  });
+};
+
 const getOne = async (query: any) => {
   return await prisma.$queryRawUnsafe<any[]>(
     "SELECT * FROM auction_likes where auction_id=" +
@@ -28,4 +36,4 @@ const removeOne = async (id: number) => {
   });
 };
 
-export default { add, removeOne, getOne };
+export default { getByAuction, add, removeOne, getOne };
