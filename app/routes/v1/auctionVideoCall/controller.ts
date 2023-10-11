@@ -56,11 +56,7 @@ const getById = async (_req: Request, _res: Response) => {
     const data = await service.getById(Number(id));
 
     if (!data) {
-      response = {
-        data: [],
-        status: "fail",
-        message: "Get Auction Video Call failed",
-      };
+      throw new Error();
     }
 
     response = {
