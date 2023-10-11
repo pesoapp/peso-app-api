@@ -28,11 +28,11 @@ const getAll = async (_req: Request, _res: Response) => {
         limit: Number(limit),
       },
     };
-  } catch (_) {
+  } catch (_: any) {
     response = {
       data: [],
       status: "fail",
-      message: "Get Auction Video Call failed",
+      message: _.toString(),
       meta: {
         currentPage: Number(page),
         limit: Number(limit),
@@ -45,78 +45,109 @@ const getAll = async (_req: Request, _res: Response) => {
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const data = await service.getById(Number(id));
 
-  if (!data) {
-    _res.send({
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await service.getById(Number(id));
+
+    if (!data) {
+      response = {
+        data: [],
+        status: "fail",
+        message: "Get Auction Video Call failed",
+      };
+    }
+
+    response = {
+      data: [data],
+      status: "success",
+      message: "Get Auction Video Call success",
+    };
+  } catch (_: any) {
+    response = {
       data: [],
       status: "fail",
-      message: "Get Auction Video Call failed",
-    });
-    return;
+      message: _.toString(),
+    };
   }
 
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Get Auction Video Call success",
-  });
+  _res.send(response);
 };
 
 // TODO: return link if video call already exists
 const add = async (_req: Request<any, any, any>, _res: Response) => {
-  const data = await service.add(_req.body);
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
 
-  const ocCustomerTemp = await ocCustomer.getById(
-    Number(_req.body.customer_id)
-  );
+  try {
+    const data = await service.add(_req.body);
 
-  await PUSHER_INSTANCE.triggerBatch([
-    {
-      channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
-      name: PUSHER.NAME.VIDEO_COUNT,
-      data: {
-        customerName: `${ocCustomerTemp?.firstname} ${ocCustomerTemp?.lastname}`,
-        customerId: _req.body.auctioner_id,
-        status: 0,
+    const ocCustomerTemp = await ocCustomer.getById(
+      Number(_req.body.customer_id)
+    );
+
+    await PUSHER_INSTANCE.triggerBatch([
+      {
+        channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
+        name: PUSHER.NAME.VIDEO_COUNT,
+        data: {
+          customerName: `${ocCustomerTemp?.firstname} ${ocCustomerTemp?.lastname}`,
+          customerId: _req.body.auctioner_id,
+          status: 0,
+        },
       },
-    },
-    {
-      channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
-      name: PUSHER.NAME.VIDEO_NOTIFICATION,
-      data: {
-        customerName: `${ocCustomerTemp?.firstname} ${ocCustomerTemp?.lastname}`,
-        customerId: _req.body.auctioner_id,
-        status: 0,
+      {
+        channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
+        name: PUSHER.NAME.VIDEO_NOTIFICATION,
+        data: {
+          customerName: `${ocCustomerTemp?.firstname} ${ocCustomerTemp?.lastname}`,
+          customerId: _req.body.auctioner_id,
+          status: 0,
+        },
       },
-    },
-    {
-      channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
-      name: PUSHER.NAME.ID,
-      data: data.id,
-    },
-    {
-      channel: PUSHER.CHANNEL.MESSAGE_CHANNEL,
-      name: PUSHER.NAME.MESSAGE,
-      data: _req.body.auctioner_id,
-    },
-  ]);
+      {
+        channel: PUSHER.CHANNEL.AUCTION_VIDEO_CALL,
+        name: PUSHER.NAME.ID,
+        data: data.id,
+      },
+      {
+        channel: PUSHER.CHANNEL.MESSAGE_CHANNEL,
+        name: PUSHER.NAME.MESSAGE,
+        data: _req.body.auctioner_id,
+      },
+    ]);
 
-  await conversation.sendMessage({
-    customer_id: _req.body.customer_id,
-    receiver_id: _req.body.auctioner_id,
-    message: "Ongoing Video Call",
-    auction_id: _req.body.auction_id,
-    smstype: "CALL",
-    status: 0,
-    call_id: data.id,
-  });
+    await conversation.sendMessage({
+      customer_id: _req.body.customer_id,
+      receiver_id: _req.body.auctioner_id,
+      message: "Ongoing Video Call",
+      auction_id: _req.body.auction_id,
+      smstype: "CALL",
+      status: 0,
+      call_id: data.id,
+    });
+    response = {
+      data: [data],
+      status: "success",
+      message: "Add Auction Video Call success",
+    };
+  } catch (_: any) {
+    response = {
+      data: [],
+      status: "fail",
+      message: _.toString(),
+    };
+  }
 
-  _res.send({
-    data: [data],
-    status: "success",
-    message: "Add Auction Video Call success",
-  });
+  _res.send(response);
 };
 
 const update = async (_req: Request, _res: Response) => {};
