@@ -4,82 +4,125 @@ import ocCustomer from "../ocCustomer/service";
 import { parseCredential } from "../../../utils";
 const login = async (_req: Request<any, any, any>, _res: Response) => {
   const { credential = "", password = "" } = _req.body;
-  const data = await service.login(parseCredential(credential), password);
 
-  if (data.length == 0) {
-    _res.send({
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await service.login(parseCredential(credential), password);
+
+    if (data.length == 0) {
+      throw new Error();
+    }
+
+    response = {
+      data,
+      status: "success",
+      message: "Login success",
+    };
+  } catch (_: any) {
+    response = {
       data: [],
       status: "fail",
-      message: "Login failed",
-    });
-    return;
+      message: _.toString(),
+    };
   }
 
-  _res.send({
-    data,
-    status: "success",
-    message: "Login success",
-  });
+  _res.send(response);
 };
 
 const google = async (_req: Request<any, any, any>, _res: Response) => {
   const { email = "" } = _req.body;
-  const data = await ocCustomer.getByEmail(email);
 
-  if (data) {
-    _res.send({
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
+
+  try {
+    const data = await ocCustomer.getByEmail(email);
+
+    if (data) {
+      throw new Error();
+    }
+    response = {
+      data,
+      status: "success",
+      message: "Google Login success",
+    };
+  } catch (_: any) {
+    response = {
       data: [],
       status: "fail",
-      message: "Google Login failed",
-    });
-    return;
+      message: _.toString(),
+    };
   }
 
-  _res.send({
-    data,
-    status: "success",
-    message: "Google Login success",
-  });
+  _res.send(response);
 };
 
 const facebook = async (_req: Request<any, any, any>, _res: Response) => {
   const { email = "" } = _req.body;
-  const data = await ocCustomer.getByEmail(email);
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
 
-  if (data) {
-    _res.send({
+  try {
+    const data = await ocCustomer.getByEmail(email);
+
+    if (data) {
+      throw new Error();
+    }
+    response = {
+      data,
+      status: "success",
+      message: "Facebook Login success",
+    };
+  } catch (_: any) {
+    response = {
       data: [],
       status: "fail",
-      message: "Facebook Login failed",
-    });
-    return;
+      message: _.toString(),
+    };
   }
 
-  _res.send({
-    data,
-    status: "success",
-    message: "Facebook Login success",
-  });
+  _res.send(response);
 };
 
 const apple = async (_req: Request<any, any, any>, _res: Response) => {
   const { email = "" } = _req.body;
-  const data = await ocCustomer.getByEmail(email);
+  let response: any = {
+    data: [],
+    status: "fail",
+    message: "Server failure",
+  };
 
-  if (data) {
-    _res.send({
+  try {
+    const data = await ocCustomer.getByEmail(email);
+
+    if (data) {
+      throw new Error();
+    }
+    response = {
+      data,
+      status: "success",
+      message: "Apple Login success",
+    };
+  } catch (_: any) {
+    response = {
       data: [],
       status: "fail",
-      message: "Apple Login failed",
-    });
-    return;
+      message: _.toString(),
+    };
   }
 
-  _res.send({
-    data,
-    status: "success",
-    message: "Apple Login success",
-  });
+  _res.send(response);
 };
 
 export { apple, facebook, google, login };
