@@ -25,6 +25,15 @@ const add = async (_body: any) => {
 
 const update = async (filter: any, _body: any, session: any) => {};
 
-const removeOne = async (filter: any, session: any) => {};
+const removeOne = async (filter: any) => {
+  const { customer_id, particulars } = filter;
+  return await prisma.$executeRawUnsafe<any[]>(
+    "DELETE FROM oc_customer_wallet where customer_id = " +
+      customer_id +
+      " and particulars ='" +
+      particulars +
+      "' "
+  );
+};
 
 export default { getById, getAll, add, update, removeOne };
