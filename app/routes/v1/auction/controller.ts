@@ -57,6 +57,7 @@ const getAll = async (_req: Request, _res: Response) => {
 
 const getById = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
+  const { customer_id = 0 } = _req.query;
   let response: any = {
     data: [],
     status: "fail",
@@ -66,8 +67,24 @@ const getById = async (_req: Request, _res: Response) => {
     const data = await service.getById(Number(id));
 
     if (!data) {
-      _res.send(response);
-      return;
+      throw new Error();
+    }
+
+    const viewsTemp = await auctionView.get({
+      auction_id: data?.id || 0,
+      customer_id: Number(customer_id),
+    });
+
+    if (viewsTemp.length !== 0) {
+      await auctionView.incrementView({
+        auction_id: data?.id || 0,
+        customer_id: Number(customer_id),
+      });
+    } else {
+      await auctionView.add({
+        auction_id: data?.id || 0,
+        customer_id: Number(customer_id),
+      });
     }
 
     const ocCustomerTemp = await ocCustomer.getById(data?.customer_id || 0);
