@@ -8,8 +8,8 @@ import auctionSideImages from "../auctionSideImages/service";
 import auctionQuestion from "../auctionQuestion/service";
 import auctionBid from "../auctionBid/service";
 import auctionLikes from "../auctionLikes/service";
+import auctionView from "../auctionView/service";
 import { shuffle } from "../../../utils";
-
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 1000, page = 1, customer_id = 0, search = "" } = _req.query;
 
@@ -112,6 +112,9 @@ const getById = async (_req: Request, _res: Response) => {
     const auctionLikesTemp =
       (await auctionLikes.getByAuction(data?.id || 0)) ?? [];
 
+    const auctionViewTemp =
+      (await auctionView.getByAuction(data?.id || 0)) ?? [];
+
     response = {
       data: [
         {
@@ -123,6 +126,7 @@ const getById = async (_req: Request, _res: Response) => {
           questions: auctionQuestionTemp,
           bids: auctionBidTemp,
           likes: auctionLikesTemp.length,
+          view: auctionViewTemp.length,
           ...data,
         },
       ],
