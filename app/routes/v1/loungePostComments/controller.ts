@@ -92,6 +92,10 @@ const getByPost = async (_req: Request, _res: Response) => {
     e.liked = loungeCommentSocialTemp.some(
       (comment: any) => comment.comment_id == e.comment_id
     );
+
+    e.replies = loungeCommentSocialTemp.filter(
+      (comment: any) => comment.comment_parent_id == e.comment_id
+    ).length;
     return e;
   });
 
