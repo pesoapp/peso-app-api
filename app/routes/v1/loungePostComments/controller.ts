@@ -1,6 +1,7 @@
 import service from "./service";
+import ocCustomer from "../ocCustomer/service";
+import loungeCommentSocial from "../loungeCommentSocial/service";
 import { Request, Response } from "express";
-
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
   let response: any = {
@@ -61,8 +62,38 @@ const getById = async (_req: Request, _res: Response) => {
 
 const getByPost = async (_req: Request, _res: Response) => {
   const { id = 0 } = _req.params;
-  const { comment_parent_id = 0 } = _req.query;
+  const { comment_parent_id = 0, customer_id = 0 } = _req.query;
   const data = await service.getByPost(Number(id), Number(comment_parent_id));
+
+  const ocCustomerTemp = await ocCustomer.getManyByCustomer([
+    ...new Set<number>(data.map((e: any) => e.customer_id)),
+  ]);
+
+  data.map((e: any) => {
+    e.customer = ocCustomerTemp.find(
+      (customer: any) => customer.customer_id == e.customer_id
+    );
+
+    return e;
+  });
+
+  const loungeCommentSocialTemp = await loungeCommentSocial.getManyByIds(
+    [...new Set<number>(data.map((e: any) => e.customer_id))],
+    [...new Set<number>(data.map((e: any) => e.comment_id))]
+  );
+
+  data.map((e: any) => {
+    e.customer = ocCustomerTemp.find(
+      (customer: any) => customer.customer_id == e.customer_id
+    );
+    e.likes = loungeCommentSocialTemp.filter(
+      (comment: any) => comment.comment_id == e.comment_id
+    ).length;
+    e.liked = loungeCommentSocialTemp.some(
+      (comment: any) => comment.comment_id == e.comment_id
+    );
+    return e;
+  });
 
   _res.send({
     data,
