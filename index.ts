@@ -1,15 +1,23 @@
 require("dotenv").config();
+import "express-async-errors";
 import ENV from "./app/env";
 import { addRoutes } from "./app/routes";
 import { addMiddlewares } from "./app/middlewares";
-
 import express, { Request, Response, Express } from "express";
 import fs from "fs";
-
 const app: Express = express();
 
 addMiddlewares(app);
 addRoutes(app);
+
+app.use(function (err: any, req: any, res: any, next: any) {
+  res.status(403);
+  res.json({
+    data: [],
+    status: "fail",
+    message: "Something wrong with the server",
+  });
+});
 
 app.get("/api/healthchecker", (req: Request, res: Response) => {
   res.status(200).json({
