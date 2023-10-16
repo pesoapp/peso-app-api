@@ -10,15 +10,6 @@ const app: Express = express();
 addMiddlewares(app);
 addRoutes(app);
 
-app.use(function (err: any, req: any, res: any, next: any) {
-  res.status(403);
-  res.json({
-    data: [],
-    status: "fail",
-    message: "Something wrong with the server",
-  });
-});
-
 app.get("/api/healthchecker", (req: Request, res: Response) => {
   res.status(200).json({
     status: "success",
@@ -30,6 +21,15 @@ app.all("*", (req: Request, res: Response) => {
   res.status(404).json({
     status: "fail",
     message: `Route: ${req.originalUrl} does not exist on this server`,
+  });
+});
+
+app.use(function (err: any, req: any, res: any, next: any) {
+  res.status(403);
+  res.json({
+    data: [],
+    status: "fail",
+    message: "Something wrong with the server",
   });
 });
 
