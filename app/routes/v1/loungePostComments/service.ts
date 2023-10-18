@@ -21,7 +21,6 @@ const getByPost = async (id: number, parent: number = 0) => {
   return await prisma.lounge_post_comments.findMany({
     where: {
       post_id: id,
-      comment_parent_id: parent,
     },
   });
 };
