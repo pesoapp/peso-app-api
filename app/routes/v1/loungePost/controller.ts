@@ -163,9 +163,12 @@ const getById = async (_req: Request, _res: Response) => {
   const sharesTemp = await service.getManyParentIds(
     [data?.post_id ?? 0].filter((e: number) => e != 0)
   );
-  const loungePostViewsTemp = await loungePostViews.getManyByPost(
-    data?.post_id ?? 0
-  );
+  await loungePostViews.add(data?.post_id ?? 0, Number(customer_id ?? 0));
+
+  const loungePostViewsTemp = (
+    await loungePostViews.getManyByPost(data?.post_id ?? 0)
+  ).reduce((acc: any, curr: any) => curr.total_view + acc, 0);
+
   _res.send({
     data: [
       {
@@ -177,7 +180,7 @@ const getById = async (_req: Request, _res: Response) => {
         liked: loungeSocialTemp.some((e: any) => e.customer_id == customer_id),
         comments: loungePostCommentsTemp,
         shares: sharesTemp.length,
-        views: loungePostViewsTemp.length,
+        views: loungePostViewsTemp,
       },
     ],
     status: "success",
