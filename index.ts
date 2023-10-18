@@ -29,7 +29,7 @@ app.use(function (err: any, req: any, res: any, next: any) {
   res.json({
     data: [],
     status: "fail",
-    message: "Something wrong with the server",
+    message: err.toString(),
   });
 });
 

@@ -86,16 +86,15 @@ const getByPost = async (_req: Request, _res: Response) => {
     e.customer = ocCustomerTemp.find(
       (customer: any) => customer.customer_id == e.customer_id
     );
+
     e.likes = loungeCommentSocialTemp.filter(
       (comment: any) => comment.comment_id == e.comment_id
     ).length;
+
     e.liked = loungeCommentSocialTemp.some(
       (comment: any) => comment.comment_id == e.comment_id
     );
 
-    e.replies = loungeCommentSocialTemp.filter(
-      (comment: any) => comment.comment_parent_id == e.comment_id
-    ).length;
     return e;
   });
 
