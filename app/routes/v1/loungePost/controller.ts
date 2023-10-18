@@ -5,7 +5,7 @@ import loungeGroup from "../loungeGroup/service";
 import loungeSocial from "../loungeSocial/service";
 import loungePostComments from "../loungePostComments/service";
 import loungeCommentSocial from "../loungeCommentSocial/service";
-
+import loungePostViews from "../loungePostViews/service";
 import {
   parseLoungePostTitle,
   shuffle,
@@ -163,6 +163,9 @@ const getById = async (_req: Request, _res: Response) => {
   const sharesTemp = await service.getManyParentIds(
     [data?.post_id ?? 0].filter((e: number) => e != 0)
   );
+  const loungePostViewsTemp = await loungePostViews.getManyByPost(
+    data?.post_id ?? 0
+  );
   _res.send({
     data: [
       {
@@ -174,6 +177,7 @@ const getById = async (_req: Request, _res: Response) => {
         liked: loungeSocialTemp.some((e: any) => e.customer_id == customer_id),
         comments: loungePostCommentsTemp,
         shares: sharesTemp.length,
+        views: loungePostViewsTemp.length,
       },
     ],
     status: "success",
