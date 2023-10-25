@@ -113,8 +113,6 @@ const getById = async (_req: Request, _res: Response) => {
       return e;
     });
 
-    console.log(auctionQuestionReplyTemp);
-
     const ocCustomersTemp =
       (await ocCustomer.getManyByCustomer(
         auctionQuestionTemp.map((e: any) => e.customer_id)
