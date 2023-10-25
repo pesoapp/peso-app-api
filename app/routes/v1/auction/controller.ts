@@ -9,6 +9,7 @@ import auctionQuestion from "../auctionQuestion/service";
 import auctionBid from "../auctionBid/service";
 import auctionLikes from "../auctionLikes/service";
 import auctionView from "../auctionView/service";
+import auctionQuestionReply from "../auctionQuestionReply/service";
 import { shuffle } from "../../../utils";
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 1000, page = 1, customer_id = 0, search = "" } = _req.query;
@@ -100,6 +101,19 @@ const getById = async (_req: Request, _res: Response) => {
     const auctionQuestionTemp = await auctionQuestion.getByAuction(
       data?.id || 0
     );
+    const auctionQuestionReplyTemp =
+      await auctionQuestionReply.getByAuctionQuestions([
+        ...new Set([...auctionQuestionTemp.map((e: any) => e.id)]),
+      ]);
+
+    auctionQuestionTemp.map((e: any) => {
+      e.replies = auctionQuestionReplyTemp.filter(
+        (reply: any) => reply.question_id == e.id
+      );
+      return e;
+    });
+
+    console.log(auctionQuestionReplyTemp);
 
     const ocCustomersTemp =
       (await ocCustomer.getManyByCustomer(
@@ -140,7 +154,10 @@ const getById = async (_req: Request, _res: Response) => {
           condition: conditionTemp,
           address: ocAddressTemp,
           side_images: auctionSideImagesTemp,
-          questions: auctionQuestionTemp,
+          questions: auctionQuestionTemp.slice(
+            0,
+            auctionQuestionTemp.length > 5 ? auctionQuestionTemp.length - 1 : 4
+          ),
           bids: auctionBidTemp,
           likes: auctionLikesTemp.length,
           view: auctionViewTemp.length,
