@@ -173,12 +173,27 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
   };
 
   try {
-    const data = await service.add(_req.body);
-    response = {
-      data: [data],
-      status: "success",
-      message: "Add Auction Cart success",
-    };
+    const customerCart = await service.checkIfCartExist(_req.body);
+    console.log(customerCart);
+    if (customerCart.length != 0) {
+      const maxTemp = await service.getMaxQuantityByAuctionId(
+        _req.body.auction_id
+      );
+      const max = maxTemp[0].quantity ?? 1;
+      await service.updateCartExist({ max, ..._req.body });
+      response = {
+        data: [],
+        status: "success",
+        message: "Update Auction Cart success",
+      };
+    } else {
+      const data = await service.add({ ..._req.body });
+      response = {
+        data: [],
+        status: "success",
+        message: "Add Auction Cart success",
+      };
+    }
   } catch (_: any) {
     response = {
       data: [],

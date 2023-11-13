@@ -47,6 +47,43 @@ const getByAuctionPriceCustomer = async (
   });
 };
 
+const checkIfCartExist = async (body: any) => {
+  return await prisma.$queryRawUnsafe<any[]>(
+    "SELECT * from auction_cart where auction_id =" +
+      body.auction_id +
+      " and price=" +
+      body.price +
+      " and customer_id=" +
+      body.customer_id +
+      " limit 1"
+  );
+};
+
+const getMaxQuantityByAuctionId = async (auction_id: any) => {
+  return await prisma.$queryRawUnsafe<any[]>(
+    "SELECT quantity from auction where id =" + auction_id + ""
+  );
+};
+
+function getDate(date: any) {
+  const temp = new Date(date);
+  return `${temp.getFullYear()}-${temp.getUTCMonth()}-${temp.getDay()} ${temp.getHours()}:${temp.getMinutes()}:${temp.getSeconds()}.000`;
+}
+
+const updateCartExist = async (body: any) => {
+  return await prisma.$executeRawUnsafe<any[]>(
+    "UPDATE auction_cart set quantity=IF(quantity + 1 > " +
+      body.max +
+      "," +
+      body.max +
+      ",quantity + 1), due = '" +
+      getDate(body.due) +
+      "' where id=" +
+      body.id +
+      ""
+  );
+};
+
 const add = async (_body: any) => {
   return await prisma.auction_cart.create({
     data: {
@@ -56,8 +93,7 @@ const add = async (_body: any) => {
       customer_id: _body.customer_id,
       date_added: new Date(),
       quantity: 1,
-      // @ts-ignore
-      due: Date.parse(_body.due),
+      due: new Date(_body.due),
     },
   });
 };
@@ -84,6 +120,9 @@ export default {
   getByCustomer,
   getAll,
   add,
+  getMaxQuantityByAuctionId,
+  checkIfCartExist,
+  updateCartExist,
   update,
   removeOne,
   getById,
