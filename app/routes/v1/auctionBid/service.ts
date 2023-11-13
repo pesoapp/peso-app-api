@@ -35,6 +35,12 @@ const add = async (_body: any) => {
   });
 };
 
+function addOneDay(date = new Date()) {
+  date.setDate(date.getDate() + 1);
+
+  return date;
+}
+
 const approve = async (id: any) => {
   return await prisma.auction_bid.update({
     where: {
@@ -42,6 +48,7 @@ const approve = async (id: any) => {
     },
     data: {
       is_approved: true,
+      approval_due: addOneDay(),
     },
   });
 };
