@@ -1,23 +1,16 @@
 import { prisma } from "../../../db";
 
 const getAll = async (_query: any) => {
-  const { limit = 20, page = 1, customer_id = 0, search = "" } = _query;
+  const {
+    limit = 20,
+    page = 1,
+    customer_id = 0,
+    search = "",
+    categories = [],
+    brands = [],
+  } = _query;
 
-  if (customer_id != 0) {
-    return await prisma.auction.findMany({
-      skip: page - 1 != 0 ? limit * page : 0,
-      take: Number(limit),
-      include: {
-        condition: true,
-      },
-      where: {
-        customer_id: Number(customer_id),
-        deleted_at: null,
-      },
-    });
-  }
-
-  return await prisma.auction.findMany({
+  let temp: any = {
     skip: page - 1 != 0 ? limit * page : 0,
     take: Number(limit),
     include: {
@@ -35,7 +28,34 @@ const getAll = async (_query: any) => {
         not: null,
       },
     },
-  });
+  };
+
+  if (categories.length != 0) {
+    temp.where = {
+      ...temp.where,
+      category_id: {
+        in: categories.map((e: any) => Number(e)),
+      },
+    };
+  }
+
+  if (brands.length != 0) {
+    temp.where = {
+      ...temp.where,
+      brand_id: {
+        in: brands.map((e: any) => Number(e)),
+      },
+    };
+  }
+
+  if (customer_id != 0) {
+    temp.where = {
+      customer_id: Number(customer_id),
+      deleted_at: null,
+    };
+  }
+
+  return await prisma.auction.findMany(temp);
 };
 
 const getById = async (id: number) => {

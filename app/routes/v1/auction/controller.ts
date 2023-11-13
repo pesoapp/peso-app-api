@@ -11,8 +11,49 @@ import auctionLikes from "../auctionLikes/service";
 import auctionView from "../auctionView/service";
 import auctionQuestionReply from "../auctionQuestionReply/service";
 import { shuffle } from "../../../utils";
+
+function filterPrice(priceFilter: number, data: any[]) {
+  if (priceFilter == 1) {
+    return data.filter((e: any) => e.price <= 500);
+  }
+
+  if (priceFilter == 2) {
+    return data.filter((e: any) => e.price > 500 && e.price <= 3000);
+  }
+
+  if (priceFilter == 3) {
+    return data.filter((e: any) => e.price > 3000 && e.price <= 10000);
+  }
+
+  if (priceFilter == 4) {
+    return data.filter((e: any) => e.price > 10000 && e.price <= 20000);
+  }
+
+  if (priceFilter == 5) {
+    return data.filter((e: any) => e.price > 20000 && e.price <= 40000);
+  }
+
+  if (priceFilter == 6) {
+    return data.filter((e: any) => e.price > 40000 && e.price <= 60000);
+  }
+
+  if (priceFilter == 7) {
+    return data.filter((e: any) => e.price > 60000);
+  }
+
+  return data;
+}
+
 const getAll = async (_req: Request, _res: Response) => {
-  const { limit = 1000, page = 1, customer_id = 0, search = "" } = _req.query;
+  const {
+    limit = 1000,
+    page = 1,
+    customer_id = 0,
+    search = "",
+    categories = [],
+    brands = [],
+    price = 0,
+  } = _req.query;
 
   let response: any = {
     data: [],
@@ -30,10 +71,12 @@ const getAll = async (_req: Request, _res: Response) => {
       page: Number(page),
       customer_id: customer_id.toString(),
       search: search.toString(),
+      brands: brands,
+      categories: categories,
     });
 
     response = {
-      data: shuffle(data),
+      data: filterPrice(Number(price), shuffle(data)),
       status: "success",
       message: "Get Auction success",
       meta: {
