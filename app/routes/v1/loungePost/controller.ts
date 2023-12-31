@@ -87,6 +87,7 @@ const getAll = async (_req: Request, _res: Response) => {
     e.customer = parentPostCustomerTemp.find(
       (customer: any) => customer.customer_id == e.customer_id
     );
+    e.title = parseLoungePostTitle(e.title);
     return e;
   });
 
@@ -100,6 +101,7 @@ const getAll = async (_req: Request, _res: Response) => {
       parentTemp.find(
         (parent: any) => parent.post_id ?? 0 == e.post_parent_id
       ) ?? null;
+
     e.shares = sharesTemp.filter(
       (share: any) => share.post_parent_id == e.post_id
     ).length;
