@@ -79,6 +79,21 @@ const getAll = async (_req: Request, _res: Response) => {
     )
   );
 
+  const parentPostCustomerTemp = await ocCustomer.getManyByCustomer([
+    ...new Set(data.map((e: any) => e.customer_id)),
+  ]);
+
+  parentTemp.map((e: any) => {
+    e.customer = parentPostCustomerTemp.find(
+      (customer: any) => customer.customer_id == e.customer_id
+    );
+    return e;
+  });
+
+  const loungePostViewsTemp = await loungePostViews.getManyByPosts([
+    ...new Set(data.map((e: any) => e.post_id)),
+  ]);
+
   data.map((e: any) => {
     e.title = parseLoungePostTitle(e.title);
     e.parent =
@@ -88,6 +103,10 @@ const getAll = async (_req: Request, _res: Response) => {
     e.shares = sharesTemp.filter(
       (share: any) => share.post_parent_id == e.post_id
     ).length;
+
+    e.views = loungePostViewsTemp
+      .filter((view: any) => view.post_id == e.post_id)
+      .reduce((acc: any, curr: any) => curr.total_view + acc, 0);
     return e;
   });
 
