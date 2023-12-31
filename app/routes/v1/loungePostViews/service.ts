@@ -38,9 +38,20 @@ const getManyByPost = async (id: number) => {
   });
 };
 
+const getManyByPosts = async (ids: number[]) => {
+  return await prisma.lounge_post_views.findMany({
+    where: {
+      post_id: {
+        in: ids,
+      },
+    },
+  });
+};
+
 export default {
   getOne,
   getManyByPost,
   update,
   add,
+  getManyByPosts,
 };
