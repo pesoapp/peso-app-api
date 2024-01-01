@@ -1,7 +1,14 @@
 import AWS from "aws-sdk";
 import ENV from "../env";
 import Pusher from "pusher";
-import { REGEX } from "../constants";
+import { REGEX, SHIPPING_RATE } from "../constants";
+
+export function getShippingRate(shipping_method: any): any {
+  const temp = Object.values(SHIPPING_RATE).find(
+    (e: any) => e.code == shipping_method
+  );
+  return temp ? temp["name"] : "";
+}
 
 export function shuffle(array: any[]) {
   let currentIndex = array.length,
