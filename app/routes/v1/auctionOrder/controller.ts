@@ -1,6 +1,7 @@
 import service from "./service";
 import ocCustomer from "../ocCustomer/service";
 import ocAddress from "../ocAddress/service";
+import ocCountry from "../ocCountry/service";
 import auctionCart from "../auctionCart/service";
 import { Request, Response } from "express";
 
@@ -82,6 +83,7 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
   const customer = await ocCustomer.getById(Number(_req.body.customer_id));
   const b_address = await ocAddress.getById(Number(_req.body.b_address));
   const d_address = await ocAddress.getById(Number(_req.body.d_address));
+  const country = await ocCountry.getById(Number(b_address?.country_id ?? 0));
   _res.send({
     data: [],
     status: "success",

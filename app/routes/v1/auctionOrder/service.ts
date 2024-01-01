@@ -52,7 +52,7 @@ const add = async (_body: any) => {
       payment_address_2: _body.b_address.address_2,
       payment_city: _body.b_address.city,
       payment_postcode: _body.b_address.postcode,
-      payment_country: ":payment_country,", // get country
+      payment_country: _body.country.name, // get country
       payment_country_id: _body.b_address.country_id,
       payment_zone: "0",
       payment_zone_id: _body.b_address.zone_id,
