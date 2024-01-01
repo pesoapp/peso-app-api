@@ -7,3 +7,10 @@ export interface IRoute {
 
 export type AddRoutes = (app: Express) => void;
 export type AddMiddlewaress = (app: Express) => void;
+export interface IShippingRate {
+  name: string;
+  code: string;
+  total: number;
+  value: string;
+  disable: boolean;
+}
