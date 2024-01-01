@@ -46,8 +46,10 @@ import auctionOrderRoute from "./auctionOrder/route";
 import loungeCommentSocialRoute from "./loungeCommentSocial/route";
 import auctionLikesRoute from "./auctionLikes/route";
 import loungePostViewsRoute from "./loungePostViews/route";
+import ocCountryRoute from "./ocCountry/route";
 
 export default {
+  ocCountryRoute,
   loungePostViewsRoute,
   auctionLikesRoute,
   loungeCommentSocialRoute,
