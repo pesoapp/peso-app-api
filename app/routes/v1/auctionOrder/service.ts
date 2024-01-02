@@ -56,8 +56,8 @@ const add = async (_body: any) => {
       payment_country_id: _body.b_address.country_id,
       payment_zone: "0",
       payment_zone_id: _body.b_address.zone_id,
-      payment_method: _body.paymentMethod,
-      payment_code: _body.payment_method,
+      payment_method: _body.paymentMethod.method,
+      payment_code: _body.paymentMethod.code,
       shipping_firstname: _body.d_address.firstname,
       shipping_lastname: _body.d_address.lastname,
       shipping_company: _body.d_address.company,
@@ -69,16 +69,16 @@ const add = async (_body: any) => {
       shipping_country_id: _body.d_address.country_id,
       shipping_zone: "0",
       shipping_zone_id: _body.d_address.zone_id,
-      shipping_method: _body.shippingMethod, // TODO: Fix name
-      shipping_code: _body.shippingMethod, // TODO: Fix name from payload
+      shipping_method: _body.shippingMethod.name,
+      shipping_code: _body.shippingMethod.code,
       total: _body.total,
       payment_district: _body.b_address.district,
       payment_region: _body.b_address.region,
       shipping_district: _body.b_address.district,
       shipping_region: _body.d_address.region,
       ip: _body.ip,
-      skip_shipping_insurance: 1,
-      user_agent: _body.userAgent, // TODO: get user agent
+      skip_shipping_insurance: _body.useshipINs ?? 0,
+      user_agent: _body.userAgent,
     },
   });
 };
