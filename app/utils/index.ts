@@ -5,16 +5,16 @@ import { REGEX, SHIPPING_RATE, PAYMENT_METHOD } from "../constants";
 
 export function getPaymentMethod(payment_method: any): any {
   const temp = Object.values(PAYMENT_METHOD).find(
-    (e: any) => e.code == payment_method
+    (e: any) => e.value == payment_method
   );
-  return temp ? temp["name"] : "";
+  return temp ? temp : {};
 }
 
 export function getShippingMethod(shipping_method: any): any {
   const temp = Object.values(SHIPPING_RATE).find(
-    (e: any) => e.value == shipping_method
+    (e: any) => e.code == shipping_method
   );
-  return temp ? temp["name"] : "";
+  return temp ? temp : {};
 }
 
 export function shuffle(array: any[]) {
