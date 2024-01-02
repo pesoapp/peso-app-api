@@ -14,3 +14,9 @@ export interface IShippingRate {
   value: string;
   disable: boolean;
 }
+
+export interface IPaymentMethod {
+  name: string;
+  value: string;
+  disable: boolean;
+}
