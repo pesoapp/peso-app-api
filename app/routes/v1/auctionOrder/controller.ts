@@ -4,6 +4,7 @@ import ocAddress from "../ocAddress/service";
 import ocCountry from "../ocCountry/service";
 import auctionCart from "../auctionCart/service";
 import { Request, Response } from "express";
+import { getPaymentMethod, getShippingMethod } from "../../../utils";
 
 const getAll = async (_req: Request, _res: Response) => {
   const { limit = 10, page = 1 } = _req.query;
@@ -83,7 +84,12 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
   const customer = await ocCustomer.getById(Number(_req.body.customer_id));
   const b_address = await ocAddress.getById(Number(_req.body.b_address));
   const d_address = await ocAddress.getById(Number(_req.body.d_address));
-  const country = await ocCountry.getById(Number(b_address?.country_id ?? 0));
+  const b_country = await ocCountry.getById(Number(b_address?.country_id ?? 0));
+  const d_country = await ocCountry.getById(Number(d_address?.country_id ?? 0));
+  const shippingMethod = getShippingMethod(_req.body.shipping_method);
+  const paymentMethod = getPaymentMethod(_req.body.payment_method);
+  const ip = _req; // TODO: Get Ip Address of client
+  const useshippingINS = _req.body.useshipINs ? 1 : 0;
   _res.send({
     data: [],
     status: "success",
