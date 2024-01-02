@@ -52,7 +52,6 @@ export default {
   COD,
   BANK_TRANSFER,
   CPUP,
-
   CREDIT_CARD,
   MAXX_PAYMENT,
   LAND_BANK_PAY,
