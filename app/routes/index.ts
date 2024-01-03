@@ -4,6 +4,10 @@ import V1 from "./v1/index.js";
 
 export const routes: IRoute[] = [
   {
+    url: "/api/v1/auctioner-order",
+    route: V1.auctionerOrderRoute,
+  },
+  {
     url: "/api/v1/oc-country",
     route: V1.ocCountryRoute,
   },
