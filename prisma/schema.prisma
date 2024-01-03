@@ -3569,6 +3569,17 @@ model auction_view {
   total_view  Int? @default(0)
 }
 
+model notification {
+  id          Int      @id @default(autoincrement())
+  content     String?  @db.VarChar(255)
+  customer_id Int?
+  date_added  DateTime @default(now()) @db.DateTime(0)
+  is_seen     Int?     @default(0)
+  from_id     Int?     @default(0)
+  type        String?  @db.VarChar(50)
+  link        String?  @db.VarChar(255)
+}
+
 enum oc_recurring_frequency {
   day
   week
