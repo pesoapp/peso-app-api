@@ -80,18 +80,26 @@ const getById = async (_req: Request, _res: Response) => {
 };
 
 const add = async (_req: Request<any, any, any>, _res: Response) => {
-  const { customer_id } = _req.body;
   const customer = await ocCustomer.getById(Number(_req.body.customer_id));
-  const b_address = await ocAddress.getById(Number(_req.body.b_address));
   const d_address = await ocAddress.getById(Number(_req.body.d_address));
-  const b_country = await ocCountry.getById(Number(b_address?.country_id ?? 0));
   const d_country = await ocCountry.getById(Number(d_address?.country_id ?? 0));
+  const b_address = await ocAddress.getById(Number(_req.body.b_address));
+  const b_country = await ocCountry.getById(Number(b_address?.country_id ?? 0));
   const shippingMethod = getShippingMethod(_req.body.shipping_method);
   const paymentMethod = getPaymentMethod(_req.body.payment_method);
-  const ip = _req; // TODO: Get Ip Address of client
-  const useshippingINS = _req.body.useshipINs ? 1 : 0;
+  const data = await service.add({
+    paymentMethod,
+    shippingMethod,
+    customer,
+    b_address,
+    d_address,
+    b_country,
+    d_country,
+    userAgent: _req.headers["user-agent"],
+    ip: _req.headers["host"],
+  });
   _res.send({
-    data: [],
+    data: [data],
     status: "success",
     message: "Add Auction Order success",
   });
