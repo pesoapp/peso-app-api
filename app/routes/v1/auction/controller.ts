@@ -182,10 +182,9 @@ const getById = async (_req: Request, _res: Response) => {
     });
 
     const auctionLikesTemp =
-      (await auctionLikes.getByAuction(data?.id || 0)) ?? [];
+      (await auctionLikes.getByAuction(Number(id))) ?? [];
 
-    const auctionViewTemp =
-      (await auctionView.getByAuction(data?.id || 0)) ?? [];
+    const auctionViewTemp = (await auctionView.getByAuction(Number(id))) ?? [];
 
     response = {
       data: [
