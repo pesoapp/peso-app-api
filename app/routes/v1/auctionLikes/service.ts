@@ -3,7 +3,7 @@ import { prisma } from "../../../db";
 const getByAuction = async (query: any) => {
   return await prisma.auction_likes.findMany({
     where: {
-      auction_id: query.auction_id,
+      auction_id: query,
     },
   });
 };
