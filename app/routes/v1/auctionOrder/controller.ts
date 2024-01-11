@@ -2,6 +2,7 @@ import service from "./service";
 import ocCustomer from "../ocCustomer/service";
 import ocAddress from "../ocAddress/service";
 import ocCountry from "../ocCountry/service";
+import auctionerOrder from "../auctionerOrder/service";
 import auctionCart from "../auctionCart/service";
 import { Request, Response } from "express";
 import { getPaymentMethod, getShippingMethod } from "../../../utils";
@@ -80,6 +81,7 @@ const getById = async (_req: Request, _res: Response) => {
 };
 
 const add = async (_req: Request<any, any, any>, _res: Response) => {
+  const { customers } = _req.body;
   const customer = await ocCustomer.getById(Number(_req.body.customer_id));
   const d_address = await ocAddress.getById(Number(_req.body.d_address));
   const d_country = await ocCountry.getById(Number(d_address?.country_id ?? 0));
@@ -95,9 +97,24 @@ const add = async (_req: Request<any, any, any>, _res: Response) => {
     d_address,
     b_country,
     d_country,
+    useshipINs: _req.body.useshipINs,
     userAgent: _req.headers["user-agent"],
     ip: _req.headers["host"],
   });
+
+  await Promise.all(
+    customers.map(async (cust: any) => {
+      const auctionerOrderTemp = await auctionerOrder.add({
+        auction_order_id: data.id,
+        auctioner_id: cust.auctioner_id,
+        shipping_method: shippingMethod.name,
+        order_number: `${data.id}-${cust.quantity}`, // TODO: change cust.quantity to order_no
+        order_status_id: 0,
+        flat_rate: 100, // TODO: Add flat rate
+      });
+    })
+  );
+
   _res.send({
     data: [data],
     status: "success",
