@@ -8,6 +8,14 @@ const getAll = async (_query: any) => {
   });
 };
 
+const getAllByIds = async (ids: number[]) => {
+  return await prisma.auction_order.findMany({
+    where: {
+      id: { in: ids },
+    },
+  });
+};
+
 const getById = async (id: number) => {
   return await prisma.auction_order.findFirst({
     where: {
@@ -87,4 +95,4 @@ const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getAll, add, update, removeOne, getById };
+export default { getAll, getAllByIds, add, update, removeOne, getById };
