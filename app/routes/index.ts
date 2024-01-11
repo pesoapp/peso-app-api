@@ -1,8 +1,11 @@
 import { AddRoutes, IRoute } from "../interfaces/index.js";
 import { Express } from "express";
 import V1 from "./v1/index.js";
-
 export const routes: IRoute[] = [
+  {
+    url: "/api/v1/auctioner-order-total",
+    route: V1.auctionerOrderTotalRoute,
+  },
   {
     url: "/api/v1/auctioner-order",
     route: V1.auctionerOrderRoute,

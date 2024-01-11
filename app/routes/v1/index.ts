@@ -48,7 +48,10 @@ import auctionLikesRoute from "./auctionLikes/route";
 import loungePostViewsRoute from "./loungePostViews/route";
 import ocCountryRoute from "./ocCountry/route";
 import auctionerOrderRoute from "./auctionerOrder/route";
+import auctionerOrderTotalRoute from "./auctionerOrderTotal/route";
+
 export default {
+  auctionerOrderTotalRoute,
   auctionerOrderRoute,
   ocCountryRoute,
   loungePostViewsRoute,
