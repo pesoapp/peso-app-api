@@ -93,6 +93,22 @@ const add = async (_body: any) => {
 
 const update = async (filter: any, _body: any, session: any) => {};
 
+const updateStatus = async (filter: any) => {
+  return await prisma.$executeRawUnsafe<any[]>(
+    "UPDATE auction_order SET order_status_id=31 where id=" +
+      filter.order_number +
+      ""
+  );
+};
+
 const removeOne = async (id: number) => {};
 
-export default { getAll, getAllByIds, add, update, removeOne, getById };
+export default {
+  getAll,
+  getAllByIds,
+  add,
+  update,
+  updateStatus,
+  removeOne,
+  getById,
+};
