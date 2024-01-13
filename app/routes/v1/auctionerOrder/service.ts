@@ -37,8 +37,24 @@ const add = async (_body: any) => {
   });
 };
 
+const updateStatus = async (filter: any) => {
+  return await prisma.$executeRawUnsafe<any[]>(
+    "UPDATE auctioner_order SET order_status_id=31 where order_number=" +
+      filter.order_number +
+      ""
+  );
+};
+
 const update = async (filter: any, _body: any, session: any) => {};
 
 const removeOne = async (id: number) => {};
 
-export default { getAll, getAllByAuctioner, add, update, removeOne, getById };
+export default {
+  getAll,
+  getAllByAuctioner,
+  add,
+  update,
+  updateStatus,
+  removeOne,
+  getById,
+};

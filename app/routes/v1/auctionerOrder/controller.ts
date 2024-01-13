@@ -4,6 +4,11 @@ import auctionerOrderTotal from "../auctionerOrderTotal/service";
 import ocOrderStatus from "../ocOrderStatus/service";
 import auctionerOrderItem from "../auctionerOrderItem/service";
 import auction from "../auction/service";
+import auctionOrderHistory from "../auctionOrderHistory/service";
+import ocOrder from "../ocOrder/service";
+import ocStatusPerStore from "../ocStatusPerStore/service";
+import ocCustomerWallet from "../ocCustomerWallet/service";
+
 import { Request, Response } from "express";
 
 import { getPaymentMethod, getShippingMethod } from "../../../utils";
@@ -173,4 +178,33 @@ const removeOne = async (_req: Request, _res: Response) => {
   });
 };
 
-export { getAll, getAllByAuctioner, getById, add, update, removeOne };
+const cancel = async (_req: Request<any, any, any>, _res: Response) => {
+  const { auction_order_id } = _req.body;
+  await auctionOrderHistory.updateStatus({ order_number: auction_order_id });
+  await auctionOrder.updateStatus({ order_number: auction_order_id });
+  await service.updateStatus({ order_number: auction_order_id });
+  await ocOrder.updateStatus({ order_id: auction_order_id });
+  await ocStatusPerStore.updateStatus({ order_id: auction_order_id });
+  await ocCustomerWallet.updateStatus({ order_id: auction_order_id });
+  const walletInfo = await ocCustomerWallet.getWalletInfo(auction_order_id);
+
+  await Promise.all(
+    walletInfo.map(async (e: any) => {
+      await ocCustomerWallet.cancelOrder({
+        customer_id: e.customer_id,
+        amount: e.amount,
+        particulars:
+          "Reversal For cancelled (Order Id:" + auction_order_id + ")",
+      });
+      return e;
+    })
+  );
+
+  _res.send({
+    data: [],
+    status: "success",
+    message: "Cancel Auctioner Order success",
+  });
+};
+
+export { getAll, getAllByAuctioner, cancel, getById, add, update, removeOne };
