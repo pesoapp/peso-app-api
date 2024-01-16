@@ -163,6 +163,142 @@ const getAuctionRatesById = async (_req: Request, _res: Response) => {
   });
 };
 
+const getCheckoutDetails = async (
+  _req: Request<any, any, any>,
+  _res: Response
+) => {
+  const { shipping_address, auction_cart_ids } = _req.query;
+
+  if (!Array.isArray(auction_cart_ids)) {
+    _res.send({
+      data: [],
+      status: "failed",
+      message: "auction_cart_ids is not an array",
+    });
+  }
+  let totalFlatRate = 0;
+  const cartItems = await service.getManyById(auction_cart_ids as any[]);
+  const auctionItems = await auction.getManyById([
+    ...new Set(cartItems.map((cart: any) => cart.auction_id)),
+  ]);
+  const deliveryCharges = await ocDeliveryCharge.getManyById([
+    ...new Set(auctionItems.map((auction: any) => auction.delivery_charge_id)),
+  ]);
+
+  const shippingAddress = await ocAddress.getById(Number(shipping_address));
+  const auctionerAddresses = await ocAddress.getManyByManyCustomer([
+    ...new Set(cartItems.map((cart: any) => cart.auctioner_id)),
+  ]);
+  console.log(auctionerAddresses);
+
+  const DRRate = await ocDeliveryCharge.getManyById([5, 1, 2, 3]);
+
+  const temp = cartItems.map((cart: any) => {
+    cart.auction = auctionItems.find(
+      (auction: any) => auction.id == cart.auction_id
+    );
+    cart.deliveryCharge = deliveryCharges.find(
+      (deliveryCharge: any) =>
+        deliveryCharge.id == cart.auction.delivery_charge_id
+    );
+    let flatrateDiffPRV = 0;
+    let flatrateSamePRV = 0;
+
+    if (cart.deliveryCharge.id == 5) {
+      if (cart.quantity < 5) {
+        const rate = DRRate.find((rate: any) => rate.id == 5);
+        flatrateDiffPRV = Number(rate?.amount ?? 0);
+        flatrateSamePRV = Number(rate?.provincial_amount ?? 0);
+      } else if (cart.quantity < 9) {
+        const rate = DRRate.find((rate: any) => rate.id == 1);
+        flatrateDiffPRV = Number(rate?.amount ?? 0);
+        flatrateSamePRV = Number(rate?.provincial_amount ?? 0);
+      } else if (cart.quantity < 17) {
+        const rate = DRRate.find((rate: any) => rate.id == 2);
+        flatrateDiffPRV = Number(rate?.amount ?? 0);
+        flatrateSamePRV = Number(rate?.provincial_amount ?? 0);
+      } else {
+        const rate = DRRate.find((rate: any) => rate.id == 3);
+        flatrateDiffPRV = Number(rate?.amount ?? 0);
+        flatrateSamePRV = Number(rate?.provincial_amount ?? 0);
+      }
+    } else if (cart.deliveryCharge.id == 1) {
+      flatrateSamePRV = cart.deliveryCharge.amount * cart.quantity;
+      flatrateDiffPRV = cart.deliveryCharge.provincial_amount * cart.quantity;
+    } else if (cart.deliveryCharge.id == 2) {
+      flatrateSamePRV = cart.deliveryCharge.amount * cart.quantity;
+      flatrateDiffPRV = cart.deliveryCharge.provincial_amount * cart.quantity;
+    } else {
+      flatrateSamePRV = cart.deliveryCharge.amount * cart.quantity;
+      flatrateDiffPRV = cart.deliveryCharge.provincial_amount * cart.quantity;
+    }
+
+    const auctioner = auctionerAddresses.find(
+      (auctioner_address: any) =>
+        auctioner_address.customer_id == cart.auctioner_id
+    );
+
+    cart.flat_rate =
+      shippingAddress?.region == auctioner?.region
+        ? flatrateSamePRV
+        : flatrateDiffPRV;
+    totalFlatRate +=
+      shippingAddress?.region == auctioner?.region
+        ? flatrateSamePRV
+        : flatrateDiffPRV;
+    cart.sub_total = cart.quantity * cart.price;
+    cart.total_price = cart.quantity * cart.price;
+    cart.insurance_fee =
+      cart.quantity * cart.price > 500 ? cart.quantity * cart.price * 0.01 : 0;
+    cart.credit_card = (
+      (cart.quantity * cart.price) / 0.972 -
+      cart.quantity * cart.price
+    ).toFixed(2);
+    cart.maxx_payment = Math.round(cart.quantity * cart.price * 0.015).toFixed(
+      2
+    );
+    return cart;
+  });
+
+  let currentOrderNumber = 0;
+  const ocCustomerTemp = await ocCustomer.getManyByCustomer([
+    ...new Set(temp.map((items: any) => items.auctioner_id)),
+  ]);
+  const details = ocCustomerTemp.map((customer: any, index: number) => {
+    const auctions = temp
+      .filter((e: any) => e.auctioner_id == customer.customer_id)
+      .map((auctionTemp: any) => {
+        currentOrderNumber++;
+        auctionTemp.order_no = currentOrderNumber;
+        return auctionTemp;
+      });
+
+    const totalPerstore = auctions.reduce(
+      (acc, curr) => acc + curr.total_price,
+      0
+    );
+    const insuranceFee = totalPerstore > 500 ? totalPerstore * 0.01 : 0;
+
+    return {
+      auctioner_id: customer.customer_id,
+      auctioner: customer,
+      auctions,
+      order_no: index + 1,
+      delstats: "Yes",
+      pickupstats: "Yes",
+      totalPerstore,
+      insuranceFee,
+      flatRate: totalFlatRate,
+    };
+  });
+
+  _res.send({
+    data: details,
+    status: "success",
+    message: "Get cart checkout details success",
+  });
+};
+
 const add = async (_req: Request<any, any, any>, _res: Response) => {
   //TODO: Update only if auction cart already exissts
 
@@ -250,4 +386,5 @@ export {
   add,
   update,
   removeOne,
+  getCheckoutDetails,
 };
